@@ -1,0 +1,46 @@
+{{ define "main" }}
+<section class="{{ .Section }}-detail">
+    <div class="container">
+        <a href="{{ .Section | relURL }}" class="back-link animate-in"><i class="fas fa-arrow-left"></i> Back to {{ .Section | title }}</a>
+
+        {{ if eq .Section "blog" }}
+        <article>
+            <h1 class="post-title animate-in">{{ .Title }}</h1>
+            <div class="post-meta animate-in">
+                <span><i class="far fa-calendar"></i> {{ .Date.Format "January 2, 2006" }}</span>
+                {{ with .Params.readTime }}<span><i class="far fa-clock"></i> {{ . }}</span>{{ end }}
+            </div>
+            <div class="post-tags animate-in">
+                {{ range .Params.tags }}
+                <span class="tag">{{ . }}</span>
+                {{ end }}
+            </div>
+            <div class="post-body animate-in">
+                {{ .Content }}
+            </div>
+        </article>
+
+        {{ else if eq .Section "projects" }}
+        <article>
+            <h1 class="post-title animate-in">{{ .Title }}</h1>
+            <div class="post-meta animate-in">
+                <span><i class="far fa-calendar"></i> {{ .Params.date }}</span>
+            </div>
+            <div class="post-tags animate-in">
+                {{ range .Params.technologies }}
+                <span class="tag">{{ . }}</span>
+                {{ end }}
+            </div>
+            {{ with .Params.github }}
+            <div class="project-links animate-in">
+                <a href="{{ . }}" class="btn btn-outline" target="_blank" rel="noopener"><i class="fab fa-github"></i> View on GitHub</a>
+            </div>
+            {{ end }}
+            <div class="post-body animate-in">
+                {{ .Content }}
+            </div>
+        </article>
+        {{ end }}
+    </div>
+</section>
+{{ end }}

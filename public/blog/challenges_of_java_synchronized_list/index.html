@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenges of Java Synchronized List in Multithreaded Environments | Daham Navinda - DevOps/Cloud Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.5a387ec9eaa433104be2dced78a32a858a19b329ffea3ec5c2f49fb041f1964f.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a href="/" class="nav-brand">Daham Navinda</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    
+                    <li><a href="/" >Home</a></li>
+                    
+                    <li><a href="/about/" >About</a></li>
+                    
+                    <li><a href="/blog/" >Blog</a></li>
+                    
+                    <li><a href="/experience/" >Experience</a></li>
+                    
+                </ul>
+                <div class="nav-social">
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+<section class="blog-detail">
+    <div class="container">
+        <a href="/blog" class="back-link animate-in"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+
+        
+        <article>
+            <h1 class="post-title animate-in">Challenges of Java Synchronized List in Multithreaded Environments</h1>
+            <div class="post-meta animate-in">
+                <span><i class="far fa-calendar"></i> February 29, 2024</span>
+                
+            </div>
+            <div class="post-tags animate-in">
+                
+                <span class="tag">Java</span>
+                
+                <span class="tag">Multithreading</span>
+                
+                <span class="tag">Concurrent Programming</span>
+                
+            </div>
+            <div class="post-body animate-in">
+                <h2 id="introduction">Introduction</h2>
+<p>Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like <code>Collections.synchronizedList()</code>, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.</p>
+<h2 id="synchronization-basics">Synchronization Basics</h2>
+<p>In Java, the <code>Collections.synchronizedList()</code> method is commonly used to create a synchronized version of a list. This method returns a synchronized wrapper around the specified list, ensuring that all methods that modify the list are synchronized. This helps prevent data corruption that can occur when multiple threads attempt to modify the list simultaneously.</p>
+<h2 id="the-problem-with-iteration">The Problem with Iteration</h2>
+<p>One common scenario where a synchronized list may fail is during iteration. While individual operations like <code>add()</code> or <code>remove()</code> are synchronized, the synchronization does not extend to compound operations like iteration. Consider the following example:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#0550ae">&lt;</span>Integer<span style="color:#0550ae">&gt;</span><span style="color:#fff"> </span>synchronizedList<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>Collections<span style="color:#1f2328">.</span><span style="color:#1f2328">synchronizedList</span><span style="color:#1f2328">(</span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>ArrayList<span style="color:#0550ae">&lt;&gt;</span><span style="color:#1f2328">());</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Thread 1: Add elements to the list</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>Thread<span style="color:#fff"> </span>thread1<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Thread<span style="color:#1f2328">(()</span><span style="color:#fff"> </span><span style="color:#0550ae">-&gt;</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>1<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;=</span><span style="color:#fff"> </span>5<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>synchronizedList<span style="color:#1f2328">.</span><span style="color:#1f2328">add</span><span style="color:#1f2328">(</span>i<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">try</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>Thread<span style="color:#1f2328">.</span><span style="color:#1f2328">sleep</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">);</span><span style="color:#fff"> </span><span style="color:#57606a">// Simulating some processing time</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff"> </span><span style="color:#cf222e">catch</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>InterruptedException<span style="color:#fff"> </span>e<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>e<span style="color:#1f2328">.</span><span style="color:#1f2328">printStackTrace</span><span style="color:#1f2328">();</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">});</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Thread 2: Iterate over the list</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>Thread<span style="color:#fff"> </span>thread2<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Thread<span style="color:#1f2328">(()</span><span style="color:#fff"> </span><span style="color:#0550ae">-&gt;</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">synchronized</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>synchronizedList<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>Integer<span style="color:#fff"> </span>num<span style="color:#fff"> </span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>synchronizedList<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>System<span style="color:#1f2328">.</span><span style="color:#1f2328">out</span><span style="color:#1f2328">.</span><span style="color:#1f2328">println</span><span style="color:#1f2328">(</span>num<span style="color:#1f2328">);</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">try</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>Thread<span style="color:#1f2328">.</span><span style="color:#1f2328">sleep</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">);</span><span style="color:#fff"> </span><span style="color:#57606a">// Simulating some processing time</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff"> </span><span style="color:#cf222e">catch</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>InterruptedException<span style="color:#fff"> </span>e<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>e<span style="color:#1f2328">.</span><span style="color:#1f2328">printStackTrace</span><span style="color:#1f2328">();</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">});</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>thread1<span style="color:#1f2328">.</span><span style="color:#1f2328">start</span><span style="color:#1f2328">();</span><span style="color:#fff">
+</span></span></span><span style="display:flex;"><span>thread2<span style="color:#1f2328">.</span><span style="color:#1f2328">start</span><span style="color:#1f2328">();</span><span style="color:#fff">
+</span></span></span></code></pre></div><p>In this example, <code>thread1</code> is adding elements to the list, and <code>thread2</code> is iterating over it. The synchronization provided by <code>Collections.synchronizedList</code> only guards individual operations, not the entire iteration process.</p>
+<h2 id="concurrentmodificationexception">ConcurrentModificationException</h2>
+<p>As a consequence, the iteration in <code>thread2</code> may throw a <code>ConcurrentModificationException</code>. This exception occurs when the list is modified during iteration, leading to an inconsistency in the internal state of the synchronized list.</p>
+<h2 id="mitigating-the-issue">Mitigating the Issue</h2>
+<p>Developers need to be aware of the limitations of synchronized collections and choose appropriate alternatives based on their specific requirements. One solution is to use thread-safe alternatives like <code>CopyOnWriteArrayList</code>, which creates a new copy of the underlying array whenever a modification is made. This allows safe iteration over the original array while modifications occur on a separate copy.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>While synchronized collections like <code>Collections.synchronizedList()</code> provide basic thread safety for individual operations, they may fall short in scenarios involving compound operations like iteration. Understanding these limitations is crucial for writing robust multithreaded applications. Developers should carefully choose thread-safe alternatives and adopt best practices to mitigate potential issues, ensuring the integrity of shared data in a concurrent environment.</p>
+
+            </div>
+        </article>
+
+        
+    </div>
+</section>
+</main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Daham Navinda</p>
+                <div class="footer-links">
+                    <a href="mailto:navindabc@gmail.com">Email</a>
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            document.querySelector('.nav-right').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+    </script>
+    
+    <script src="/js/three-effects.a45d9c56b3199203fa3a7fa8abb869f6c872bbf1068abc8c43d03fc3967bbf15.js"></script>
+</body>
+</html>

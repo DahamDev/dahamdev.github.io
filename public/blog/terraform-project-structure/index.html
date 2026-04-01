@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Structure Terraform Projects for Scalable Infrastructure Management | Daham Navinda - DevOps/Cloud Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.5a387ec9eaa433104be2dced78a32a858a19b329ffea3ec5c2f49fb041f1964f.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a href="/" class="nav-brand">Daham Navinda</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    
+                    <li><a href="/" >Home</a></li>
+                    
+                    <li><a href="/about/" >About</a></li>
+                    
+                    <li><a href="/blog/" >Blog</a></li>
+                    
+                    <li><a href="/experience/" >Experience</a></li>
+                    
+                </ul>
+                <div class="nav-social">
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+<section class="blog-detail">
+    <div class="container">
+        <a href="/blog" class="back-link animate-in"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+
+        
+        <article>
+            <h1 class="post-title animate-in">How to Structure Terraform Projects for Scalable Infrastructure Management</h1>
+            <div class="post-meta animate-in">
+                <span><i class="far fa-calendar"></i> January 15, 2024</span>
+                <span><i class="far fa-clock"></i> 10 min read</span>
+            </div>
+            <div class="post-tags animate-in">
+                
+                <span class="tag">Terraform</span>
+                
+                <span class="tag">AWS</span>
+                
+                <span class="tag">Infrastructure as Code</span>
+                
+                <span class="tag">DevOps</span>
+                
+                <span class="tag">Best Practices</span>
+                
+            </div>
+            <div class="post-body animate-in">
+                <p>Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.</p>
+<h2 id="example-project-overview">Example Project Overview</h2>
+<p>My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:</p>
+<ul>
+<li>Amazon VPC with public and private subnets across multiple Availability Zones</li>
+<li>Application Load Balancer (ALB) for distributing incoming traffic</li>
+<li>Amazon ECS Fargate cluster running containerized applications</li>
+<li>Supporting infrastructure including security groups, IAM roles, and CloudWatch logs</li>
+</ul>
+<h2 id="project-structure-breakdown">Project Structure Breakdown</h2>
+<pre tabindex="0"><code>terraform-project-structure/
+├── modules/                    # Reusable infrastructure modules
+│   ├── vpc/                   # VPC module
+│   │   ├── main.tf           # VPC resources
+│   │   ├── variables.tf      # Input variables
+│   │   └── outputs.tf        # Output values
+│   ├── alb/                  # Application Load Balancer module
+│   │   ├── main.tf           # ALB resources
+│   │   ├── variables.tf      # Input variables
+│   │   └── outputs.tf        # Output values
+│   └── ecs/                  # ECS module
+│       ├── main.tf           # ECS resources
+│       ├── variables.tf      # Input variables
+│       └── outputs.tf        # Output values
+├── main.tf                   # Root module configuration
+├── variables.tf              # Root-level variables
+├── outputs.tf               # Root-level outputs
+├── versions.tf              # Provider and Terraform version constraints
+├── terraform.tfvars        # Variable values
+└── Makefile                # Automation commands
+</code></pre><h2 id="benefits-of-this-structure">Benefits of This Structure</h2>
+<h3 id="1-modularity-and-reusability">1. Modularity and Reusability</h3>
+<p>Modules encapsulate related resources, making them reusable across different projects and environments.</p>
+<h3 id="2-clear-separation-of-concerns">2. Clear Separation of Concerns</h3>
+<p>Each module handles a specific aspect of your infrastructure:</p>
+<ul>
+<li><strong>VPC module:</strong> Network infrastructure (subnets, route tables, NAT gateways)</li>
+<li><strong>ALB module:</strong> Load balancing and traffic distribution</li>
+<li><strong>ECS module:</strong> Container orchestration and application deployment</li>
+</ul>
+<h3 id="3-simplified-testing-and-validation">3. Simplified Testing and Validation</h3>
+<p>Modules can be tested independently, making it easier to validate changes and catch issues early in the development cycle.</p>
+<h2 id="best-practices-summary">Best Practices Summary</h2>
+<ol>
+<li><strong>Use consistent naming conventions</strong> across all modules and resources</li>
+<li><strong>Document your modules</strong> with clear descriptions and examples</li>
+<li><strong>Version your modules</strong> using Git tags or semantic versioning</li>
+<li><strong>Implement state locking</strong> using DynamoDB to prevent concurrent modifications</li>
+<li><strong>Use remote state storage</strong> (S3) for team collaboration</li>
+<li><strong>Never commit sensitive data</strong> - use <code>.gitignore</code> properly</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>A well-structured Terraform project provides the foundation for scalable infrastructure management. By organizing code into reusable modules and implementing consistent patterns, teams can efficiently manage complex AWS environments across multiple stages of development.</p>
+
+            </div>
+        </article>
+
+        
+    </div>
+</section>
+</main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Daham Navinda</p>
+                <div class="footer-links">
+                    <a href="mailto:navindabc@gmail.com">Email</a>
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            document.querySelector('.nav-right').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+    </script>
+    
+    <script src="/js/three-effects.a45d9c56b3199203fa3a7fa8abb869f6c872bbf1068abc8c43d03fc3967bbf15.js"></script>
+</body>
+</html>

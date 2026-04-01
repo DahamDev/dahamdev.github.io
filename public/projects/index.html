@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Daham Navinda - DevOps/Cloud Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.5a387ec9eaa433104be2dced78a32a858a19b329ffea3ec5c2f49fb041f1964f.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a href="/" class="nav-brand">Daham Navinda</a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span>
+            </button>
+            <div class="nav-right">
+                <ul class="nav-menu">
+                    
+                    <li><a href="/" >Home</a></li>
+                    
+                    <li><a href="/about/" >About</a></li>
+                    
+                    <li><a href="/blog/" >Blog</a></li>
+                    
+                    <li><a href="/experience/" >Experience</a></li>
+                    
+                </ul>
+                <div class="nav-social">
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+<header class="page-header">
+    <div class="container">
+        <h1 class="animate-in">Projects</h1>
+        <p class="animate-in">A collection of my technical projects and contributions</p>
+    </div>
+</header>
+
+<section class="projects-list">
+    <div class="container">
+        
+        
+        <article class="project-item animate-in">
+            <a href="/projects/ai-ticket-system/" class="project-link">
+                <h2>AI-Powered Ticket Summarization System</h2>
+                <p>Developed an automated system to summarize ongoing support tickets using generative AI models. Integrated with AWS case handling system to evaluate engineer&#39;s customer engagement and provide feedback to improve customer satisfaction.</p>
+                <div class="project-tech-list">
+                    
+                    <span>AWS Bedrock</span>
+                    
+                    <span>AWS Lambda</span>
+                    
+                    <span>DynamoDB</span>
+                    
+                    <span>SQS</span>
+                    
+                    <span>Python</span>
+                    
+                    <span>Generative AI</span>
+                    
+                </div>
+            </a>
+        </article>
+        
+        
+        
+        <article class="project-item animate-in">
+            <a href="/projects/release-management/" class="project-link">
+                <h2>Automated Release Management Workflow</h2>
+                <p>Architected and implemented automated release management workflow, reducing deployment time from 4 hours to less than 30 minutes.</p>
+                <div class="project-tech-list">
+                    
+                    <span>Jenkins</span>
+                    
+                    <span>Git</span>
+                    
+                    <span>Docker</span>
+                    
+                    <span>Kubernetes</span>
+                    
+                    <span>AWS EKS</span>
+                    
+                    <span>Bash</span>
+                    
+                </div>
+            </a>
+        </article>
+        
+        
+        
+        <article class="project-item animate-in">
+            <a href="/projects/database-migration/" class="project-link">
+                <h2>Large-Scale Database Migration</h2>
+                <p>Migrated 10 million user data from on-premises Oracle database to AWS RDS MySQL as part of cloud modernization initiative.</p>
+                <div class="project-tech-list">
+                    
+                    <span>AWS RDS</span>
+                    
+                    <span>MySQL</span>
+                    
+                    <span>Oracle</span>
+                    
+                    <span>AWS DMS</span>
+                    
+                    <span>Python</span>
+                    
+                    <span>AWS EKS</span>
+                    
+                </div>
+            </a>
+        </article>
+        
+        
+    </div>
+</section>
+</main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Daham Navinda</p>
+                <div class="footer-links">
+                    <a href="mailto:navindabc@gmail.com">Email</a>
+                    <a href="https://github.com/DahamDev" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            document.querySelector('.nav-right').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+    </script>
+    
+    <script src="/js/three-effects.a45d9c56b3199203fa3a7fa8abb869f6c872bbf1068abc8c43d03fc3967bbf15.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+baseURL = "https://dahamnavinda.com/"
+languageCode = "en-us"
+title = "Daham Navinda - DevOps/Cloud Engineer"
+theme = "portfolio"
+
+[params]
+  name = "Daham Navinda"
+  title = "DevOps/Cloud Engineer"
+  field = "AWS & Kubernetes Specialist"
+  bio = "more than five years of experience deploying and managing critical applications. Proven expertise in building robust, scalable solutions using Java, Spring Boot, and Python. Expert in cloud architecture with AWS and container orchestration using Kubernetes."
+  about = "I'm a DevOps/Cloud Engineer with a strong background in building and managing cloud infrastructure at scale. Currently working at Amazon Web Services as a Cloud Support Engineer specializing in Kubernetes and container services. My expertise spans container orchestration with Kubernetes, AWS cloud services, infrastructure as code, and implementing DevOps best practices. I have a proven track record of delivering mission-critical financial applications while ensuring high performance, security, and reliability."
+  email = "navindabc@gmail.com"
+  github = "https://github.com/DahamDev"
+  linkedin = "https://linkedin.com/in/dahamne"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 3
+  [[menu.main]]
+    name = "Experience"
+    url = "/experience/"
+    weight = 4
+
+[markup]
+  [markup.highlight]
+    style = "github"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

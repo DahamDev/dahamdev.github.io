@@ -1,0 +1,58 @@
+{
+  "categories": [
+    {
+      "name": "Programming Languages",
+      "icon": "fa-code",
+      "color": "green",
+      "skills": ["Java", "Python", "JavaScript", "Bash scripting"]
+    },
+    {
+      "name": "Cloud Technologies",
+      "icon": "fa-cloud",
+      "color": "blue",
+      "skills": ["AWS (EKS, ECS, ELB, EC2, VPC, EFS, EBS, Lambda, DynamoDB, SQS, Bedrock, CloudFormation, RDS)"]
+    },
+    {
+      "name": "Container Orchestration",
+      "icon": "fa-dharmachakra",
+      "color": "indigo",
+      "skills": ["Kubernetes", "Docker", "AWS EKS", "AWS ECS"]
+    },
+    {
+      "name": "Web Frameworks",
+      "icon": "fa-globe",
+      "color": "teal",
+      "skills": ["Spring Boot", "Fast API"]
+    },
+    {
+      "name": "Message Brokers",
+      "icon": "fa-paper-plane",
+      "color": "orange",
+      "skills": ["Kafka", "AWS SQS", "AWS SNS"]
+    },
+    {
+      "name": "Databases",
+      "icon": "fa-database",
+      "color": "red",
+      "skills": ["MySQL", "PostgreSQL", "MongoDB", "DynamoDB", "Oracle", "Redis"]
+    },
+    {
+      "name": "Infrastructure as Code",
+      "icon": "fa-layer-group",
+      "color": "amber",
+      "skills": ["CloudFormation", "Terraform", "AWS CDK"]
+    },
+    {
+      "name": "CI/CD & Version Control",
+      "icon": "fa-rocket",
+      "color": "purple",
+      "skills": ["Jenkins", "Git"]
+    },
+    {
+      "name": "Monitoring & Observability",
+      "icon": "fa-chart-line",
+      "color": "pink",
+      "skills": ["Prometheus", "AWS X-Ray", "CloudWatch"]
+    }
+  ]
+}

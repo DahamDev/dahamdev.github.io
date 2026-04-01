@@ -1,0 +1,63 @@
+{{ define "main" }}
+<section class="hero">
+    <div class="hero-intro">
+        <h1 class="hero-name">Daham Navinda</h1>
+        <p class="hero-subtitle">Cloud Native Software Engineer</p>
+        <p class="hero-bio">More than five year of experience deploying and managing critical applications. Proven expertise in building robust, scalable solutions using Java, Spring Boot, and Python. Expert in cloud architecture with AWS and container orchestration using Kubernetes.</p>
+        <div class="hero-actions">
+            <a href="{{ "files/cv.pdf" | relURL }}" class="btn btn-primary" download>Download CV</a>
+            <a href="{{ "about/" | relURL }}" class="btn btn-outline">About me</a>
+        </div>
+    </div>
+    <div class="hero-terminal">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <div class="terminal-title">daham@live-server: ~/portfolio</div>
+                <div class="terminal-dots" style="visibility:hidden">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-body" tabindex="0">
+                <div id="terminal-output"></div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">daham@live-server:~/portfolio$ </span>
+                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>scroll down</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+{{ $posts := first 3 (where .Site.RegularPages "Section" "blog") }}
+{{ if $posts }}
+<section class="section blog-preview">
+    <div class="container">
+        <div class="section-header animate-in">
+            <h2 class="section-label">Latest Posts</h2>
+            <a href="{{ "blog/" | relURL }}" class="view-all">All posts <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="blog-grid">
+            {{ range $posts }}
+            <a href="{{ .RelPermalink }}" class="blog-preview-card animate-in">
+                <span class="blog-preview-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+                <h3>{{ .Title }}</h3>
+                <p>{{ .Params.excerpt }}</p>
+                <div class="blog-preview-tags">
+                    {{ range first 3 .Params.tags }}<span>{{ . }}</span>{{ end }}
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}
+{{ end }}

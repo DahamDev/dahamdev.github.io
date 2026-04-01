@@ -1,0 +1,77 @@
+{{ define "main" }}
+<header class="page-header">
+    <div class="container">
+        <h1 class="animate-in">About Me</h1>
+        <p class="animate-in">{{ .Site.Params.title }} · {{ .Site.Params.field }}</p>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <div class="about-bio animate-in">
+            <p>{{ .Site.Params.about }}</p>
+            <div class="about-links">
+                <a href="mailto:{{ .Site.Params.email }}" class="btn btn-primary"><i class="fas fa-envelope"></i> Email</a>
+                <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                <a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener" class="btn btn-outline"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="{{ "files/cv.pdf" | relURL }}" class="btn btn-outline" download><i class="fas fa-download"></i> CV</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-label animate-in">Skills</h2>
+        <div class="skills-grid">
+            {{ range .Site.Data.skills.categories }}
+            <div class="skill-card animate-in" data-color="{{ .color }}">
+                <div class="skill-card-header">
+                    <div class="skill-card-icon skill-icon-{{ .color }}"><i class="fas {{ .icon }}"></i></div>
+                    <h3>{{ .name }}</h3>
+                </div>
+                <div class="skill-items">
+                    {{ range .skills }}<span class="skill-tag">{{ . }}</span>{{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="two-col">
+            <div class="col animate-in">
+                <h2 class="section-label">Certifications</h2>
+                <div class="card-list">
+                    {{ range .Site.Data.certifications.certifications }}
+                    <div class="info-card">
+                        <div class="info-card-dot"></div>
+                        <div>
+                            <h4>{{ .name }}</h4>
+                            <p>{{ .issuer }} · {{ .date }}</p>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            <div class="col animate-in">
+                <h2 class="section-label">Education</h2>
+                <div class="card-list">
+                    {{ range .Site.Data.education }}
+                    <div class="info-card">
+                        <div class="info-card-dot"></div>
+                        <div>
+                            <h4>{{ .degree }}</h4>
+                            <p>{{ .institution }}</p>
+                            <span class="info-card-date">{{ .date }}</span>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}

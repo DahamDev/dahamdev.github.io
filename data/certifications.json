@@ -1,0 +1,14 @@
+{
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect - Associate",
+      "issuer": "Amazon Web Services",
+      "date": "Current"
+    },
+    {
+      "name": "Cisco Certified Network Administrator (CCNA)",
+      "issuer": "Cisco",
+      "date": "Current"
+    }
+  ]
+}

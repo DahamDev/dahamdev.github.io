@@ -1,0 +1,46 @@
+{{ define "main" }}
+<header class="page-header">
+    <div class="container">
+        <h1 class="animate-in">{{ .Title }}</h1>
+        {{ with .Description }}<p class="animate-in">{{ . }}</p>{{ end }}
+    </div>
+</header>
+
+<section class="{{ .Section }}-list">
+    <div class="container">
+        {{ range .Pages }}
+        {{ if eq $.Section "blog" }}
+        <article class="blog-card animate-in">
+            <a href="{{ .RelPermalink }}" class="blog-link">
+                <div class="blog-card-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> {{ .Date.Format "Jan 2, 2006" }}</span>
+                        {{ with .Params.readTime }}<span>· {{ . }}</span>{{ end }}
+                    </div>
+                    <h2>{{ .Title }}</h2>
+                    <p class="blog-excerpt">{{ .Params.excerpt }}</p>
+                    <div class="blog-tags">
+                        {{ range .Params.tags }}
+                        <span class="blog-tag">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                </div>
+            </a>
+        </article>
+        {{ else if eq $.Section "projects" }}
+        <article class="project-item animate-in">
+            <a href="{{ .RelPermalink }}" class="project-link">
+                <h2>{{ .Title }}</h2>
+                <p>{{ .Params.description }}</p>
+                <div class="project-tech-list">
+                    {{ range .Params.technologies }}
+                    <span>{{ . }}</span>
+                    {{ end }}
+                </div>
+            </a>
+        </article>
+        {{ end }}
+        {{ end }}
+    </div>
+</section>
+{{ end }}

@@ -1,0 +1,42 @@
+{{ define "main" }}
+<header class="page-header">
+    <div class="container">
+        <h1 class="animate-in">Experience</h1>
+        <p class="animate-in">My professional journey</p>
+    </div>
+</header>
+
+<section class="timeline-section">
+    <div class="container">
+        <h2 class="animate-in"><i class="fas fa-briefcase"></i> Work Experience</h2>
+        <div class="timeline">
+            {{ range .Site.Data.experience }}
+            <div class="timeline-item animate-in">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">{{ .date }}</span>
+                    <h3>{{ .title }}</h3>
+                    <div class="timeline-org">{{ .institution }}</div>
+                    <p>{{ .description }}</p>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+
+        <h2 class="animate-in"><i class="fas fa-graduation-cap"></i> Education</h2>
+        <div class="timeline">
+            {{ range .Site.Data.education }}
+            <div class="timeline-item animate-in">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">{{ .date }}</span>
+                    <h3>{{ .degree }}</h3>
+                    <div class="timeline-org">{{ .institution }}</div>
+                    <p>{{ .description }}</p>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

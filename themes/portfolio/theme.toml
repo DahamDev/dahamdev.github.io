@@ -1,0 +1,11 @@
+name = "Portfolio Modern"
+license = "MIT"
+licenselink = ""
+description = "A modern dark-mode developer portfolio theme"
+homepage = ""
+tags = ["portfolio", "personal", "dark", "modern"]
+features = ["responsive", "dark-mode", "animations"]
+min_version = "0.80.0"
+
+[author]
+  name = "Daham Navinda"
