@@ -3,24 +3,24 @@
     "title": "Cloud Support Engineer (Kubernetes and Container Service)",
     "institution": "Amazon Web Services",
     "date": "2024 – Present",
-    "description": "Help organizations deploy and manage containerized workloads on AWS cloud, mainly on Elastic Kubernetes Service (EKS) and Elastic Container Service (ECS). Investigate critical production issues and provide root cause analysis."
+    "description": "Help organizations work backwards from business and reliability goals to deploy, operate, and troubleshoot containerized workloads on AWS, mainly Elastic Kubernetes Service (EKS) and Elastic Container Service (ECS). Investigate critical production issues and provide root cause analysis."
   },
   {
     "title": "Senior Software Engineer",
     "institution": "Zero Beta, Colombo, Sri Lanka",
     "date": "2023 – 2024",
-    "description": "Worked on company's core financial risk management product suite. Engineered high-performance backend features for market data and risk calculations, reducing system latency from 1000ms to 10ms."
+    "description": "Owned backend delivery for a core financial risk management product suite. Engineered high-performance services for market data and risk calculations, reducing system latency from 1000ms to 10ms."
   },
   {
     "title": "Software Engineer",
     "institution": "Zero Beta, Colombo, Sri Lanka",
     "date": "2022 – 2023",
-    "description": "Established robust unit testing frameworks and enforced clean code practices. Leveraged Redis caching and MySQL databases for optimized data management."
+    "description": "Built backend features with stronger test coverage, clean code practices, Redis caching, and MySQL data flows so software could move safely from development into production."
   },
   {
     "title": "Software Engineer",
     "institution": "Axiata Digital Labs, Colombo, Sri Lanka",
     "date": "2021 – 2022",
-    "description": "Worked with a large telecommunication provider to modernize legacy monolithic applications into microservices. Migrated applications from on-premises Kubernetes cluster to AWS EKS cluster."
+    "description": "Modernized legacy telecommunications applications into microservices and migrated workloads from on-premises Kubernetes to AWS EKS."
   }
 ]

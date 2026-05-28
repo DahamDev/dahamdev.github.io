@@ -1,33 +1,42 @@
 {{ define "main" }}
 <section class="hero">
-    <div class="hero-intro">
-        <h1 class="hero-name">Daham Navinda</h1>
-        <p class="hero-subtitle">Cloud Native Software Engineer</p>
-        <p class="hero-bio">More than five year of experience deploying and managing critical applications. Proven expertise in building robust, scalable solutions using Java, Spring Boot, and Python. Expert in cloud architecture with AWS and container orchestration using Kubernetes.</p>
-        <div class="hero-actions">
-            <a href="{{ "files/cv.pdf" | relURL }}" class="btn btn-primary" download>Download CV</a>
-            <a href="{{ "about/" | relURL }}" class="btn btn-outline">About me</a>
+    <div class="hero-shell">
+        <div class="hero-intro">
+            <p class="hero-eyebrow">Software delivery | AWS cloud | Kubernetes operations</p>
+            <h1 class="hero-name">I build, deploy, and run production software on AWS.</h1>
+            <p class="hero-bio">I ship backend systems with full-cycle ownership: working backwards from the business goal, writing the software, deploying it with cloud-native practices, and managing it in production.</p>
+            <div class="hero-actions">
+                <a href="mailto:{{ .Site.Params.email }}" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Start a project</a>
+            </div>
+            <div class="hero-proof">
+                <div><strong>5+ years</strong><span>software and cloud delivery</span></div>
+                <div><strong>Kubernetes</strong><span>experienced workign with mega k8s cluster in fortune 500 companies</span></div>
+                <div><strong>AWS</strong><span>expert knowledge in AWS services</span></div>
+            </div>
         </div>
-    </div>
-    <div class="hero-terminal">
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="terminal-dots">
-                    <span class="dot dot-red"></span>
-                    <span class="dot dot-yellow"></span>
-                    <span class="dot dot-green"></span>
-                </div>
-                <div class="terminal-title">daham@live-server: ~/portfolio</div>
-                <div class="terminal-dots" style="visibility:hidden">
-                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="hero-visual" aria-label="Cloud delivery profile">
+            <div class="profile-panel">
+                <img src="{{ "images/avatar.jpeg" | relURL }}" alt="Daham Navinda" class="profile-photo">
+                <div>
+                    <span class="profile-status">Available for client projects</span>
+                    <h2>Daham Navinda</h2>
+                    <p>Software, AWS & Kubernetes Engineer</p>
                 </div>
             </div>
-            <div class="terminal-body" id="terminal-body" tabindex="0">
-                <div id="terminal-output"></div>
-                <div class="terminal-input-line">
-                    <span class="terminal-prompt">daham@live-server:~/portfolio$ </span>
-                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input">
-                </div>
+            <div class="delivery-map">
+                <div class="map-node node-build"><i class="fas fa-code"></i><span>Build</span></div>
+                <div class="map-line"></div>
+                <div class="map-node node-cloud"><i class="fab fa-aws"></i><span>AWS</span></div>
+                <div class="map-line"></div>
+                <div class="map-node node-run"><i class="fas fa-dharmachakra"></i><span>Run</span></div>
+            </div>
+            <div class="cloud-card">
+                <span>Client outcomes</span>
+                <ul>
+                    <li><i class="fas fa-check"></i> Production-ready backend systems</li>
+                    <li><i class="fas fa-check"></i> AWS architecture and deployment</li>
+                    <li><i class="fas fa-check"></i> Kubernetes operations and troubleshooting</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -37,12 +46,79 @@
     </div>
 </section>
 
+<section class="section services-section">
+    <div class="container">
+        <div class="section-kicker animate-in">Full-cycle ownership</div>
+        <div class="section-heading animate-in">
+            <h2>One engineer for the path from idea to production.</h2>
+            <p>Clients do not just need code. They need software that is designed well, deployed correctly, observable, and maintainable after launch.</p>
+        </div>
+        <div class="service-grid">
+            <article class="service-card animate-in">
+                <div class="service-icon icon-code"><i class="fas fa-laptop-code"></i></div>
+                <h3>Software Development</h3>
+                <p>Backend services, APIs, integrations, data flows, and performance-focused Java, Spring Boot, and Python delivery.</p>
+            </article>
+            <article class="service-card animate-in">
+                <div class="service-icon icon-cloud"><i class="fab fa-aws"></i></div>
+                <h3>AWS Cloud Delivery</h3>
+                <p>Architecture, deployment, infrastructure as code, networking, storage, compute, messaging, and managed AWS services.</p>
+            </article>
+            <article class="service-card animate-in">
+                <div class="service-icon icon-k8s"><i class="fas fa-dharmachakra"></i></div>
+                <h3>Kubernetes Operations</h3>
+                <p>EKS, ECS, container deployments, production troubleshooting, root cause analysis, monitoring, and reliability improvements.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section working-backwards-section">
+    <div class="container">
+        <div class="working-backwards">
+            <div class="working-copy animate-in">
+                <div class="section-kicker">Working backwards</div>
+                <h2>Business outcome first. Technical choices second.</h2>
+                <p>I start with the client goal, expected users, reliability needs, cost constraints, and operational risks. Then I map the smallest dependable architecture that can be built, deployed, and owned without surprises.</p>
+            </div>
+            <div class="principle-list animate-in">
+                <div><span>01</span><strong>Clarify the outcome</strong><p>Define success, constraints, and production expectations before implementation.</p></div>
+                <div><span>02</span><strong>Design for ownership</strong><p>Choose AWS and Kubernetes patterns that are secure, observable, and maintainable.</p></div>
+                <div><span>03</span><strong>Ship and operate</strong><p>Deliver the application, deployment path, monitoring, and incident-ready runbooks.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section proof-section">
+    <div class="container">
+        <div class="section-kicker animate-in">Relevant experience</div>
+        <div class="proof-grid">
+            <div class="proof-card proof-feature animate-in">
+                <span>Amazon Web Services</span>
+                <h2>Kubernetes and container service experience from inside AWS.</h2>
+                <p>Hands-on with customer production environments across EKS, ECS, networking, storage, deployment behavior, and incident investigation.</p>
+            </div>
+            <div class="proof-card animate-in">
+                <span>Backend engineering</span>
+                <h3>High-performance financial systems</h3>
+                <p>Reduced latency from 1000ms to 10ms in a core financial risk management product.</p>
+            </div>
+            <div class="proof-card animate-in">
+                <span>Modernization</span>
+                <h3>Monolith to microservices</h3>
+                <p>Migrated enterprise workloads from on-premises Kubernetes to AWS EKS.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{ $posts := first 3 (where .Site.RegularPages "Section" "blog") }}
 {{ if $posts }}
 <section class="section blog-preview">
     <div class="container">
         <div class="section-header animate-in">
-            <h2 class="section-label">Latest Posts</h2>
+            <h2 class="section-label">Engineering Notes</h2>
             <a href="{{ "blog/" | relURL }}" class="view-all">All posts <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="blog-grid">

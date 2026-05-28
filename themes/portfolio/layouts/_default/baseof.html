@@ -59,7 +59,5 @@
         }, { threshold: 0.08 });
         document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
     </script>
-    {{ $fx := resources.Get "js/three-effects.js" | fingerprint }}
-    <script src="{{ $fx.RelPermalink }}"></script>
 </body>
 </html>

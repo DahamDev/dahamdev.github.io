@@ -1,33 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Projects on Daham Navinda - DevOps/Cloud Engineer</title>
-    <link>http://localhost:1313/projects/</link>
-    <description>Recent content in Projects on Daham Navinda - DevOps/Cloud Engineer</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>AI-Powered Ticket Summarization System</title>
-      <link>http://localhost:1313/projects/ai-ticket-system/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/ai-ticket-system/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Developed an intelligent system to automatically summarize ongoing support tickets using generative AI models, integrated with AWS case handling system to enhance customer engagement and satisfaction.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Summarization&lt;/strong&gt;: Uses AWS Bedrock generative AI models to create concise summaries of support tickets&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Real-Time Processing&lt;/strong&gt;: Lambda functions process tickets as they are updated&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Engagement Analytics&lt;/strong&gt;: Evaluates engineer&amp;rsquo;s customer engagement patterns&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Feedback System&lt;/strong&gt;: Provides actionable feedback to improve customer satisfaction scores&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scalable Architecture&lt;/strong&gt;: Serverless design handles variable workload efficiently&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;&#xA;&lt;p&gt;The solution uses a serverless architecture:&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Automated Release Management Workflow</title>
-      <link>http://localhost:1313/projects/release-management/</link>
-      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/release-management/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed and implemented an automated release management system that dramatically reduced deployment time and improved release reliability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Pipeline&lt;/strong&gt;: End-to-end automation from code commit to production deployment&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Version Control Integration&lt;/strong&gt;: Seamless Git integration with branch-based deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;: Docker-based builds with Kubernetes deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Capability&lt;/strong&gt;: Quick rollback mechanisms for failed deployments&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Reduced deployment time from 4 hours to under 30 minutes&lt;/li&gt;&#xA;&lt;li&gt;Improved deployment reliability and consistency&lt;/li&gt;&#xA;&lt;li&gt;Enabled more frequent releases with lower risk&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>Large-Scale Database Migration</title>
-      <link>http://localhost:1313/projects/database-migration/</link>
-      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/database-migration/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Led the migration of a large-scale database from on-premises Oracle to AWS RDS MySQL, supporting a major cloud modernization initiative for a telecommunications provider.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero Downtime Migration&lt;/strong&gt;: Implemented CDC (Change Data Capture) for continuous replication&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Data Validation&lt;/strong&gt;: Comprehensive data integrity checks throughout migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Tuned MySQL for optimal performance post-migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Strategy&lt;/strong&gt;: Maintained fallback capability during transition period&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Successfully migrated 10 million user records&lt;/li&gt;&#xA;&lt;li&gt;Achieved zero data loss during migration&lt;/li&gt;&#xA;&lt;li&gt;Reduced database operational costs&lt;/li&gt;&#xA;&lt;li&gt;Improved application performance with optimized cloud infrastructure&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-    </item>
-  </channel>
+	<channel>
+		<title>Projects on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
+		<link>https://dahamnavinda.com/projects/</link>
+		<description>Recent content in Projects on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="https://dahamnavinda.com/projects/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>AI-Powered Ticket Summarization System</title>
+				<link>https://dahamnavinda.com/projects/ai-ticket-system/</link>
+				<pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+				<guid>https://dahamnavinda.com/projects/ai-ticket-system/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Developed an intelligent system to automatically summarize ongoing support tickets using generative AI models, integrated with AWS case handling system to enhance customer engagement and satisfaction.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Summarization&lt;/strong&gt;: Uses AWS Bedrock generative AI models to create concise summaries of support tickets&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Real-Time Processing&lt;/strong&gt;: Lambda functions process tickets as they are updated&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Engagement Analytics&lt;/strong&gt;: Evaluates engineer&amp;rsquo;s customer engagement patterns&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Feedback System&lt;/strong&gt;: Provides actionable feedback to improve customer satisfaction scores&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scalable Architecture&lt;/strong&gt;: Serverless design handles variable workload efficiently&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;&#xA;&lt;p&gt;The solution uses a serverless architecture:&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Automated Release Management Workflow</title>
+				<link>https://dahamnavinda.com/projects/release-management/</link>
+				<pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+				<guid>https://dahamnavinda.com/projects/release-management/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed and implemented an automated release management system that dramatically reduced deployment time and improved release reliability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Pipeline&lt;/strong&gt;: End-to-end automation from code commit to production deployment&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Version Control Integration&lt;/strong&gt;: Seamless Git integration with branch-based deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;: Docker-based builds with Kubernetes deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Capability&lt;/strong&gt;: Quick rollback mechanisms for failed deployments&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Reduced deployment time from 4 hours to under 30 minutes&lt;/li&gt;&#xA;&lt;li&gt;Improved deployment reliability and consistency&lt;/li&gt;&#xA;&lt;li&gt;Enabled more frequent releases with lower risk&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+			<item>
+				<title>Large-Scale Database Migration</title>
+				<link>https://dahamnavinda.com/projects/database-migration/</link>
+				<pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+				<guid>https://dahamnavinda.com/projects/database-migration/</guid>
+				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Led the migration of a large-scale database from on-premises Oracle to AWS RDS MySQL, supporting a major cloud modernization initiative for a telecommunications provider.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero Downtime Migration&lt;/strong&gt;: Implemented CDC (Change Data Capture) for continuous replication&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Data Validation&lt;/strong&gt;: Comprehensive data integrity checks throughout migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Tuned MySQL for optimal performance post-migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Strategy&lt;/strong&gt;: Maintained fallback capability during transition period&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Successfully migrated 10 million user records&lt;/li&gt;&#xA;&lt;li&gt;Achieved zero data loss during migration&lt;/li&gt;&#xA;&lt;li&gt;Reduced database operational costs&lt;/li&gt;&#xA;&lt;li&gt;Improved application performance with optimized cloud infrastructure&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+			</item>
+	</channel>
 </rss>

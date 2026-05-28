@@ -1,14 +1,14 @@
 baseURL = "https://dahamnavinda.com/"
 languageCode = "en-us"
-title = "Daham Navinda - DevOps/Cloud Engineer"
+title = "Daham Navinda - Software, AWS & Kubernetes Engineer"
 theme = "portfolio"
 
 [params]
   name = "Daham Navinda"
-  title = "DevOps/Cloud Engineer"
-  field = "AWS & Kubernetes Specialist"
-  bio = "more than five years of experience deploying and managing critical applications. Proven expertise in building robust, scalable solutions using Java, Spring Boot, and Python. Expert in cloud architecture with AWS and container orchestration using Kubernetes."
-  about = "I'm a DevOps/Cloud Engineer with a strong background in building and managing cloud infrastructure at scale. Currently working at Amazon Web Services as a Cloud Support Engineer specializing in Kubernetes and container services. My expertise spans container orchestration with Kubernetes, AWS cloud services, infrastructure as code, and implementing DevOps best practices. I have a proven track record of delivering mission-critical financial applications while ensuring high performance, security, and reliability."
+  title = "Software, AWS & Kubernetes Engineer"
+  field = "Full-Cycle Cloud Delivery"
+  bio = "I help teams turn business goals into reliable software: design the backend, build the service, deploy it on AWS, run it on Kubernetes, and keep it healthy in production."
+  about = "I'm a software and cloud engineer focused on full-cycle ownership: writing backend systems, deploying them on AWS, and operating them reliably on Kubernetes. I currently work at Amazon Web Services as a Cloud Support Engineer specializing in Kubernetes and container services, where I help customers reason from business outcomes back to secure, scalable technical decisions. My background includes Java, Spring Boot, Python, AWS, EKS, ECS, infrastructure as code, observability, and production incident analysis."
   email = "navindabc@gmail.com"
   github = "https://github.com/DahamDev"
   linkedin = "https://linkedin.com/in/dahamne"
@@ -23,13 +23,21 @@ theme = "portfolio"
     url = "/about/"
     weight = 2
   [[menu.main]]
-    name = "Blog"
-    url = "/blog/"
-    weight = 3
-  [[menu.main]]
     name = "Experience"
     url = "/experience/"
+    weight = 3
+  [[menu.main]]
+    name = "Projects"
+    url = "/projects/"
     weight = 4
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 5
+  [[menu.main]]
+    name = "Contact"
+    url = "mailto:navindabc@gmail.com"
+    weight = 6
 
 [markup]
   [markup.highlight]

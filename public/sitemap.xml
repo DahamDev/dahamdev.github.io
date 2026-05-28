@@ -1,86 +1,87 @@
+
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/ai/</loc>
+    <loc>https://dahamnavinda.com/tags/ai/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/</loc>
+    <loc>https://dahamnavinda.com/blog/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://dahamnavinda.com/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/problem-solving/</loc>
+    <loc>https://dahamnavinda.com/tags/problem-solving/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://dahamnavinda.com/tags/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</loc>
+    <loc>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/troubleshooting/</loc>
+    <loc>https://dahamnavinda.com/tags/troubleshooting/</loc>
     <lastmod>2026-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/linux/</loc>
+    <loc>https://dahamnavinda.com/tags/linux/</loc>
     <lastmod>2025-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/systemd/</loc>
+    <loc>https://dahamnavinda.com/tags/systemd/</loc>
     <lastmod>2025-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/systemd-service/</loc>
+    <loc>https://dahamnavinda.com/tags/systemd-service/</loc>
     <lastmod>2025-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/what_is_systemd/</loc>
+    <loc>https://dahamnavinda.com/blog/what_is_systemd/</loc>
     <lastmod>2025-04-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/challenges_of_java_synchronized_list/</loc>
+    <loc>https://dahamnavinda.com/blog/challenges_of_java_synchronized_list/</loc>
     <lastmod>2024-02-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/concurrent-programming/</loc>
+    <loc>https://dahamnavinda.com/tags/concurrent-programming/</loc>
     <lastmod>2024-02-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/java/</loc>
+    <loc>https://dahamnavinda.com/tags/java/</loc>
     <lastmod>2024-02-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/multithreading/</loc>
+    <loc>https://dahamnavinda.com/tags/multithreading/</loc>
     <lastmod>2024-02-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/aws/</loc>
+    <loc>https://dahamnavinda.com/tags/aws/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/best-practices/</loc>
+    <loc>https://dahamnavinda.com/tags/best-practices/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/devops/</loc>
+    <loc>https://dahamnavinda.com/tags/devops/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/terraform-project-structure/</loc>
+    <loc>https://dahamnavinda.com/blog/terraform-project-structure/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/infrastructure-as-code/</loc>
+    <loc>https://dahamnavinda.com/tags/infrastructure-as-code/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/terraform/</loc>
+    <loc>https://dahamnavinda.com/tags/terraform/</loc>
     <lastmod>2024-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/ai-ticket-system/</loc>
+    <loc>https://dahamnavinda.com/projects/ai-ticket-system/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/</loc>
+    <loc>https://dahamnavinda.com/projects/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/release-management/</loc>
+    <loc>https://dahamnavinda.com/projects/release-management/</loc>
     <lastmod>2023-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/projects/database-migration/</loc>
+    <loc>https://dahamnavinda.com/projects/database-migration/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://dahamnavinda.com/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://dahamnavinda.com/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/experience/</loc>
+    <loc>https://dahamnavinda.com/experience/</loc>
   </url>
 </urlset>
