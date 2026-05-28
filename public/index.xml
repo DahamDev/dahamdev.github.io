@@ -1,66 +1,61 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-		<link>https://dahamnavinda.com/</link>
-		<description>Recent content on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
-		<generator>Hugo</generator>
-		<language>en-us</language>
-		
-		
-		
-		
-			<lastBuildDate>Mon, 16 Feb 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="https://dahamnavinda.com/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>The XY Problem in the Age of AI: When Solutions Become the Problem</title>
-				<link>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</link>
-				<pubDate>Mon, 16 Feb 2026 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</guid>
-				<description>&lt;p&gt;We&amp;rsquo;re living through an extraordinary shift in how we troubleshoot technical problems. AI assistants have become our first line of defense when something breaks, our rubber duck for debugging, and our instant technical consultant. But this convenience comes with a hidden cost: AI is making us better at solving the wrong problems.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-an-xy-problem&#34;&gt;What Is an XY Problem?&lt;/h2&gt;&#xA;&lt;p&gt;The XY problem [1] is a classic troubleshooting anti-pattern that predates AI by decades. It happens when someone:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>What is Systemd and How to Run a Systemd Service Securely</title>
-				<link>https://dahamnavinda.com/blog/what_is_systemd/</link>
-				<pubDate>Thu, 17 Apr 2025 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/what_is_systemd/</guid>
-				<description>&lt;p&gt;Systemd is a system and service manager for Linux operating systems. In this article I explain basic concepts of systemd and how to run a service securely with systemd.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-do-we-need-systemd&#34;&gt;Why Do We Need Systemd?&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;It starts programs in the right order&lt;/li&gt;&#xA;&lt;li&gt;It automatically restarts programs if they crash&lt;/li&gt;&#xA;&lt;li&gt;It can start programs when they&amp;rsquo;re needed&lt;/li&gt;&#xA;&lt;li&gt;It keeps track of what&amp;rsquo;s running and what&amp;rsquo;s not&lt;/li&gt;&#xA;&lt;li&gt;It stores logs so you can check what happened&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;basic-systemd-concepts&#34;&gt;Basic Systemd Concepts&lt;/h2&gt;&#xA;&lt;h3 id=&#34;units&#34;&gt;Units&lt;/h3&gt;&#xA;&lt;p&gt;Units are like recipe cards that tell systemd how to handle different programs. The most common type is a &amp;ldquo;service&amp;rdquo; unit, which ends with &lt;code&gt;.service&lt;/code&gt;.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Challenges of Java Synchronized List in Multithreaded Environments</title>
-				<link>https://dahamnavinda.com/blog/challenges_of_java_synchronized_list/</link>
-				<pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/challenges_of_java_synchronized_list/</guid>
-				<description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like &lt;code&gt;Collections.synchronizedList()&lt;/code&gt;, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>How to Structure Terraform Projects for Scalable Infrastructure Management</title>
-				<link>https://dahamnavinda.com/blog/terraform-project-structure/</link>
-				<pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/terraform-project-structure/</guid>
-				<description>&lt;p&gt;Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;example-project-overview&#34;&gt;Example Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>AI-Powered Ticket Summarization System</title>
-				<link>https://dahamnavinda.com/projects/ai-ticket-system/</link>
-				<pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/projects/ai-ticket-system/</guid>
-				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Developed an intelligent system to automatically summarize ongoing support tickets using generative AI models, integrated with AWS case handling system to enhance customer engagement and satisfaction.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Summarization&lt;/strong&gt;: Uses AWS Bedrock generative AI models to create concise summaries of support tickets&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Real-Time Processing&lt;/strong&gt;: Lambda functions process tickets as they are updated&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Engagement Analytics&lt;/strong&gt;: Evaluates engineer&amp;rsquo;s customer engagement patterns&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Feedback System&lt;/strong&gt;: Provides actionable feedback to improve customer satisfaction scores&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scalable Architecture&lt;/strong&gt;: Serverless design handles variable workload efficiently&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;&#xA;&lt;p&gt;The solution uses a serverless architecture:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Automated Release Management Workflow</title>
-				<link>https://dahamnavinda.com/projects/release-management/</link>
-				<pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/projects/release-management/</guid>
-				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed and implemented an automated release management system that dramatically reduced deployment time and improved release reliability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Pipeline&lt;/strong&gt;: End-to-end automation from code commit to production deployment&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Version Control Integration&lt;/strong&gt;: Seamless Git integration with branch-based deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;: Docker-based builds with Kubernetes deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Capability&lt;/strong&gt;: Quick rollback mechanisms for failed deployments&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Reduced deployment time from 4 hours to under 30 minutes&lt;/li&gt;&#xA;&lt;li&gt;Improved deployment reliability and consistency&lt;/li&gt;&#xA;&lt;li&gt;Enabled more frequent releases with lower risk&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-			</item>
-			<item>
-				<title>Large-Scale Database Migration</title>
-				<link>https://dahamnavinda.com/projects/database-migration/</link>
-				<pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/projects/database-migration/</guid>
-				<description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Led the migration of a large-scale database from on-premises Oracle to AWS RDS MySQL, supporting a major cloud modernization initiative for a telecommunications provider.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero Downtime Migration&lt;/strong&gt;: Implemented CDC (Change Data Capture) for continuous replication&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Data Validation&lt;/strong&gt;: Comprehensive data integrity checks throughout migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Tuned MySQL for optimal performance post-migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Strategy&lt;/strong&gt;: Maintained fallback capability during transition period&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Successfully migrated 10 million user records&lt;/li&gt;&#xA;&lt;li&gt;Achieved zero data loss during migration&lt;/li&gt;&#xA;&lt;li&gt;Reduced database operational costs&lt;/li&gt;&#xA;&lt;li&gt;Improved application performance with optimized cloud infrastructure&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-			</item>
-	</channel>
+  <channel>
+    <title>Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 16 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The XY Problem in the Age of AI: When Solutions Become the Problem</title>
+      <link>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</link>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</guid>
+      <description>&lt;p&gt;We&amp;rsquo;re living through an extraordinary shift in how we troubleshoot technical problems. AI assistants have become our first line of defense when something breaks, our rubber duck for debugging, and our instant technical consultant. But this convenience comes with a hidden cost: AI is making us better at solving the wrong problems.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-an-xy-problem&#34;&gt;What Is an XY Problem?&lt;/h2&gt;&#xA;&lt;p&gt;The XY problem [1] is a classic troubleshooting anti-pattern that predates AI by decades. It happens when someone:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>What is Systemd and How to Run a Systemd Service Securely</title>
+      <link>http://localhost:1313/blog/what_is_systemd/</link>
+      <pubDate>Thu, 17 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/what_is_systemd/</guid>
+      <description>&lt;p&gt;Systemd is a system and service manager for Linux operating systems. In this article I explain basic concepts of systemd and how to run a service securely with systemd.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-do-we-need-systemd&#34;&gt;Why Do We Need Systemd?&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;It starts programs in the right order&lt;/li&gt;&#xA;&lt;li&gt;It automatically restarts programs if they crash&lt;/li&gt;&#xA;&lt;li&gt;It can start programs when they&amp;rsquo;re needed&lt;/li&gt;&#xA;&lt;li&gt;It keeps track of what&amp;rsquo;s running and what&amp;rsquo;s not&lt;/li&gt;&#xA;&lt;li&gt;It stores logs so you can check what happened&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;basic-systemd-concepts&#34;&gt;Basic Systemd Concepts&lt;/h2&gt;&#xA;&lt;h3 id=&#34;units&#34;&gt;Units&lt;/h3&gt;&#xA;&lt;p&gt;Units are like recipe cards that tell systemd how to handle different programs. The most common type is a &amp;ldquo;service&amp;rdquo; unit, which ends with &lt;code&gt;.service&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Challenges of Java Synchronized List in Multithreaded Environments</title>
+      <link>http://localhost:1313/blog/challenges_of_java_synchronized_list/</link>
+      <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/challenges_of_java_synchronized_list/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like &lt;code&gt;Collections.synchronizedList()&lt;/code&gt;, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to Structure Terraform Projects for Scalable Infrastructure Management</title>
+      <link>http://localhost:1313/blog/terraform-project-structure/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/terraform-project-structure/</guid>
+      <description>&lt;p&gt;Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;example-project-overview&#34;&gt;Example Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>AI-Powered Ticket Summarization System</title>
+      <link>http://localhost:1313/projects/ai-ticket-system/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/ai-ticket-system/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Developed an intelligent system to automatically summarize ongoing support tickets using generative AI models, integrated with AWS case handling system to enhance customer engagement and satisfaction.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Summarization&lt;/strong&gt;: Uses AWS Bedrock generative AI models to create concise summaries of support tickets&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Real-Time Processing&lt;/strong&gt;: Lambda functions process tickets as they are updated&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Engagement Analytics&lt;/strong&gt;: Evaluates engineer&amp;rsquo;s customer engagement patterns&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Feedback System&lt;/strong&gt;: Provides actionable feedback to improve customer satisfaction scores&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Scalable Architecture&lt;/strong&gt;: Serverless design handles variable workload efficiently&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;architecture&#34;&gt;Architecture&lt;/h2&gt;&#xA;&lt;p&gt;The solution uses a serverless architecture:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Automated Release Management Workflow</title>
+      <link>http://localhost:1313/projects/release-management/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/release-management/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Designed and implemented an automated release management system that dramatically reduced deployment time and improved release reliability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Automated Pipeline&lt;/strong&gt;: End-to-end automation from code commit to production deployment&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Version Control Integration&lt;/strong&gt;: Seamless Git integration with branch-based deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;: Docker-based builds with Kubernetes deployments&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Capability&lt;/strong&gt;: Quick rollback mechanisms for failed deployments&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Reduced deployment time from 4 hours to under 30 minutes&lt;/li&gt;&#xA;&lt;li&gt;Improved deployment reliability and consistency&lt;/li&gt;&#xA;&lt;li&gt;Enabled more frequent releases with lower risk&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Large-Scale Database Migration</title>
+      <link>http://localhost:1313/projects/database-migration/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/database-migration/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;Led the migration of a large-scale database from on-premises Oracle to AWS RDS MySQL, supporting a major cloud modernization initiative for a telecommunications provider.&lt;/p&gt;&#xA;&lt;h2 id=&#34;key-features&#34;&gt;Key Features&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero Downtime Migration&lt;/strong&gt;: Implemented CDC (Change Data Capture) for continuous replication&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Data Validation&lt;/strong&gt;: Comprehensive data integrity checks throughout migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Performance Optimization&lt;/strong&gt;: Tuned MySQL for optimal performance post-migration&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rollback Strategy&lt;/strong&gt;: Maintained fallback capability during transition period&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Successfully migrated 10 million user records&lt;/li&gt;&#xA;&lt;li&gt;Achieved zero data loss during migration&lt;/li&gt;&#xA;&lt;li&gt;Reduced database operational costs&lt;/li&gt;&#xA;&lt;li&gt;Improved application performance with optimized cloud infrastructure&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
 </rss>
