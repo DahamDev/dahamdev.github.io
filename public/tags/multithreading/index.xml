@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<<<<<<< HEAD
 	<channel>
 		<title>Multithreading on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
 		<link>http://localhost:1313/tags/multithreading/</link>
@@ -21,4 +22,22 @@
 				<description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like &lt;code&gt;Collections.synchronizedList()&lt;/code&gt;, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.&lt;/p&gt;</description>
 			</item>
 	</channel>
+=======
+  <channel>
+    <title>Multithreading on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
+    <link>http://localhost:1313/tags/multithreading/</link>
+    <description>Recent content in Multithreading on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 29 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/multithreading/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Challenges of Java Synchronized List in Multithreaded Environments</title>
+      <link>http://localhost:1313/blog/challenges_of_java_synchronized_list/</link>
+      <pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/challenges_of_java_synchronized_list/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like &lt;code&gt;Collections.synchronizedList()&lt;/code&gt;, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.&lt;/p&gt;</description>
+    </item>
+  </channel>
+>>>>>>> 8412318bae0a1f8f2d8ad53055dbf45d4a9497e1
 </rss>
