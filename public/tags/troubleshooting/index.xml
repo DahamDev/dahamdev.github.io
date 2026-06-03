@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Troubleshooting on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-		<link>https://dahamnavinda.com/tags/troubleshooting/</link>
+		<link>http://localhost:1313/tags/troubleshooting/</link>
 		<description>Recent content in Troubleshooting on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Mon, 16 Feb 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://dahamnavinda.com/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>The XY Problem in the Age of AI: When Solutions Become the Problem</title>
-				<link>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</link>
+				<link>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</link>
 				<pubDate>Mon, 16 Feb 2026 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</guid>
+				<guid>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</guid>
 				<description>&lt;p&gt;We&amp;rsquo;re living through an extraordinary shift in how we troubleshoot technical problems. AI assistants have become our first line of defense when something breaks, our rubber duck for debugging, and our instant technical consultant. But this convenience comes with a hidden cost: AI is making us better at solving the wrong problems.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-an-xy-problem&#34;&gt;What Is an XY Problem?&lt;/h2&gt;&#xA;&lt;p&gt;The XY problem [1] is a classic troubleshooting anti-pattern that predates AI by decades. It happens when someone:&lt;/p&gt;</description>
 			</item>
 	</channel>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Large-Scale Database Migration | Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
@@ -51,7 +51,7 @@
         <article>
             <h1 class="post-title animate-in">Large-Scale Database Migration</h1>
             <div class="post-meta animate-in">
-                <span><i class="far fa-calendar"></i> 2022-01-01 00:00:00 &#43;0000 UTC</span>
+                <span><i class="far fa-calendar"></i> 2021-11-10 00:00:00 &#43;0000 UTC</span>
             </div>
             <div class="post-tags animate-in">
                 
@@ -70,22 +70,58 @@
             </div>
             
             <div class="post-body animate-in">
-                <h2 id="overview">Overview</h2>
-<p>Led the migration of a large-scale database from on-premises Oracle to AWS RDS MySQL, supporting a major cloud modernization initiative for a telecommunications provider.</p>
-<h2 id="key-features">Key Features</h2>
+                <p>I led a large scale database migration project involving more than 10 million customers&rsquo; critical transaction data. The existing platform was built as a legacy monolithic application running on an on premises Oracle database. Since the system managed customer transactions, it was considered a business critical platform with strict requirements around data integrity, availability, and reliability.</p>
+<p>Over time, the on premises infrastructure introduced significant operational overhead, including hardware maintenance, database administration, and increasing Oracle licensing costs. To improve scalability, reduce operational complexity, and modernize the platform, the organization decided to migrate the system to AWS using cloud native technologies.</p>
+<h2 id="solution-design">Solution Design</h2>
+<p>As part of the modernization effort, we selected <strong>Amazon RDS for MySQL</strong> as the target database platform instead of Oracle. This decision presented several challenges because the existing application relied heavily on Oracle specific features and database functionality. A direct one to one migration was not feasible.</p>
+<p>Rather than simply moving the existing schema, we took the opportunity to redesign the platform. The monolithic application was decomposed into a set of microservices, and the database schema was redesigned to align with the new service boundaries and application requirements.</p>
+<p>The primary objectives of the redesign were:</p>
 <ul>
-<li><strong>Zero Downtime Migration</strong>: Implemented CDC (Change Data Capture) for continuous replication</li>
-<li><strong>Data Validation</strong>: Comprehensive data integrity checks throughout migration</li>
-<li><strong>Performance Optimization</strong>: Tuned MySQL for optimal performance post-migration</li>
-<li><strong>Rollback Strategy</strong>: Maintained fallback capability during transition period</li>
+<li>Eliminate dependencies on Oracle specific features</li>
+<li>Create a schema optimized for MySQL and cloud native workloads</li>
+<li>Ensure complete data integrity throughout the migration process</li>
+<li>Maintain compatibility with existing customer data and transaction history</li>
+<li>Support future scalability and service independence</li>
 </ul>
-<h2 id="results">Results</h2>
+<p>The new application stack was deployed on <strong>Amazon EKS</strong>, providing a scalable and resilient Kubernetes based platform for the modernized services.</p>
+<h2 id="migration-strategy">Migration Strategy</h2>
+<p>Given the critical nature of the customer transaction data, a big bang migration approach was considered too risky. Instead, we implemented a controlled canary migration strategy.</p>
+<p>To support gradual migration, we developed a custom proxy application that could intelligently route customer requests either to the legacy on premises system or to the new AWS based platform. This allowed both environments to coexist during the migration period.</p>
+<p>Because the database schemas between Oracle and MySQL were significantly different, traditional export and import methods were not suitable. Instead, we used <strong>Pentaho Data Integration</strong> together with custom Java programs to transform and map data from the Oracle schema into the redesigned MySQL schema.</p>
+<p>The migration process followed a phased approach:</p>
+<h3 id="phase-1">Phase 1</h3>
+<p>The system was temporarily taken offline and data for an initial group of 10 customers was migrated from Oracle to Amazon RDS MySQL.</p>
+<p>The proxy service was configured to route requests from these customers exclusively to the new AWS platform.</p>
+<h3 id="phase-2">Phase 2</h3>
+<p>The migrated customers were closely monitored for several days. We analyzed application behavior, transaction consistency, performance metrics, and any unexpected issues.</p>
+<h3 id="phase-3">Phase 3</h3>
+<p>After validating the success of the initial migration, the same approach was repeated with progressively larger customer groups:</p>
 <ul>
-<li>Successfully migrated 10 million user records</li>
-<li>Achieved zero data loss during migration</li>
-<li>Reduced database operational costs</li>
-<li>Improved application performance with optimized cloud infrastructure</li>
+<li>10 customers</li>
+<li>10,000 customers</li>
+<li>100,000 customers</li>
+<li>Several million customers</li>
 </ul>
+<p>This incremental rollout significantly reduced risk while allowing the team to gain confidence in the migration process at each stage.</p>
+<h2 id="optimizing-data-transfer">Optimizing Data Transfer</h2>
+<p>One of the major challenges was efficiently transferring a very large volume of data between the on premises data center and AWS.</p>
+<p>To minimize network overhead, we implemented an additional migration step. Rather than migrating directly from Oracle to Amazon RDS, we first provisioned a local MySQL database within the data center. Data was migrated from Oracle into the local MySQL instance, where all schema transformations and data mapping were performed.</p>
+<p>Once the data was validated, we generated MySQL dumps and imported them into Amazon RDS. This approach reduced transformation workloads across the network and simplified the migration process.</p>
+<p>To ensure reliable connectivity throughout the migration, we used <strong>AWS Direct Connect</strong> between the AWS environment and the on premises data center.</p>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<h3 id="always-have-a-rollback-strategy">Always Have a Rollback Strategy</h3>
+<p>A rollback plan is essential for any large scale migration. If a bulk migration fails, the safest approach is to revert to the last known good state rather than attempting emergency fixes during the migration window.</p>
+<p>Before every migration phase, we took full backups of both the on premises and cloud environments. This allowed us to recover quickly if any issues were encountered.</p>
+<h3 id="avoid-hot-fixes-during-migration">Avoid Hot Fixes During Migration</h3>
+<p>When dealing with critical transactional systems, introducing changes during a migration can create additional risks and make troubleshooting more difficult. A clean rollback followed by issue resolution is often the safer and more predictable approach.</p>
+<h3 id="network-reliability-matters">Network Reliability Matters</h3>
+<p>Large scale data migrations are heavily dependent on network stability. A network interruption at the wrong time can result in incomplete transfers, data inconsistencies, and lengthy rollback operations.</p>
+<p>Using AWS Direct Connect provided a reliable and dedicated connection between our data center and AWS, significantly reducing migration risk.</p>
+<h3 id="validate-incrementally">Validate Incrementally</h3>
+<p>Migrating small customer groups first allowed us to validate application behavior, database performance, and data accuracy before expanding the rollout. This incremental approach helped identify issues early and greatly reduced overall project risk.</p>
+<h2 id="outcome">Outcome</h2>
+<p>The project successfully migrated more than <strong>10 million customers&rsquo; transaction records</strong> from a legacy on premises Oracle platform to a modern AWS architecture based on <strong>Amazon RDS MySQL</strong> and <strong>Amazon EKS</strong>. Through careful planning, phased deployment, robust rollback procedures, and continuous monitoring, the migration was completed while maintaining data integrity and minimizing disruption to customers.</p>
+<p>The result was a more scalable, cloud native platform with reduced operational overhead, lower licensing costs, and a foundation that supports future growth and modernization initiatives.</p>
 
             </div>
         </article>

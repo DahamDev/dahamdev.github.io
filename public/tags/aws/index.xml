@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>AWS on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-		<link>https://dahamnavinda.com/tags/aws/</link>
+		<link>http://localhost:1313/tags/aws/</link>
 		<description>Recent content in AWS on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Mon, 15 Jan 2024 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="https://dahamnavinda.com/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/tags/aws/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>How to Structure Terraform Projects for Scalable Infrastructure Management</title>
-				<link>https://dahamnavinda.com/blog/terraform-project-structure/</link>
+				<link>http://localhost:1313/blog/terraform-project-structure/</link>
 				<pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
-				<guid>https://dahamnavinda.com/blog/terraform-project-structure/</guid>
+				<guid>http://localhost:1313/blog/terraform-project-structure/</guid>
 				<description>&lt;p&gt;Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;example-project-overview&#34;&gt;Example Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:&lt;/p&gt;</description>
 			</item>
 	</channel>
