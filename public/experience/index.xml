@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<<<<<<< HEAD
 	<channel>
 		<title>Experience on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
 		<link>http://localhost:1313/experience/</link>
@@ -13,14 +12,4 @@
 		
 			<atom:link href="http://localhost:1313/experience/index.xml" rel="self" type="application/rss+xml" />
 	</channel>
-=======
-  <channel>
-    <title>Experience on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-    <link>http://localhost:1313/experience/</link>
-    <description>Recent content in Experience on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <atom:link href="http://localhost:1313/experience/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
->>>>>>> 8412318bae0a1f8f2d8ad53055dbf45d4a9497e1
 </rss>
