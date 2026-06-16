@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/styles.b56d9cb5e6f72d3a6644441c3898e72f7beefa6eed49cc757cd1d1109a0b5fc2.css">
+    <link rel="stylesheet" href="/css/styles.4c9348c0476890f6a4dbe6f3f11318efdaecca522dd4a7d8709d3a594dfe6bed.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="section-blog kind-page">
@@ -74,37 +74,37 @@
 <p>In Java, the <code>Collections.synchronizedList()</code> method is commonly used to create a synchronized version of a list. This method returns a synchronized wrapper around the specified list, ensuring that all methods that modify the list are synchronized. This helps prevent data corruption that can occur when multiple threads attempt to modify the list simultaneously.</p>
 <h2 id="the-problem-with-iteration">The Problem with Iteration</h2>
 <p>One common scenario where a synchronized list may fail is during iteration. While individual operations like <code>add()</code> or <code>remove()</code> are synchronized, the synchronization does not extend to compound operations like iteration. Consider the following example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#0550ae">&lt;</span>Integer<span style="color:#0550ae">&gt;</span><span style="color:#fff"> </span>synchronizedList<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>Collections<span style="color:#1f2328">.</span><span style="color:#1f2328">synchronizedList</span><span style="color:#1f2328">(</span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>ArrayList<span style="color:#0550ae">&lt;&gt;</span><span style="color:#1f2328">());</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Thread 1: Add elements to the list</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span>Thread<span style="color:#fff"> </span>thread1<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Thread<span style="color:#1f2328">(()</span><span style="color:#fff"> </span><span style="color:#0550ae">-&gt;</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span><span style="color:#cf222e">int</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span>1<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#fff"> </span><span style="color:#0550ae">&lt;=</span><span style="color:#fff"> </span>5<span style="color:#1f2328">;</span><span style="color:#fff"> </span>i<span style="color:#0550ae">++</span><span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span>synchronizedList<span style="color:#1f2328">.</span><span style="color:#1f2328">add</span><span style="color:#1f2328">(</span>i<span style="color:#1f2328">);</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">try</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>Thread<span style="color:#1f2328">.</span><span style="color:#1f2328">sleep</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">);</span><span style="color:#fff"> </span><span style="color:#57606a">// Simulating some processing time</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff"> </span><span style="color:#cf222e">catch</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>InterruptedException<span style="color:#fff"> </span>e<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>e<span style="color:#1f2328">.</span><span style="color:#1f2328">printStackTrace</span><span style="color:#1f2328">();</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">});</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#57606a">// Thread 2: Iterate over the list</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span>Thread<span style="color:#fff"> </span>thread2<span style="color:#fff"> </span><span style="color:#0550ae">=</span><span style="color:#fff"> </span><span style="color:#cf222e">new</span><span style="color:#fff"> </span>Thread<span style="color:#1f2328">(()</span><span style="color:#fff"> </span><span style="color:#0550ae">-&gt;</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#cf222e">synchronized</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>synchronizedList<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#cf222e">for</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>Integer<span style="color:#fff"> </span>num<span style="color:#fff"> </span><span style="color:#1f2328">:</span><span style="color:#fff"> </span>synchronizedList<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span>System<span style="color:#1f2328">.</span><span style="color:#1f2328">out</span><span style="color:#1f2328">.</span><span style="color:#1f2328">println</span><span style="color:#1f2328">(</span>num<span style="color:#1f2328">);</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#cf222e">try</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>Thread<span style="color:#1f2328">.</span><span style="color:#1f2328">sleep</span><span style="color:#1f2328">(</span>10<span style="color:#1f2328">);</span><span style="color:#fff"> </span><span style="color:#57606a">// Simulating some processing time</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff"> </span><span style="color:#cf222e">catch</span><span style="color:#fff"> </span><span style="color:#1f2328">(</span>InterruptedException<span style="color:#fff"> </span>e<span style="color:#1f2328">)</span><span style="color:#fff"> </span><span style="color:#1f2328">{</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">                </span>e<span style="color:#1f2328">.</span><span style="color:#1f2328">printStackTrace</span><span style="color:#1f2328">();</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">            </span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">        </span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">    </span><span style="color:#1f2328">}</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#1f2328">});</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span>thread1<span style="color:#1f2328">.</span><span style="color:#1f2328">start</span><span style="color:#1f2328">();</span><span style="color:#fff">
-</span></span></span><span style="display:flex;"><span>thread2<span style="color:#1f2328">.</span><span style="color:#1f2328">start</span><span style="color:#1f2328">();</span><span style="color:#fff">
-</span></span></span></code></pre></div><p>In this example, <code>thread1</code> is adding elements to the list, and <code>thread2</code> is iterating over it. The synchronization provided by <code>Collections.synchronizedList</code> only guards individual operations, not the entire iteration process.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>List<span style="color:#ff79c6">&lt;</span>Integer<span style="color:#ff79c6">&gt;</span> synchronizedList <span style="color:#ff79c6">=</span> Collections.<span style="color:#50fa7b">synchronizedList</span>(<span style="color:#ff79c6">new</span> ArrayList<span style="color:#ff79c6">&lt;&gt;</span>());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Thread 1: Add elements to the list</span>
+</span></span><span style="display:flex;"><span>Thread thread1 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Thread(() <span style="color:#ff79c6">-&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd">int</span> i <span style="color:#ff79c6">=</span> 1; i <span style="color:#ff79c6">&lt;=</span> 5; i<span style="color:#ff79c6">++</span>) {
+</span></span><span style="display:flex;"><span>        synchronizedList.<span style="color:#50fa7b">add</span>(i);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">try</span> {
+</span></span><span style="display:flex;"><span>            Thread.<span style="color:#50fa7b">sleep</span>(10); <span style="color:#6272a4">// Simulating some processing time</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#ff79c6">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#50fa7b">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Thread 2: Iterate over the list</span>
+</span></span><span style="display:flex;"><span>Thread thread2 <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Thread(() <span style="color:#ff79c6">-&gt;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">synchronized</span> (synchronizedList) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> (Integer num : synchronizedList) {
+</span></span><span style="display:flex;"><span>            System.<span style="color:#50fa7b">out</span>.<span style="color:#50fa7b">println</span>(num);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">try</span> {
+</span></span><span style="display:flex;"><span>                Thread.<span style="color:#50fa7b">sleep</span>(10); <span style="color:#6272a4">// Simulating some processing time</span>
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff79c6">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                e.<span style="color:#50fa7b">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>thread1.<span style="color:#50fa7b">start</span>();
+</span></span><span style="display:flex;"><span>thread2.<span style="color:#50fa7b">start</span>();
+</span></span></code></pre></div><p>In this example, <code>thread1</code> is adding elements to the list, and <code>thread2</code> is iterating over it. The synchronization provided by <code>Collections.synchronizedList</code> only guards individual operations, not the entire iteration process.</p>
 <h2 id="concurrentmodificationexception">ConcurrentModificationException</h2>
 <p>As a consequence, the iteration in <code>thread2</code> may throw a <code>ConcurrentModificationException</code>. This exception occurs when the list is modified during iteration, leading to an inconsistency in the internal state of the synchronized list.</p>
 <h2 id="mitigating-the-issue">Mitigating the Issue</h2>

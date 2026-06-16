@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/styles.b56d9cb5e6f72d3a6644441c3898e72f7beefa6eed49cc757cd1d1109a0b5fc2.css">
+    <link rel="stylesheet" href="/css/styles.4c9348c0476890f6a4dbe6f3f11318efdaecca522dd4a7d8709d3a594dfe6bed.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="section-blog kind-page">
@@ -92,89 +92,89 @@
 <h2 id="practical-example-creating-a-simple-service">Practical Example: Creating a Simple Service</h2>
 <p>Let&rsquo;s create a real example by making a simple bash script that writes the current time to a file every minute, and then run it as a service.</p>
 <h3 id="step-1-create-the-bash-script">Step 1: Create the Bash Script</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Create a directory for our script</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Create a directory for our script</span>
 </span></span><span style="display:flex;"><span>mkdir -p /opt/myservice
-</span></span><span style="display:flex;"><span><span style="color:#6639ba">cd</span> /opt/myservice
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">cd</span> /opt/myservice
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Create the script</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Create the script</span>
 </span></span><span style="display:flex;"><span>vi time_writer.sh
 </span></span></code></pre></div><p>Put this code in the script:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a">#!/bin/bash
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff79c6">#!/bin/bash
 </span></span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#cf222e">while</span> true<span style="color:#1f2328">;</span> <span style="color:#cf222e">do</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#57606a"># Get current time and write to file</span>
-</span></span><span style="display:flex;"><span>    date <span style="color:#0a3069">&#34;+Current time is: %Y-%m-%d %H:%M:%S&#34;</span> &gt; /tmp/current_time.txt
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">while</span> true; <span style="color:#ff79c6">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Get current time and write to file</span>
+</span></span><span style="display:flex;"><span>    date <span style="color:#f1fa8c">&#34;+Current time is: %Y-%m-%d %H:%M:%S&#34;</span> &gt; /tmp/current_time.txt
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#57606a"># Wait for 60 seconds</span>
-</span></span><span style="display:flex;"><span>    sleep <span style="color:#0550ae">60</span>
-</span></span><span style="display:flex;"><span><span style="color:#cf222e">done</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Wait for 60 seconds</span>
+</span></span><span style="display:flex;"><span>    sleep <span style="color:#bd93f9">60</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">done</span>
 </span></span></code></pre></div><h3 id="step-2-make-the-script-executable">Step 2: Make the Script Executable</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x time_writer.sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x time_writer.sh
 </span></span></code></pre></div><h3 id="step-3-create-a-secure-user-to-run-our-service">Step 3: Create a Secure User to Run Our Service</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo useradd --no-create-home --shell /bin/false testuser
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo useradd --no-create-home --shell /bin/false testuser
 </span></span></code></pre></div><ul>
 <li><code>--no-create-home</code> — prevent from creating a home directory for the user</li>
 <li><code>--shell /bin/false</code> — disable shell login for the user</li>
 </ul>
 <p>Assign file ownership to the user:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chown testuser:testuser /opt/myservice/time_writer.sh
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chown testuser:testuser /opt/myservice/time_writer.sh
 </span></span></code></pre></div><h3 id="step-4-create-the-service-file">Step 4: Create the Service File</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vi /etc/systemd/system/timewriter.service
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vi /etc/systemd/system/timewriter.service
 </span></span></code></pre></div><p>Add this content:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#cf222e">[Unit]</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">Description</span><span style="color:#0550ae">=</span><span style="color:#0a3069">Time Writer Service</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">After</span><span style="color:#0550ae">=</span><span style="color:#0a3069">network.target</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#ff79c6">[Unit]</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">Description</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">Time Writer Service</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">After</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">network.target</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#cf222e">[Service]</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># The user that will run the script</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">User</span><span style="color:#0550ae">=</span><span style="color:#0a3069">testuser</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Where the script is located</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">WorkingDirectory</span><span style="color:#0550ae">=</span><span style="color:#0a3069">/opt/myservice</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># The command to start the script</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">ExecStart</span><span style="color:#0550ae">=</span><span style="color:#0a3069">sh time_writer.sh</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Restart if it crashes</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">Restart</span><span style="color:#0550ae">=</span><span style="color:#0a3069">always</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Wait 3 seconds before restart</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">RestartSec</span><span style="color:#0550ae">=</span><span style="color:#0a3069">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[Service]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The user that will run the script</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">User</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">testuser</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Where the script is located</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">WorkingDirectory</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">/opt/myservice</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The command to start the script</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">ExecStart</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">sh time_writer.sh</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Restart if it crashes</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">Restart</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">always</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Wait 3 seconds before restart</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">RestartSec</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">3</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#cf222e">[Install]</span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Start at boot</span>
-</span></span><span style="display:flex;"><span><span style="color:#1f2328">WantedBy</span><span style="color:#0550ae">=</span><span style="color:#0a3069">multi-user.target</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[Install]</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Start at boot</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">WantedBy</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">multi-user.target</span>
 </span></span></code></pre></div><h3 id="step-5-start-and-enable-the-service">Step 5: Start and Enable the Service</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Reload systemd to see the new service</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Reload systemd to see the new service</span>
 </span></span><span style="display:flex;"><span>sudo systemctl daemon-reload
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Start the service</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Start the service</span>
 </span></span><span style="display:flex;"><span>sudo systemctl start timewriter
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Enable it to start at boot</span>
-</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#6639ba">enable</span> timewriter
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Enable it to start at boot</span>
+</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#8be9fd;font-style:italic">enable</span> timewriter
 </span></span></code></pre></div><h3 id="step-6-check-if-everything-works">Step 6: Check if Everything Works</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Check the service status</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Check the service status</span>
 </span></span><span style="display:flex;"><span>sudo systemctl status timewriter
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Look at the output file</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Look at the output file</span>
 </span></span><span style="display:flex;"><span>cat /tmp/current_time.txt
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Check the logs</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Check the logs</span>
 </span></span><span style="display:flex;"><span>sudo journalctl -u timewriter
 </span></span></code></pre></div><h2 id="common-commands-to-manage-services">Common Commands to Manage Services</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#57606a"># Start a service</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Start a service</span>
 </span></span><span style="display:flex;"><span>sudo systemctl start service_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Stop a service</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Stop a service</span>
 </span></span><span style="display:flex;"><span>sudo systemctl stop service_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Restart a service</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Restart a service</span>
 </span></span><span style="display:flex;"><span>sudo systemctl restart service_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Enable service to start at boot</span>
-</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#6639ba">enable</span> service_name
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Enable service to start at boot</span>
+</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#8be9fd;font-style:italic">enable</span> service_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Disable service from starting at boot</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Disable service from starting at boot</span>
 </span></span><span style="display:flex;"><span>sudo systemctl disable service_name
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#57606a"># Check service status</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Check service status</span>
 </span></span><span style="display:flex;"><span>sudo systemctl status service_name
 </span></span></code></pre></div><h2 id="troubleshooting-tips">Troubleshooting Tips</h2>
 <ol>
