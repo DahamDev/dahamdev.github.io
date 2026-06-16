@@ -6,12 +6,16 @@
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     {{ $style := resources.Get "css/styles.css" | fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+    <div class="site-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <a href="/" class="nav-brand">{{ .Site.Params.name }}</a>
@@ -58,6 +62,21 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.08 });
         document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+
+        const root = document.documentElement;
+        window.addEventListener('pointermove', (event) => {
+            root.style.setProperty('--pointer-x', `${event.clientX}px`);
+            root.style.setProperty('--pointer-y', `${event.clientY}px`);
+        }, { passive: true });
+
+        const progress = document.querySelector('.scroll-progress');
+        const updateProgress = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const ratio = max > 0 ? window.scrollY / max : 0;
+            progress.style.transform = `scaleX(${ratio})`;
+        };
+        updateProgress();
+        window.addEventListener('scroll', updateProgress, { passive: true });
     </script>
 </body>
 </html>

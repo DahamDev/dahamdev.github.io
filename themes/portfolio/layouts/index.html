@@ -1,5 +1,9 @@
 {{ define "main" }}
 <section class="hero">
+    <div class="hero-marquee" aria-hidden="true">
+        <span>BUILD / SHIP / SCALE / OPERATE / AWS / KUBERNETES /</span>
+        <span>BUILD / SHIP / SCALE / OPERATE / AWS / KUBERNETES /</span>
+    </div>
     <div class="hero-shell">
         <div class="hero-intro">
             <p class="hero-eyebrow">Software delivery | AWS cloud | Kubernetes operations</p>
@@ -15,8 +19,10 @@
             </div>
         </div>
         <div class="hero-visual" aria-label="Cloud delivery profile">
+            <div class="signal-ring signal-ring-one"></div>
+            <div class="signal-ring signal-ring-two"></div>
             <div class="profile-panel">
-                <img src="{{ "images/avatar.jpeg" | relURL }}" alt="Daham Navinda" class="profile-photo">
+                <img src="{{ "images/avatar.jpg" | relURL }}" alt="Daham Navinda" class="profile-photo">
                 <div>
                     <span class="profile-status">Available for client projects</span>
                     <h2>Daham Navinda</h2>
@@ -37,6 +43,11 @@
                     <li><i class="fas fa-check"></i> AWS architecture and deployment</li>
                     <li><i class="fas fa-check"></i> Kubernetes operations and troubleshooting</li>
                 </ul>
+            </div>
+            <div class="metric-strip" aria-label="Delivery metrics">
+                <span><strong>10ms</strong> latency wins</span>
+                <span><strong>EKS</strong> production ops</span>
+                <span><strong>IaC</strong> repeatable delivery</span>
             </div>
         </div>
     </div>

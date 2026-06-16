@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automated Release Management Workflow | Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/styles.9d68a03b300ad219bf160fe839c5ff69d78434392cbfb85e99b6153a9f10e8fb.css">
+    <link rel="stylesheet" href="/css/styles.dc0ad70af072fd484869f4dd062b602488033c794818cec08a24bfbb08acff00.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+    <div class="site-orbit" aria-hidden="true">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
             <a href="/" class="nav-brand">Daham Navinda</a>
@@ -117,6 +121,21 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.08 });
         document.querySelectorAll('.animate-in').forEach(el => obs.observe(el));
+
+        const root = document.documentElement;
+        window.addEventListener('pointermove', (event) => {
+            root.style.setProperty('--pointer-x', `${event.clientX}px`);
+            root.style.setProperty('--pointer-y', `${event.clientY}px`);
+        }, { passive: true });
+
+        const progress = document.querySelector('.scroll-progress');
+        const updateProgress = () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const ratio = max > 0 ? window.scrollY / max : 0;
+            progress.style.transform = `scaleX(${ratio})`;
+        };
+        updateProgress();
+        window.addEventListener('scroll', updateProgress, { passive: true });
     </script>
 </body>
 </html>

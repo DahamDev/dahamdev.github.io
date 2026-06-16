@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Blog on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-		<link>http://localhost:1313/blog/</link>
+		<link>https://dahamnavinda.com/blog/</link>
 		<description>Recent content in Blog on Daham Navinda - Software, AWS &amp; Kubernetes Engineer</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,33 +12,33 @@
 		
 			<lastBuildDate>Mon, 16 Feb 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://dahamnavinda.com/blog/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>The XY Problem in the Age of AI: When Solutions Become the Problem</title>
-				<link>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</link>
+				<link>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</link>
 				<pubDate>Mon, 16 Feb 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/blog/xy_problem_in_the_age_of_ai/</guid>
+				<guid>https://dahamnavinda.com/blog/xy_problem_in_the_age_of_ai/</guid>
 				<description>&lt;p&gt;We&amp;rsquo;re living through an extraordinary shift in how we troubleshoot technical problems. AI assistants have become our first line of defense when something breaks, our rubber duck for debugging, and our instant technical consultant. But this convenience comes with a hidden cost: AI is making us better at solving the wrong problems.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-an-xy-problem&#34;&gt;What Is an XY Problem?&lt;/h2&gt;&#xA;&lt;p&gt;The XY problem [1] is a classic troubleshooting anti-pattern that predates AI by decades. It happens when someone:&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>What is Systemd and How to Run a Systemd Service Securely</title>
-				<link>http://localhost:1313/blog/what_is_systemd/</link>
+				<link>https://dahamnavinda.com/blog/what_is_systemd/</link>
 				<pubDate>Thu, 17 Apr 2025 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/blog/what_is_systemd/</guid>
+				<guid>https://dahamnavinda.com/blog/what_is_systemd/</guid>
 				<description>&lt;p&gt;Systemd is a system and service manager for Linux operating systems. In this article I explain basic concepts of systemd and how to run a service securely with systemd.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-do-we-need-systemd&#34;&gt;Why Do We Need Systemd?&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;It starts programs in the right order&lt;/li&gt;&#xA;&lt;li&gt;It automatically restarts programs if they crash&lt;/li&gt;&#xA;&lt;li&gt;It can start programs when they&amp;rsquo;re needed&lt;/li&gt;&#xA;&lt;li&gt;It keeps track of what&amp;rsquo;s running and what&amp;rsquo;s not&lt;/li&gt;&#xA;&lt;li&gt;It stores logs so you can check what happened&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;basic-systemd-concepts&#34;&gt;Basic Systemd Concepts&lt;/h2&gt;&#xA;&lt;h3 id=&#34;units&#34;&gt;Units&lt;/h3&gt;&#xA;&lt;p&gt;Units are like recipe cards that tell systemd how to handle different programs. The most common type is a &amp;ldquo;service&amp;rdquo; unit, which ends with &lt;code&gt;.service&lt;/code&gt;.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Challenges of Java Synchronized List in Multithreaded Environments</title>
-				<link>http://localhost:1313/blog/challenges_of_java_synchronized_list/</link>
+				<link>https://dahamnavinda.com/blog/challenges_of_java_synchronized_list/</link>
 				<pubDate>Thu, 29 Feb 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/blog/challenges_of_java_synchronized_list/</guid>
+				<guid>https://dahamnavinda.com/blog/challenges_of_java_synchronized_list/</guid>
 				<description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like &lt;code&gt;Collections.synchronizedList()&lt;/code&gt;, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>How to Structure Terraform Projects for Scalable Infrastructure Management</title>
-				<link>http://localhost:1313/blog/terraform-project-structure/</link>
+				<link>https://dahamnavinda.com/blog/terraform-project-structure/</link>
 				<pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/blog/terraform-project-structure/</guid>
+				<guid>https://dahamnavinda.com/blog/terraform-project-structure/</guid>
 				<description>&lt;p&gt;Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.&lt;/p&gt;&#xA;&lt;h2 id=&#34;example-project-overview&#34;&gt;Example Project Overview&lt;/h2&gt;&#xA;&lt;p&gt;My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:&lt;/p&gt;</description>
 			</item>
 	</channel>

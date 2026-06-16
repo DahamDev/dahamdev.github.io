@@ -1,5 +1,7 @@
 ---
 title: "Large-Scale Database Migration"
+slug: "large-scale-database-migration"
+aliases: ["/projects/database-migration/"]
 description: "Migrated 10 million user data from on-premises Oracle database to AWS RDS MySQL as part of cloud modernization initiative."
 technologies: ["AWS RDS", "MySQL", "Oracle", "AWS DMS", "Python", "AWS EKS"]
 date: 2021-11-10
