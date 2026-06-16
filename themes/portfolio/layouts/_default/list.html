@@ -1,8 +1,8 @@
 {{ define "main" }}
 <header class="page-header">
     <div class="container">
-        <h1 class="animate-in">{{ .Title }}</h1>
-        {{ with .Description }}<p class="animate-in">{{ . }}</p>{{ end }}
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </div>
 </header>
 
@@ -10,7 +10,7 @@
     <div class="container">
         {{ range .Pages }}
         {{ if eq $.Section "blog" }}
-        <article class="blog-card animate-in">
+        <article class="blog-card">
             <a href="{{ .RelPermalink }}" class="blog-link">
                 <div class="blog-card-content">
                     <div class="blog-meta">
@@ -28,7 +28,7 @@
             </a>
         </article>
         {{ else if eq $.Section "projects" }}
-        <article class="project-item animate-in">
+        <article class="project-item">
             <a href="{{ .RelPermalink }}" class="project-link">
                 <h2>{{ .Title }}</h2>
                 <p>{{ .Params.description }}</p>

@@ -49,16 +49,16 @@
     <main>
 <section class="blog-detail">
     <div class="container">
-        <a href="/blog" class="back-link animate-in"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        <a href="/blog" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
 
         
         <article>
-            <h1 class="post-title animate-in">Challenges of Java Synchronized List in Multithreaded Environments</h1>
-            <div class="post-meta animate-in">
+            <h1 class="post-title">Challenges of Java Synchronized List in Multithreaded Environments</h1>
+            <div class="post-meta">
                 <span><i class="far fa-calendar"></i> February 29, 2024</span>
                 
             </div>
-            <div class="post-tags animate-in">
+            <div class="post-tags">
                 
                 <span class="tag">Java</span>
                 
@@ -67,7 +67,7 @@
                 <span class="tag">Concurrent Programming</span>
                 
             </div>
-            <div class="post-body animate-in">
+            <div class="post-body">
                 <h2 id="introduction">Introduction</h2>
 <p>Multithreading in Java introduces complexities in managing shared resources among multiple threads. While synchronized collections, like <code>Collections.synchronizedList()</code>, are intended to provide a level of thread safety, they come with their own set of challenges, particularly when it comes to compound operations such as iteration. In this article, I will explore how a synchronized list can fail in a multithreaded environment and why developers should be cautious about its limitations.</p>
 <h2 id="synchronization-basics">Synchronization Basics</h2>
