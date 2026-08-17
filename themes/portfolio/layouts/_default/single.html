@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="{{ .Section }}-detail">
     <div class="container">
-        <a href="{{ .Section | relURL }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to {{ .Section | title }}</a>
+        <a href="{{ .CurrentSection.RelPermalink }}" class="back-link"><i class="fas fa-arrow-left"></i> Back to {{ .Section | title }}</a>
 
         {{ if eq .Section "blog" }}
         <article>

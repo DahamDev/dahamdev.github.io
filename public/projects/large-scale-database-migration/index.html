@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Large-Scale Database Migration | Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/styles.4c9348c0476890f6a4dbe6f3f11318efdaecca522dd4a7d8709d3a594dfe6bed.css">
+    <link rel="stylesheet" href="/css/styles.7096667499373f23b60ab13192a5ddabc67a9e943d4d1f266ee4f9ccad855cbe.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="section-projects kind-page">
@@ -49,7 +49,7 @@
     <main>
 <section class="projects-detail">
     <div class="container">
-        <a href="/projects" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
+        <a href="/projects/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Projects</a>
 
         
         <article>
@@ -147,6 +147,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script>
         document.querySelector('.nav-toggle').addEventListener('click', function() {
             const expanded = this.getAttribute('aria-expanded') === 'true';
@@ -173,6 +174,110 @@
         };
         updateProgress();
         window.addEventListener('scroll', updateProgress, { passive: true });
+
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            hero.addEventListener('pointermove', event => {
+                const bounds = hero.getBoundingClientRect();
+                hero.style.setProperty('--hero-x', `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+                hero.style.setProperty('--hero-y', `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+            }, { passive: true });
+        }
+
+        
+        const canvas = document.getElementById('orbital-network');
+        if (canvas && window.THREE && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+            camera.position.set(0, 0.15, 8.5);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.18;
+
+            
+            const envCanvas = document.createElement('canvas');
+            envCanvas.width = 1024; envCanvas.height = 512;
+            const env = envCanvas.getContext('2d');
+            const envBase = env.createLinearGradient(0, 0, 0, 512);
+            envBase.addColorStop(0, '#071f46'); envBase.addColorStop(.42, '#020817'); envBase.addColorStop(1, '#00030b');
+            env.fillStyle = envBase; env.fillRect(0, 0, 1024, 512);
+            const paintReflection = (x, y, radius, color) => {
+                const gradient = env.createRadialGradient(x, y, 0, x, y, radius);
+                gradient.addColorStop(0, color); gradient.addColorStop(.18, color); gradient.addColorStop(1, 'rgba(0,0,0,0)');
+                env.fillStyle = gradient; env.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+            };
+            paintReflection(135, 190, 250, 'rgba(32,207,255,.95)');
+            paintReflection(830, 235, 270, 'rgba(255,42,120,.92)');
+            paintReflection(610, 45, 180, 'rgba(255,143,70,.75)');
+            env.fillStyle = 'rgba(255,255,255,.92)'; env.fillRect(65, 70, 16, 340); env.fillRect(930, 95, 9, 285);
+            env.fillStyle = 'rgba(120,205,255,.48)'; env.fillRect(320, 24, 365, 8);
+            const environment = new THREE.CanvasTexture(envCanvas);
+            environment.mapping = THREE.EquirectangularReflectionMapping;
+            environment.colorSpace = THREE.SRGBColorSpace;
+            scene.environment = environment;
+
+            const ring = new THREE.Group();
+            scene.add(ring);
+            const segments = 320, sides = 64, positions = [], colors = [], indices = [];
+            const palette = [new THREE.Color('#00c8ff'), new THREE.Color('#663dff'), new THREE.Color('#ff2d8d'), new THREE.Color('#ff7b43')];
+            for (let i = 0; i <= segments; i++) {
+                const u = (i / segments) * Math.PI * 2;
+                const twist = u * 1.5;
+                for (let j = 0; j <= sides; j++) {
+                    const v = (j / sides) * Math.PI * 2;
+                    const radius = 2.32 + .18 * Math.sin(u * 3);
+                    const tube = .58 + .12 * Math.cos(u * 2);
+                    const radial = tube * Math.cos(v);
+                    const lift = tube * .52 * Math.sin(v);
+                    const x = (radius + radial * Math.cos(twist)) * Math.cos(u) - lift * Math.sin(twist) * Math.sin(u);
+                    const y = (radius + radial * Math.cos(twist)) * Math.sin(u) + lift * Math.sin(twist) * Math.cos(u);
+                    const z = radial * Math.sin(twist) + lift * Math.cos(twist);
+                    positions.push(x, y, z);
+                    const phase = (i / segments + j / sides * .18) * (palette.length - 1);
+                    const a = Math.floor(phase) % palette.length, b = (a + 1) % palette.length;
+                    const color = palette[a].clone().lerp(palette[b], phase - Math.floor(phase));
+                    colors.push(color.r, color.g, color.b);
+                }
+            }
+            for (let i = 0; i < segments; i++) for (let j = 0; j < sides; j++) {
+                const a = i * (sides + 1) + j, b = a + sides + 1;
+                indices.push(a, b, a + 1, b, b + 1, a + 1);
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+            geometry.setIndex(indices); geometry.computeVertexNormals();
+            const material = new THREE.MeshPhysicalMaterial({ vertexColors: true, metalness: .58, roughness: .075, transmission: .3, thickness: 1.6, ior: 1.52, attenuationDistance: 2.4, attenuationColor: 0x695cff, clearcoat: 1, clearcoatRoughness: .025, iridescence: 1, iridescenceIOR: 1.42, iridescenceThicknessRange: [180, 920], specularIntensity: 1, specularColor: 0xffffff, sheen: .32, sheenColor: 0xff3d8f, sheenRoughness: .18, envMapIntensity: 2.65, emissive: 0x08051c, emissiveIntensity: .16, side: THREE.DoubleSide });
+            const sculpture = new THREE.Mesh(geometry, material); ring.add(sculpture);
+            const aura = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: .1, blending: THREE.AdditiveBlending, side: THREE.BackSide, depthWrite: false }));
+            aura.scale.setScalar(1.025); ring.add(aura);
+            ring.rotation.set(.82, -.24, -.12);
+            scene.add(new THREE.HemisphereLight(0xb9dcff, 0x02030d, 1.25));
+            const coral = new THREE.PointLight(0xff356f, 95, 18); coral.position.set(4.5, 2.8, 5); scene.add(coral);
+            const cyan = new THREE.PointLight(0x24cfff, 110, 18); cyan.position.set(-4.5, -1.8, 5); scene.add(cyan);
+            const rim = new THREE.DirectionalLight(0xffffff, 2.8); rim.position.set(0, 4, 6); scene.add(rim);
+            const resize = () => { const box = canvas.getBoundingClientRect(); renderer.setSize(box.width, box.height, false); camera.aspect = box.width / box.height; camera.updateProjectionMatrix(); };
+            resize(); window.addEventListener('resize', resize);
+            let targetX = -.24, targetY = .82, dragging = false, startX = 0, startY = 0;
+            const visual = canvas.parentElement;
+            visual.addEventListener('pointerdown', e => { dragging = true; startX = e.clientX; startY = e.clientY; visual.setPointerCapture(e.pointerId); });
+            visual.addEventListener('pointermove', e => { if (!dragging) return; targetX += (e.clientX - startX) * .006; targetY += (e.clientY - startY) * .006; startX = e.clientX; startY = e.clientY; });
+            visual.addEventListener('pointerup', () => dragging = false);
+            const animate = (time = 0) => {
+                requestAnimationFrame(animate);
+                if (!dragging) targetX += .00135;
+                ring.rotation.y += (targetX - ring.rotation.y) * .045;
+                ring.rotation.x += (targetY - ring.rotation.x) * .045;
+                ring.rotation.z = -.12 + Math.sin(time * .00035) * .045;
+                ring.position.y = Math.sin(time * .0007) * .08;
+                coral.position.x = 4.5 + Math.sin(time * .00045) * 1.2;
+                cyan.position.y = -1.8 + Math.cos(time * .00038) * .8;
+                renderer.render(scene, camera);
+            };
+            animate();
+        }
     </script>
 </body>
 </html>
