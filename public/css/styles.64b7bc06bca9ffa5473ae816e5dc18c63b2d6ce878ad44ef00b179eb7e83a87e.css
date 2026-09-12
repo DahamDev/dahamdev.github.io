@@ -31,7 +31,7 @@ img { max-width: 100%; }
 .container { width: min(1100px, calc(100% - 96px)); margin-inline: auto; }
 .skip-link { position: fixed; top: -100px; left: 20px; padding: 12px; background: var(--surface); z-index: 200; }
 .skip-link:focus { top: 12px; }
-.site-header { position: relative; background: var(--paper); border-top: 4px solid var(--button); border-bottom: 1px solid var(--line); }
+.site-header { background: var(--paper); border-top: 4px solid var(--button); border-bottom: 1px solid var(--line); }
 .navbar { min-height: 98px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 0; }
 .nav-brand { min-width: 0; display: flex; align-items: center; gap: 14px; text-decoration: none; font-weight: 600; font-size: 15px; }
 .brand-symbol { display: grid; place-items: center; width: 40px; height: 40px; background: #291939; border: 1px solid #65428a; font: 600 14px/1 "DM Sans", sans-serif; color: #fff; letter-spacing: .08em; }
@@ -43,7 +43,7 @@ img { max-width: 100%; }
 .nav-menu .active { border-bottom: 1px solid var(--accent); }
 .nav-cta { font-size: 15px; text-decoration: none; border: 1px solid var(--line); border-radius: 0; background: var(--button); color: white; border-color: var(--button); padding: 12px 22px; }
 .nav-cta span { margin-left: 22px; }
-.nav-toggle { display: none; flex-shrink: 0; justify-content: center; min-width: 48px; min-height: 48px; border: 0; padding: 12px; background: transparent; }
+.nav-toggle { display: none; border: 0; padding: 12px; background: transparent; }
 .hero-layout { display: grid; grid-template-columns: 1.25fr 1fr; gap: 64px; align-items: center; padding-top: 88px; padding-bottom: 88px; }
 .hero-copy { min-width: 0; text-align: left; }
 .eyebrow { display: block; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 26px; }
@@ -196,26 +196,6 @@ footer { background: #f6f5f7; border-top: 1px solid var(--line); padding-block: 
 .hero-motion-toggle { margin-top: 8px; padding: 4px 0; border: 0; background: transparent; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 12px; }
 .creative-art.is-paused *, .creative-art.is-hidden * { animation-play-state: paused !important; }
 
-.enquiry-prompts { margin-top: 16px; padding-left: 20px; color: var(--muted); }
-.enquiry-prompts li + li { margin-top: 6px; }
-.contact-note, .copy-status { font-size: 14px; color: var(--muted); }
-.copy-status { min-height: 24px; max-width: 290px; }
-.copy-email { color: var(--ink); background: transparent; border-color: var(--line); }
-.copy-email[hidden] { display: none; }
-.contact-actions { min-width: 0; }
-.email-link { overflow-wrap: anywhere; }
-.result-stack p + p { margin-top: 12px; }
-.result-stack .text-link { margin-top: 20px; }
-.results-grid { align-items: start; }
-
-@media (min-width: 801px) and (max-width: 1000px) {
-  .nav-brand small { max-width: 170px; }
-  .nav-brand .brand-symbol { width: 32px; height: 32px; }
-  .nav-brand { gap: 8px; }
-  .navbar { gap: 12px; }
-  .nav-menu { gap: 12px; }
-  .nav-cta { padding-inline: 14px; }
-}
 @media (max-width: 1050px) {
   .container { width: calc(100% - 64px); }
   .nav-menu { gap: 16px; }
@@ -232,7 +212,7 @@ footer { background: #f6f5f7; border-top: 1px solid var(--line); padding-block: 
   .navbar { min-height: 85px; }
   .nav-toggle { display: flex; flex-direction: column; gap: 6px; }
   .nav-toggle span { width: 24px; height: 1px; background: var(--ink); }
-  .nav-right { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: var(--surface); padding: 25px; border-bottom: 1px solid var(--line); }
+  .nav-right { display: none; position: absolute; top: 85px; left: 0; right: 0; z-index: 100; background: var(--surface); padding: 25px; border-bottom: 1px solid var(--line); }
   .nav-right.active { display: flex; flex-direction: column; align-items: stretch; }
   .nav-menu { flex-direction: column; align-items: stretch; gap: 0; }
   .nav-menu a { display: block; padding: 12px 0; font-size: 15px; }

@@ -1,147 +1,17 @@
-<!DOCTYPE html>
-<html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <title>Projects | Daham Navinda - Software, AWS &amp; Kubernetes Engineer</title>
-    <meta name="description" content="A collection of my technical projects and contributions">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/css/styles.2b7bbc437f95982bd7730a179a6f0aabfa334c9167d78e85a77a85630c389fcc.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body class="section-projects kind-section">
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-        <nav class="navbar container" aria-label="Main navigation">
-            <a href="/" class="nav-brand"><span class="brand-symbol" aria-hidden="true">d.</span><span>Daham Navinda<small>Software engineering</small></span></a>
-            <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span></button>
-            <div class="nav-right" id="site-navigation"><ul class="nav-menu"><li><a href="/about/">About</a></li><li><a href="/projects/" class="active" aria-current="page">Projects</a></li><li><a href="/blog/">Blog</a></li></ul><a class="nav-cta" href="mailto:navindabc@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a></div>
-        </nav>
-    </header>
-    <main id="main">
-<header class="page-header">
-    <div class="container">
-        <h1>Projects</h1>
-        <p>A collection of my technical projects and contributions</p>
-    </div>
-</header>
-
-<section class="projects-list">
-    <div class="container">
-        
-        
-        <article class="project-item">
-            <a href="/projects/ai-ticket-system/" class="project-link">
-                <h2>AI-Powered Ticket Summarization System</h2>
-                <p>Developed an automated system to summarize ongoing support tickets using generative AI models. Integrated with AWS case handling system to evaluate engineer&#39;s customer engagement and provide feedback to improve customer satisfaction.</p>
-                <div class="project-tech-list">
-                    
-                    <span>AWS Bedrock</span>
-                    
-                    <span>AWS Lambda</span>
-                    
-                    <span>DynamoDB</span>
-                    
-                    <span>SQS</span>
-                    
-                    <span>Python</span>
-                    
-                    <span>Generative AI</span>
-                    
-                </div>
-            </a>
-        </article>
-        
-        
-        
-        <article class="project-item">
-            <a href="/projects/release-management/" class="project-link">
-                <h2>Automated Release Management Workflow</h2>
-                <p>Architected and implemented automated release management workflow, reducing deployment time from 4 hours to less than 30 minutes.</p>
-                <div class="project-tech-list">
-                    
-                    <span>Jenkins</span>
-                    
-                    <span>Git</span>
-                    
-                    <span>Docker</span>
-                    
-                    <span>Kubernetes</span>
-                    
-                    <span>AWS EKS</span>
-                    
-                    <span>Bash</span>
-                    
-                </div>
-            </a>
-        </article>
-        
-        
-        
-        <article class="project-item">
-            <a href="/projects/large-scale-database-migration/" class="project-link">
-                <h2>Large-Scale Database Migration</h2>
-                <p>Migrated 10 million user data from on-premises Oracle database to AWS RDS MySQL as part of cloud modernization initiative.</p>
-                <div class="project-tech-list">
-                    
-                    <span>AWS RDS</span>
-                    
-                    <span>MySQL</span>
-                    
-                    <span>Oracle</span>
-                    
-                    <span>AWS DMS</span>
-                    
-                    <span>Python</span>
-                    
-                    <span>AWS EKS</span>
-                    
-                </div>
-            </a>
-        </article>
-        
-        
-    </div>
-</section>
-</main>
-    <footer><div class="container footer-content"><div><a href="/" class="footer-name">Daham Navinda</a><p>Software built with care.</p></div><div class="footer-links"><a href="mailto:navindabc@gmail.com">Email ↗</a><a href="https://github.com/DahamDev" target="_blank" rel="noopener">GitHub ↗</a><a href="https://linkedin.com/in/dahamne" target="_blank" rel="noopener">LinkedIn ↗</a></div><p class="copyright">&copy; 2026 Daham Navinda</p></div></footer>
-    <script>
-        (() => {
-            const toggle = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.nav-right');
-            const setMenu = open => {
-                toggle.setAttribute('aria-expanded', String(open));
-                toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-                nav.classList.toggle('active', open);
-            };
-            toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-            nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
-            const art = document.querySelector('.creative-art');
-            const motionButton = document.querySelector('.hero-motion-toggle');
-            if (art && motionButton) {
-                const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-                const pause = value => {
-                    art.classList.toggle('is-paused', value);
-                    motionButton.setAttribute('aria-pressed', String(value));
-                    motionButton.textContent = value ? 'Play animation' : 'Pause animation';
-                };
-                pause(reducedMotion.matches);
-                motionButton.addEventListener('click', () => pause(motionButton.getAttribute('aria-pressed') !== 'true'));
-                reducedMotion.addEventListener('change', event => pause(event.matches));
-                let inView = true;
-                const visibility = () => art.classList.toggle('is-hidden', document.hidden || !inView);
-                document.addEventListener('visibilitychange', visibility);
-                if ('IntersectionObserver' in window) {
-                    new IntersectionObserver(entries => { inView = entries[0].isIntersecting; visibility(); }).observe(art);
-                }
-                visibility();
-            }
-            document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); } });
-        })();
-    </script>
-</body>
-</html>
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="light"><meta name=theme-color content="#ffffff"><title>Projects | Daham Navinda - Software, AWS & Kubernetes Engineer</title><meta name=description content="A collection of my technical projects and contributions"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel=stylesheet><link rel=stylesheet href=/css/styles.edbf4e90eb688fe8e09d29f7301f0323a99c9fd788dce6b5bd5cec0b1069b3f5.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css></head><body class="section-projects kind-section"><a class=skip-link href=#main>Skip to content</a><header class=site-header><nav class="navbar container" aria-label="Main navigation"><a href=/ class=nav-brand><span class=brand-symbol aria-hidden=true>DN</span><span>Daham Navinda<small>Software engineering & cloud consulting</small></span></a>
+<button class=nav-toggle aria-label="Open navigation" aria-expanded=false aria-controls=site-navigation><span></span><span></span></button><div class=nav-right id=site-navigation><ul class=nav-menu><li><a href=/about/>About</a></li><li><a href=/experience/>Experience</a></li><li><a href=/projects/ class=active aria-current=page>Projects</a></li><li><a href=/blog/>Blog</a></li></ul><a class=nav-cta href=/#contact>Contact <span aria-hidden=true>↗</span></a></div></nav></header><main id=main><header class=page-header><div class=container><h1>Projects</h1><p>A collection of my technical projects and contributions</p></div></header><section class=projects-list><div class=container><article class=project-item><a href=/projects/ai-ticket-system/ class=project-link><h2>AI-Powered Ticket Summarization System</h2><p>Developed an automated system to summarize ongoing support tickets using generative AI models. Integrated with AWS case handling system to evaluate engineer's customer engagement and provide feedback to improve customer satisfaction.</p><div class=project-tech-list><span>AWS Bedrock</span>
+<span>AWS Lambda</span>
+<span>DynamoDB</span>
+<span>SQS</span>
+<span>Python</span>
+<span>Generative AI</span></div></a></article><article class=project-item><a href=/projects/release-management/ class=project-link><h2>Automated Release Management Workflow</h2><p>Architected and implemented automated release management workflow, reducing deployment time from 4 hours to less than 30 minutes.</p><div class=project-tech-list><span>Jenkins</span>
+<span>Git</span>
+<span>Docker</span>
+<span>Kubernetes</span>
+<span>AWS EKS</span>
+<span>Bash</span></div></a></article><article class=project-item><a href=/projects/large-scale-database-migration/ class=project-link><h2>Large-Scale Database Migration</h2><p>Migrated 10 million user data from on-premises Oracle database to AWS RDS MySQL as part of cloud modernization initiative.</p><div class=project-tech-list><span>AWS RDS</span>
+<span>MySQL</span>
+<span>Oracle</span>
+<span>AWS DMS</span>
+<span>Python</span>
+<span>AWS EKS</span></div></a></article></div></section></main><footer><div class="container footer-content"><div><a href=/ class=footer-name>Daham Navinda</a><p>Software built with care.</p></div><div class=footer-links><a href=mailto:navindabc@gmail.com>Email ↗</a><a href=https://github.com/DahamDev target=_blank rel=noopener>GitHub ↗</a><a href=https://linkedin.com/in/dahamne target=_blank rel=noopener>LinkedIn ↗</a></div><p class=copyright>&copy; 2026 Daham Navinda</p></div></footer><script>(()=>{const n=document.querySelector(".copy-email");n&&navigator.clipboard&&(n.hidden=!1,n.addEventListener("click",async()=>{const e=document.querySelector(".copy-status");try{await navigator.clipboard.writeText(n.dataset.email),e.textContent="Email address copied."}catch{e.textContent="Please select and copy the email address above."}}));const e=document.querySelector(".nav-toggle"),i=document.querySelector(".nav-right"),o=t=>{e.setAttribute("aria-expanded",String(t)),e.setAttribute("aria-label",t?"Close navigation":"Open navigation"),i.classList.toggle("active",t)};e.addEventListener("click",()=>o(e.getAttribute("aria-expanded")!=="true")),i.querySelectorAll("a").forEach(e=>e.addEventListener("click",()=>o(!1)));const s=document.querySelector(".creative-art"),t=document.querySelector(".hero-motion-toggle");if(s&&t){const o=matchMedia("(prefers-reduced-motion: reduce)"),e=e=>{s.classList.toggle("is-paused",e),t.setAttribute("aria-pressed",String(e)),t.textContent=e?"Play animation":"Pause animation"};e(o.matches),t.addEventListener("click",()=>e(t.getAttribute("aria-pressed")!=="true")),o.addEventListener("change",t=>e(t.matches));let i=!0;const n=()=>s.classList.toggle("is-hidden",document.hidden||!i);document.addEventListener("visibilitychange",n),"IntersectionObserver"in window&&new IntersectionObserver(e=>{i=e[0].isIntersecting,n()}).observe(s),n()}document.addEventListener("keydown",t=>{t.key==="Escape"&&e.getAttribute("aria-expanded")==="true"&&(o(!1),e.focus())})})()</script></body></html>

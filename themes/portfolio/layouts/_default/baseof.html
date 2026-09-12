@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.bio }}{{ end }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     {{ $style := resources.Get "css/styles.css" | fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -17,15 +18,28 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <nav class="navbar container" aria-label="Main navigation">
-            <a href="{{ "/" | relURL }}" class="nav-brand"><span class="brand-symbol" aria-hidden="true">d.</span><span>{{ .Site.Params.name }}<small>Software engineering</small></span></a>
+            <a href="{{ "/" | relURL }}" class="nav-brand"><span class="brand-symbol" aria-hidden="true">DN</span><span>{{ .Site.Params.name }}<small>Software engineering &amp; cloud consulting</small></span></a>
             <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span></button>
-            <div class="nav-right" id="site-navigation"><ul class="nav-menu">{{ range .Site.Menus.main }}{{ if and (ne .Name "Contact") (ne .Name "Home") (ne .Name "Experience") }}<li><a href="{{ .URL }}"{{ if eq $.RelPermalink .URL }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a></li>{{ end }}{{ end }}</ul><a class="nav-cta" href="mailto:{{ .Site.Params.email }}">Let’s talk <span aria-hidden="true">↗</span></a></div>
+            <div class="nav-right" id="site-navigation"><ul class="nav-menu">{{ range .Site.Menus.main }}{{ if and (ne .Name "Contact") (ne .Name "Home") }}<li><a href="{{ .URL }}"{{ if eq $.RelPermalink .URL }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a></li>{{ end }}{{ end }}</ul><a class="nav-cta" href="{{ "/" | relURL }}#contact">Contact <span aria-hidden="true">↗</span></a></div>
         </nav>
     </header>
     <main id="main">{{ block "main" . }}{{ end }}</main>
     <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }}</a><p>Software built with care.</p></div><div class="footer-links"><a href="mailto:{{ .Site.Params.email }}">Email ↗</a><a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
     <script>
         (() => {
+            const copyEmail = document.querySelector('.copy-email');
+            if (copyEmail && navigator.clipboard) {
+                copyEmail.hidden = false;
+                copyEmail.addEventListener('click', async () => {
+                    const status = document.querySelector('.copy-status');
+                    try {
+                        await navigator.clipboard.writeText(copyEmail.dataset.email);
+                        status.textContent = 'Email address copied.';
+                    } catch {
+                        status.textContent = 'Please select and copy the email address above.';
+                    }
+                });
+            }
             const toggle = document.querySelector('.nav-toggle');
             const nav = document.querySelector('.nav-right');
             const setMenu = open => {
