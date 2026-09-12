@@ -229,8 +229,7 @@ footer { background: var(--paper); border-top: 1px solid var(--line); padding-bl
   .nav-menu a { display: block; padding: 12px 0; font-size: 15px; }
   .nav-cta { text-align: center; }
   .hero-layout { grid-template-columns: 1fr; padding-top: 42px; gap: 45px; }
-  .creative-art { display: none; }
-  .creative-art * { animation: none !important; }
+  .creative-art { width: min(470px,100%); justify-self: center; }
   .hero-description { max-width: 550px; }
   h1 { font-size: clamp(60px,12vw,86px); }
   .capability-line { flex-direction: column; gap: 10px; }

@@ -41,7 +41,7 @@ theme = "portfolio"
 
 [markup]
   [markup.highlight]
-    style = "dracula"
+    style = "github"
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
