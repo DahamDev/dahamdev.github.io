@@ -280,26 +280,3 @@ body{background:var(--paper);font-size:15px}.site-header{border-top:0;background
 .work-section{background:#18282e}.work-section .result-feature{background:#213c45;border:1px solid #385863}.result-number{color:var(--peach)}.results-grid{gap:18px}.result-stack article{border-color:#38515a}.process-layout{gap:90px}.blog-preview-card{border-radius:16px}.contact-section{background:var(--accent);border:0}.contact-layout .eyebrow{color:#ffe2d6}.contact-actions .btn-primary{background:#fff;border-color:#fff;color:var(--accent)}footer{background:#f1f5f3}
 @media(max-width:800px){.studio-hero{padding-top:38px;background:var(--paper)}.hero-layout{grid-template-columns:1fr;padding-bottom:45px}.hero-copy h1{font-size:clamp(46px,13vw,72px)}.creative-art{min-height:360px;transform:none}.art-panel{left:32px;bottom:37px}.art-metric{right:30px;top:83px}.service-grid,.blog-grid,.results-grid,.process-layout{grid-template-columns:1fr}.contact-layout{align-items:flex-start}.creative-art{display:block}.capability-line{flex-direction:column;gap:10px}.section-heading{align-items:flex-start;flex-direction:column;gap:20px}}
  .art-layer-labels{position:absolute;z-index:1;inset:84px 42px auto;display:flex;justify-content:space-between;color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.12em}.art-layer-labels span{padding:4px 7px;border:1px solid rgba(92,148,173,.35);border-radius:99px;background:rgba(255,255,255,.58)}
-/* Contact section contrast and spacing refinement */
-.contact-section{padding:56px 0;background:#b64b28}
-.contact-layout{gap:30px}
-.contact-layout h2,.contact-layout .heading-accent{color:#fff}
-.contact-layout p:not(.eyebrow){margin-top:14px;color:#fff0e9}
-.enquiry-prompts{margin-top:8px;color:#fff0e9}
-.contact-actions{gap:10px}
-.contact-actions .email-link{color:#fff0e9}
-@media(max-width:800px){.contact-section{padding:48px 0}.contact-layout{gap:24px}}
-
-.service-grid{grid-template-columns:repeat(4,1fr)}
-body{font-size:16px;line-height:1.7}
-.service-card p{font-size:15px;line-height:1.65}
-.service-card ul{font-size:13px;line-height:1.55}
-.service-card li{padding:8px 0}
-.service-card h3{font-size:22px;line-height:1.15}
-.service-card .text-link{font-size:13px}
-@media(max-width:1050px){.service-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:800px){.service-grid{grid-template-columns:1fr}}
-
-.support-section{padding:82px 0;background:#eef5f7;border-top:1px solid #d7e1e3;border-bottom:1px solid #d7e1e3}.support-intro{display:grid;grid-template-columns:1fr .8fr;align-items:end;gap:80px}.support-intro h2{font-size:clamp(32px,4vw,51px)}.support-intro .heading-accent{color:#b64b28}.support-intro>p{max-width:430px;color:#607078;font-size:15px}.support-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:42px}.support-card{min-height:285px;padding:28px;border:1px solid #cbdde2;border-radius:18px;background:#fff}.support-card-primary{background:#fff7f2;border-color:#efc5b6}.support-card-top{display:flex;align-items:center;justify-content:space-between}.support-icon{display:grid;place-items:center;width:38px;height:38px;border:1px solid #b64b28;border-radius:50%;color:#b64b28;font-size:17px}.support-card .service-number{margin:0;color:#5c94ad}.support-card h3{margin-top:30px;font-size:23px;letter-spacing:-.04em}.support-card p{max-width:470px;margin-top:12px;color:#607078;font-size:14px}.support-card ul{display:grid;grid-template-columns:repeat(2,1fr);gap:0 20px;margin:22px 0 0;padding:0;list-style:none;color:#607078;font-size:12px}.support-card li{padding:8px 0;border-top:1px solid #d7e1e3}.support-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:22px;color:#607078;font-size:12px}.support-footer .text-link{color:#16232a;border-color:#b5cdd5}.support-footer .text-link:hover{color:#b64b28;border-color:#b64b28}
-@media(max-width:800px){.support-section{padding:64px 0}.support-intro{grid-template-columns:1fr;gap:22px}.support-grid{grid-template-columns:1fr;margin-top:30px}.support-card{min-height:0}.support-footer{align-items:flex-start;flex-direction:column;gap:14px}}
-@media(max-width:430px){.support-card ul{grid-template-columns:1fr}}

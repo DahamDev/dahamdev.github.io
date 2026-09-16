@@ -291,12 +291,6 @@ body{background:var(--paper);font-size:15px}.site-header{border-top:0;background
 @media(max-width:800px){.contact-section{padding:48px 0}.contact-layout{gap:24px}}
 
 .service-grid{grid-template-columns:repeat(4,1fr)}
-body{font-size:16px;line-height:1.7}
-.service-card p{font-size:15px;line-height:1.65}
-.service-card ul{font-size:13px;line-height:1.55}
-.service-card li{padding:8px 0}
-.service-card h3{font-size:22px;line-height:1.15}
-.service-card .text-link{font-size:13px}
 @media(max-width:1050px){.service-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:800px){.service-grid{grid-template-columns:1fr}}
 

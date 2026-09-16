@@ -25,6 +25,7 @@
     </header>
     <main id="main">{{ block "main" . }}{{ end }}</main>
     <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }}</a><p>Software built with care.</p></div><div class="footer-links"><a href="mailto:{{ .Site.Params.email }}">Email ↗</a><a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script>
         (() => {
             const copyEmail = document.querySelector('.copy-email');
@@ -51,23 +52,41 @@
             nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
             const art = document.querySelector('.creative-art');
             const motionButton = document.querySelector('.hero-motion-toggle');
+            const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
             if (art && motionButton) {
-                const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-                const pause = value => {
-                    art.classList.toggle('is-paused', value);
-                    motionButton.setAttribute('aria-pressed', String(value));
-                    motionButton.textContent = value ? 'Play animation' : 'Pause animation';
-                };
+                const pause = value => { art.classList.toggle('is-paused', value); motionButton.setAttribute('aria-pressed', String(value)); motionButton.textContent = value ? 'Play motion' : 'Pause motion'; };
                 pause(reducedMotion.matches);
                 motionButton.addEventListener('click', () => pause(motionButton.getAttribute('aria-pressed') !== 'true'));
                 reducedMotion.addEventListener('change', event => pause(event.matches));
-                let inView = true;
-                const visibility = () => art.classList.toggle('is-hidden', document.hidden || !inView);
-                document.addEventListener('visibilitychange', visibility);
-                if ('IntersectionObserver' in window) {
-                    new IntersectionObserver(entries => { inView = entries[0].isIntersecting; visibility(); }).observe(art);
-                }
-                visibility();
+            }
+            const canvas = document.querySelector('#hero-canvas');
+            if (canvas && window.THREE) {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(34, canvas.clientWidth / canvas.clientHeight, .1, 100);
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); camera.position.set(0, .35, 8.5);
+                const colors = { blue: 0x79afc5, orange: 0xb64b28, peach: 0xedb09a, ink: 0x294952, brass: 0xd79a68, white: 0xf5f5ef, flame: 0xffa24b, hot: 0xffe0a3 };
+                const rocket = new THREE.Group(); rocket.position.y = -.25; rocket.rotation.z = -.11; scene.add(rocket);
+                const solid = (geometry, color, roughness = .32, metalness = .15) => new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color, roughness, metalness }));
+                const cloudGroup = new THREE.Group(); cloudGroup.position.z = -.9; scene.add(cloudGroup); const cloudMaterial = new THREE.MeshStandardMaterial({ color: 0xf5f5ef, roughness: .95, metalness: 0, transparent: true, opacity: .7 });
+                const cloudPositions = [[-2.15, 1.65, .7], [2.15, 1.05, .25], [-2.25, -.15, .5], [2.2, -.72, .3], [-1.85, -1.3, .45]];
+                const clouds = cloudPositions.map(([x, y, scale], cloudIndex) => { const cloud = new THREE.Group(); cloud.position.set(x, y, 0); cloud.scale.setScalar(scale); [-.28, 0, .3].forEach((offset, index) => { const puff = new THREE.Mesh(new THREE.SphereGeometry(.3 + (index === 1 ? .12 : 0), 16, 12), cloudMaterial); puff.position.set(offset, index === 1 ? .08 : 0, index % 2 ? .04 : 0); cloud.add(puff); }); cloudGroup.add(cloud); return { cloud, baseX: x, baseY: y, offset: cloudIndex * .8 }; });
+                const body = solid(new THREE.CylinderGeometry(.52, .58, 2.55, 32), colors.white, .24, .25); body.position.y = .55; rocket.add(body);
+                const bodyBand = y => { const band = new THREE.Mesh(new THREE.TorusGeometry(.555, .035, 8, 32), new THREE.MeshStandardMaterial({ color: colors.orange, roughness: .25, metalness: .45 })); band.rotation.x = Math.PI / 2; band.position.y = y; rocket.add(band); };
+                bodyBand(-.1); bodyBand(.65); bodyBand(1.25);
+                const nose = solid(new THREE.ConeGeometry(.52, .9, 32), colors.orange, .23, .3); nose.position.y = 2.28; rocket.add(nose);
+                const noseTip = solid(new THREE.SphereGeometry(.08, 12, 8), colors.brass, .2, .5); noseTip.position.y = 2.72; rocket.add(noseTip);
+                const windowMaterial = new THREE.MeshStandardMaterial({ color: colors.blue, roughness: .12, metalness: .35 }); [1.5, 1.08, .66].forEach((y, index) => { const ring = new THREE.Mesh(new THREE.TorusGeometry(.19, .035, 8, 24), new THREE.MeshStandardMaterial({ color: colors.brass, roughness: .2, metalness: .55 })); ring.position.set(0, y, .51); const glass = new THREE.Mesh(new THREE.SphereGeometry(.16, 18, 12), windowMaterial); glass.scale.z = .3; glass.position.set(0, y, .53); rocket.add(ring, glass); });
+                const finMaterial = new THREE.MeshStandardMaterial({ color: colors.blue, roughness: .3, metalness: .2 }); [-1, 1].forEach(side => { const fin = solid(new THREE.BoxGeometry(.18, 1.05, .62), colors.blue, .3, .2); fin.position.set(side * .52, -.42, 0); fin.rotation.z = side * -.25; rocket.add(fin); }); const rearFin = solid(new THREE.BoxGeometry(.62, .85, .16), colors.blue, .3, .2); rearFin.position.set(0, -.52, -.47); rearFin.rotation.x = -.18; rocket.add(rearFin);
+                const panel = solid(new THREE.BoxGeometry(.36, .62, .035), colors.ink, .4, .15); panel.position.set(.4, .35, .54); rocket.add(panel); for (let index = 0; index < 6; index++) { const rivet = solid(new THREE.SphereGeometry(.025, 8, 8), colors.brass, .22, .45); rivet.position.set(.23 + (index % 2) * .32, .12 + Math.floor(index / 2) * .2, .575); rocket.add(rivet); }
+                const engineDeck = solid(new THREE.CylinderGeometry(.6, .6, .13, 32), colors.ink, .3, .35); engineDeck.position.y = -.78; rocket.add(engineDeck);
+                const nozzles = [-.25, 0, .25].map(x => { const nozzle = solid(new THREE.ConeGeometry(.14, .28, 20, 1, true), colors.ink, .22, .5); nozzle.position.set(x, -1, 0); nozzle.rotation.z = Math.PI; rocket.add(nozzle); return nozzle; });
+                const flames = nozzles.map((nozzle, index) => { const outer = solid(new THREE.ConeGeometry(.15, .82, 16), colors.flame, .2, 0); outer.rotation.z = Math.PI; outer.position.set(nozzle.position.x, -1.52, .01); const inner = solid(new THREE.ConeGeometry(.07, .55, 12), colors.hot, .15, 0); inner.rotation.z = Math.PI; inner.position.set(nozzle.position.x, -1.58, .03); rocket.add(outer, inner); return { outer, inner }; });
+                const exhaustParticles = Array.from({ length: 18 }, (_, index) => { const particle = solid(new THREE.SphereGeometry(.025 + Math.random() * .025, 8, 8), index % 2 ? colors.hot : colors.flame, .2, 0); particle.userData.offset = Math.random(); particle.userData.x = (Math.random() - .5) * .6; rocket.add(particle); return particle; });
+                const antenna = solid(new THREE.CylinderGeometry(.025, .025, .35, 8), colors.brass, .2, .5); antenna.position.y = 2.85; rocket.add(antenna); const beacon = solid(new THREE.SphereGeometry(.07, 10, 8), colors.peach, .15, .1); beacon.position.y = 3.04; rocket.add(beacon);
+                scene.add(new THREE.AmbientLight(0xffffff, 2.5)); const light = new THREE.PointLight(0xffc7ae, 7, 12); light.position.set(1.5, -1.5, 3); scene.add(light);
+                let frame; const animate = time => { const paused = art?.classList.contains('is-paused') || document.hidden; if (!paused) { rocket.position.x = Math.sin(time * .00045) * .08; rocket.rotation.z = -.11 + Math.sin(time * .0005) * .025; clouds.forEach(({ cloud, baseX, baseY, offset }) => { cloud.position.x = baseX + Math.sin(time * .00018 + offset) * .12; cloud.position.y = baseY + Math.sin(time * .00022 + offset) * .06; }); flames.forEach((flame, index) => { const pulse = 1 + Math.sin(time * .012 + index) * .18; flame.outer.scale.y = pulse; flame.inner.scale.y = 1.1 + Math.sin(time * .016 + index) * .23; }); exhaustParticles.forEach((particle, index) => { const progress = (time * .00075 + particle.userData.offset) % 1; particle.position.set(particle.userData.x * (1 + progress), -1.15 - progress * 1.9, (index % 3 - 1) * .035); particle.scale.setScalar(1 - progress * .65); }); light.intensity = 6 + Math.sin(time * .018) * 1.5; } renderer.render(scene, camera); frame = requestAnimationFrame(animate); };
+                animate(0); new ResizeObserver(() => { const { width, height } = canvas.getBoundingClientRect(); camera.aspect = width / height; camera.updateProjectionMatrix(); renderer.setSize(width, height, false); }).observe(canvas); window.addEventListener('pagehide', () => cancelAnimationFrame(frame), { once: true });
             }
             document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { setMenu(false); toggle.focus(); } });
         })();

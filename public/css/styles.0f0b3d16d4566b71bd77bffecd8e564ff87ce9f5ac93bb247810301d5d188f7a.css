@@ -289,17 +289,3 @@ body{background:var(--paper);font-size:15px}.site-header{border-top:0;background
 .contact-actions{gap:10px}
 .contact-actions .email-link{color:#fff0e9}
 @media(max-width:800px){.contact-section{padding:48px 0}.contact-layout{gap:24px}}
-
-.service-grid{grid-template-columns:repeat(4,1fr)}
-body{font-size:16px;line-height:1.7}
-.service-card p{font-size:15px;line-height:1.65}
-.service-card ul{font-size:13px;line-height:1.55}
-.service-card li{padding:8px 0}
-.service-card h3{font-size:22px;line-height:1.15}
-.service-card .text-link{font-size:13px}
-@media(max-width:1050px){.service-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:800px){.service-grid{grid-template-columns:1fr}}
-
-.support-section{padding:82px 0;background:#eef5f7;border-top:1px solid #d7e1e3;border-bottom:1px solid #d7e1e3}.support-intro{display:grid;grid-template-columns:1fr .8fr;align-items:end;gap:80px}.support-intro h2{font-size:clamp(32px,4vw,51px)}.support-intro .heading-accent{color:#b64b28}.support-intro>p{max-width:430px;color:#607078;font-size:15px}.support-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:42px}.support-card{min-height:285px;padding:28px;border:1px solid #cbdde2;border-radius:18px;background:#fff}.support-card-primary{background:#fff7f2;border-color:#efc5b6}.support-card-top{display:flex;align-items:center;justify-content:space-between}.support-icon{display:grid;place-items:center;width:38px;height:38px;border:1px solid #b64b28;border-radius:50%;color:#b64b28;font-size:17px}.support-card .service-number{margin:0;color:#5c94ad}.support-card h3{margin-top:30px;font-size:23px;letter-spacing:-.04em}.support-card p{max-width:470px;margin-top:12px;color:#607078;font-size:14px}.support-card ul{display:grid;grid-template-columns:repeat(2,1fr);gap:0 20px;margin:22px 0 0;padding:0;list-style:none;color:#607078;font-size:12px}.support-card li{padding:8px 0;border-top:1px solid #d7e1e3}.support-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:22px;color:#607078;font-size:12px}.support-footer .text-link{color:#16232a;border-color:#b5cdd5}.support-footer .text-link:hover{color:#b64b28;border-color:#b64b28}
-@media(max-width:800px){.support-section{padding:64px 0}.support-intro{grid-template-columns:1fr;gap:22px}.support-grid{grid-template-columns:1fr;margin-top:30px}.support-card{min-height:0}.support-footer{align-items:flex-start;flex-direction:column;gap:14px}}
-@media(max-width:430px){.support-card ul{grid-template-columns:1fr}}
