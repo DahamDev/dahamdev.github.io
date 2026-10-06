@@ -101,9 +101,10 @@ footer{background:#07384f;border-color:#e8f99c}.footer-name{color:#f3fff9}.foote
 /* Three foreground depths move at different rates while the page scrolls. */
 .hero-parallax{position:absolute;z-index:2;inset:0;overflow:visible;pointer-events:none}
 .hero-parallax img{position:absolute;display:block;max-width:none;transform:translate3d(0,var(--parallax-y,0px),0);will-change:transform}
+.parallax-blueprints{top:2%;right:1%;width:clamp(430px,46vw,700px);opacity:.34;mix-blend-mode:multiply}
 .parallax-foreground{bottom:0;width:100vw;height:auto;object-fit:initial;object-position:initial;transform:translate3d(-50%,var(--parallax-y,0px),0);opacity:.96}
 .hero-character{z-index:5;transform:translate3d(0,var(--parallax-y,0px),0)}
-@media(max-width:800px){.hero-parallax{inset:0 0 auto;height:365px}.parallax-foreground{width:min(100vw,680px);bottom:0}.hero-character{z-index:5}}
+@media(max-width:800px){.hero-parallax{inset:0 0 auto;height:365px}.parallax-blueprints{top:1%;right:-28%;width:92vw;opacity:.26}.parallax-foreground{width:min(100vw,680px);bottom:0}.hero-character{z-index:5}}
 
 /* Polished indie adventure styling: atmospheric, restrained, and portfolio-first. */
 :root{
@@ -173,11 +174,6 @@ footer{border-color:#314850;background:#091a22}
 .post-body blockquote{background:#142c36}
 .post-body code{color:#e8bd68}
 footer .footer-content p{color:#90a8ad}
-.hero-clouds{position:absolute;z-index:1;inset:auto 0 0;height:clamp(260px,42vh,380px);overflow:hidden;pointer-events:none}
-.cloud-band{position:absolute;display:block;max-width:none;width:110%;height:auto;left:-5%;top:-8%;opacity:.25;will-change:transform;animation:cloud-drift 64s ease-in-out infinite alternate}
-@keyframes cloud-drift{from{transform:translate3d(-2.6%,0,0)}to{transform:translate3d(2.6%,1.2%,0)}}
-@media(max-width:800px){.hero-clouds{height:170px}.cloud-band{width:180%;left:-40%;top:-5%;opacity:.18;animation-duration:42s}}
-@media(prefers-reduced-motion:reduce){.cloud-band{animation:none!important}}
 @keyframes character-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @media(max-width:800px){
   .nav-right{background:#102630;border-color:#304953}

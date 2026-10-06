@@ -173,10 +173,13 @@ footer{border-color:#314850;background:#091a22}
 .post-body blockquote{background:#142c36}
 .post-body code{color:#e8bd68}
 footer .footer-content p{color:#90a8ad}
-.hero-clouds{position:absolute;z-index:1;inset:auto 0 0;height:clamp(260px,42vh,380px);overflow:hidden;pointer-events:none}
-.cloud-band{position:absolute;display:block;max-width:none;width:110%;height:auto;left:-5%;top:-8%;opacity:.25;will-change:transform;animation:cloud-drift 64s ease-in-out infinite alternate}
-@keyframes cloud-drift{from{transform:translate3d(-2.6%,0,0)}to{transform:translate3d(2.6%,1.2%,0)}}
-@media(max-width:800px){.hero-clouds{height:170px}.cloud-band{width:180%;left:-40%;top:-5%;opacity:.18;animation-duration:42s}}
+.hero-clouds{position:absolute;z-index:1;inset:0 0 auto;height:80%;overflow:hidden;pointer-events:none}
+.cloud-band{position:absolute;display:block;max-width:none;width:130%;height:auto;opacity:.2;will-change:transform;filter:blur(.35px)}
+.cloud-band-far{left:-14%;top:-4%;opacity:.19;animation:cloud-drift-far 70s ease-in-out infinite alternate}
+.cloud-band-near{left:-25%;top:8%;width:155%;opacity:.12;animation:cloud-drift-near 48s ease-in-out infinite alternate-reverse}
+@keyframes cloud-drift-far{from{transform:translate3d(-2.5%,0,0)}to{transform:translate3d(2.5%,1.5%,0)}}
+@keyframes cloud-drift-near{from{transform:translate3d(2.2%,0,0)}to{transform:translate3d(-2.2%,-1%,0)}}
+@media(max-width:800px){.hero-clouds{height:365px}.cloud-band-far{top:0}.cloud-band-near{top:12%}}
 @media(prefers-reduced-motion:reduce){.cloud-band{animation:none!important}}
 @keyframes character-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @media(max-width:800px){

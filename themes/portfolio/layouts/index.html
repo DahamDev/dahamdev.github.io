@@ -1,8 +1,10 @@
 {{ define "main" }}
 <section class="home-hero">
     <img class="hero-art" src="{{ "images/renaissance-island.webp" | relURL }}" alt="" aria-hidden="true">
+    <div class="hero-clouds" aria-hidden="true">
+        <img class="cloud-band" src="{{ "images/sky-clouds.webp" | relURL }}" alt="">
+    </div>
     <div class="hero-parallax" aria-hidden="true">
-        <img class="parallax-blueprints" data-parallax-speed="0.13" src="{{ "images/renaissance-blueprints.webp" | relURL }}" alt="">
         <img class="parallax-foreground" data-parallax-speed="0.28" src="{{ "images/renaissance-foreground.webp" | relURL }}" alt="">
     </div>
     <div class="treasure-sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -17,8 +19,8 @@
             </div>
             <div class="hero-meta"><span>✦ &nbsp;Based in Aotearoa, New Zealand</span><span>Backend · Cloud · Kubernetes</span></div>
         </div>
-        <div class="hero-character" data-parallax-speed="0.17"><img src="{{ "images/daham-renaissance-engineer.webp" | relURL }}" alt="Cartoon illustration of Daham as a Renaissance engineer, with a flying-machine sketch"></div>
-        <aside class="quest-stamp" aria-label="Current quest: invent the next thing"><span class="quest-star">✦</span><span><small>FIELD NOTES</small><strong>Invent the next thing</strong></span><span class="quest-check">✓</span></aside>
+        <div class="hero-character" data-parallax-speed="0.17"><img src="{{ "images/daham-game-character.webp" | relURL }}" alt="2D illustration of Daham as a Renaissance-inspired software engineer holding an engineering sketch"></div>
+        <aside class="quest-stamp" aria-label="Engineering focus: backend, cloud, and reliable software"><span class="quest-star" aria-hidden="true">✦</span><span><small>ENGINEERING LOG</small><strong>Backend · cloud · reliability</strong></span><span class="quest-check" aria-hidden="true">↗</span></aside>
     </div>
     <div class="container skill-strip"><span class="strip-label">My usual toolkit</span><div><span>Java</span><span>Python</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>Distributed systems</span></div></div>
 </section>
