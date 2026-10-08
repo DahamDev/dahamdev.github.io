@@ -3,30 +3,30 @@
     "title": "Software Engineer - Microservices",
     "institution": "Air New Zealand",
     "date": "2026 – Present",
-    "description": "Migrated Air NZ learning managemetn system into a new system. Desgined several integrations with internal systems using event driven AWS serverless architecture patterns. Trasnformed existing microservices based jabva applciations into python lambda functions. "
+    "description": "Designed the end-to-end architecture for migrating Air New Zealand’s learning management system to a new platform. Built event-driven integrations between the platform and internal systems using AWS serverless patterns.\n\n- Modernized Java-based microservices as Python AWS Lambda functions.\n- Established Lambda deployment patterns in Azure DevOps pipelines using AWS SAM templates.\n- Designed observability and alerting with OpenTelemetry (OTel) Lambda layers, Amazon CloudWatch, and SNS notifications.\n- Added support for invoking Lambda functions through Kong API Gateway."
   },
   {
     "title": "Cloud Support Engineer (Kubernetes and Container Service)",
     "institution": "Amazon Web Services",
     "date": "2024 – Present",
-    "description": "Help organizations work backwards from business and reliability goals to deploy, operate, and troubleshoot containerized workloads on AWS, mainly Elastic Kubernetes Service (EKS) and Elastic Container Service (ECS). Investigate critical production issues and provide root cause analysis."
+    "description": "Delivered expert technical support for AWS container services to enterprise customers running regulated and high-traffic workloads, specializing in Amazon Elastic Kubernetes Service (EKS) and Amazon Elastic Container Service (ECS).\n\n- Diagnosed performance degradation and reliability issues in containerized applications and production workloads.\n- Advised customers on EKS and ECS architecture, cluster scaling, cost optimization, reliability, and security best practices.\n- Supported large-scale Kubernetes clusters, helping maintain stability, resource efficiency, and alignment with AWS Well-Architected principles.\n- Reduced time to resolve production-critical incidents through rapid triage, cross-team escalation, and clear real-time customer communication.\n- Worked with AWS engineering and service teams to investigate product defects, develop workarounds, and advocate for customer-focused improvements."
   },
   {
     "title": "Senior Software Engineer",
     "institution": "Zero Beta, Colombo, Sri Lanka",
     "date": "2023 – 2024",
-    "description": "Owned backend delivery for a core financial risk management product suite. Engineered high-performance services for market data and risk calculations, reducing system latency from 1000ms to 10ms."
+    "description": "Contributed to the development and deployment of **Blueshift**, a cloud-native financial risk management product.\n\n- Developed Java microservices and REST APIs for market data processing, following maintainable coding standards.\n- Profiled and performance-tested services, reducing latency from 1,000 ms to 10 ms through Java concurrency, caching, and algorithmic improvements.\n- Built end-to-end release management scripts in Python and CI/CD pipelines, reducing product release time by 10×.\n- Automated AWS resource provisioning and management with Bash, Python, and CloudFormation, including EKS, API Gateway, Cognito, S3, Lambda, ElastiCache/Redis, and MSK.\n- Integrated Amazon CloudWatch to monitor application health and status.\n- Identified and remediated security issues in application code and infrastructure.\n- Improved user-facing functionality using React and Redux."
   },
   {
     "title": "Software Engineer",
     "institution": "Zero Beta, Colombo, Sri Lanka",
     "date": "2022 – 2023",
-    "description": "Built backend features with stronger test coverage, clean code practices, Redis caching, and MySQL data flows so software could move safely from development into production."
+    "description": "Designed and developed an **Execution Management System** that routes market orders to FIX market gateways.\n\n- Built APIs and user interfaces for real-time order management.\n- Worked with architects and business stakeholders on design decisions to reduce latency and improve system scalability.\n- Integrated SBE encoding and Java concurrency to improve execution performance.\n- Added a statistics collector to measure real-time system performance."
   },
   {
     "title": "Software Engineer",
     "institution": "Axiata Digital Labs, Colombo, Sri Lanka",
     "date": "2021 – 2022",
-    "description": "Modernized legacy telecommunications applications into microservices and migrated workloads from on-premises Kubernetes to AWS EKS."
+    "description": "Developed distributed applications, microservices, and REST APIs for subscriber-charging transactions at a major telecommunications service provider, using Java and Spring Boot.\n\n- Modernized legacy applications with updated designs and engineering best practices, improving code quality and fixing vulnerabilities and defects.\n- Migrated applications from on-premises servers to AWS EKS with minimal disruption to revenue-generating services.\n- Managed CI/CD pipelines and applied DevOps practices to support faster, reliable application delivery.\n- Migrated 10 million customer transaction records from an on-premises Oracle database to AWS RDS.\n- Led technical sessions on Test-Driven Development (TDD) and helped teams apply it in day-to-day development.\n- Provided L3 production support for applications on on-premises servers and Kubernetes clusters, including participation in critical incident response.\n- Worked within CMMI-aligned processes and Agile delivery practices."
   }
 ]

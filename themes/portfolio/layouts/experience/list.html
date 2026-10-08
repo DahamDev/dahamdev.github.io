@@ -17,7 +17,7 @@
                     <span class="timeline-date">{{ .date }}</span>
                     <h3>{{ .title }}</h3>
                     <div class="timeline-org">{{ .institution }}</div>
-                    <p>{{ .description }}</p>
+                    <div class="timeline-description">{{ .description | markdownify }}</div>
                 </div>
             </div>
             {{ end }}

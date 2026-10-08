@@ -1,24 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Education on Daham Navinda — Software Engineer</title>
-		<link>http://localhost:1313/tags/education/</link>
-		<description>Recent content in Education on Daham Navinda — Software Engineer</description>
-		<generator>Hugo</generator>
-		<language>en-us</language>
-		
-		
-		
-		
-			<lastBuildDate>Fri, 11 Sep 2026 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="http://localhost:1313/tags/education/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>AI Has Raised the Bar for Software Engineers</title>
-				<link>http://localhost:1313/blog/ai-has-raised-the-bar-for-software-engineers/</link>
-				<pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/blog/ai-has-raised-the-bar-for-software-engineers/</guid>
-				<description>&lt;p&gt;For decades, learning to become a software engineer followed a relatively familiar path.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-familiar-path&#34;&gt;The familiar path&lt;/h2&gt;&#xA;&lt;p&gt;Learn a programming language. Learn data structures and algorithms. Build applications. Learn databases. Understand operating systems and networks. Write increasingly complex software.&lt;/p&gt;&#xA;&lt;p&gt;There was a simple assumption: if you could write good code, you were becoming a good software engineer.&lt;/p&gt;&#xA;&lt;p&gt;That assumption is now being challenged by artificial intelligence.&lt;/p&gt;&#xA;&lt;h2 id=&#34;ai-changes-the-signal&#34;&gt;AI changes the signal&lt;/h2&gt;&#xA;&lt;p&gt;Large language models can write functions, generate APIs, create tests, refactor applications, explain unfamiliar code and even build entire features from a natural-language description. AI coding agents are increasingly capable of navigating repositories, modifying multiple files and working through development tasks with surprisingly little human intervention.&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Education on Daham Navinda — Software Engineer</title><link>https://dahamnavinda.com/tags/education/</link><description>Recent content in Education on Daham Navinda — Software Engineer</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 11 Sep 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://dahamnavinda.com/tags/education/index.xml" rel="self" type="application/rss+xml"/><item><title>AI Has Raised the Bar for Software Engineers</title><link>https://dahamnavinda.com/blog/ai-has-raised-the-bar-for-software-engineers/</link><pubDate>Fri, 11 Sep 2026 00:00:00 +0000</pubDate><guid>https://dahamnavinda.com/blog/ai-has-raised-the-bar-for-software-engineers/</guid><description>&lt;p&gt;For decades, learning to become a software engineer followed a relatively familiar path.&lt;/p&gt;
+&lt;h2 id="the-familiar-path"&gt;The familiar path&lt;/h2&gt;
+&lt;p&gt;Learn a programming language. Learn data structures and algorithms. Build applications. Learn databases. Understand operating systems and networks. Write increasingly complex software.&lt;/p&gt;
+&lt;p&gt;There was a simple assumption: if you could write good code, you were becoming a good software engineer.&lt;/p&gt;
+&lt;p&gt;That assumption is now being challenged by artificial intelligence.&lt;/p&gt;
+&lt;h2 id="ai-changes-the-signal"&gt;AI changes the signal&lt;/h2&gt;
+&lt;p&gt;Large language models can write functions, generate APIs, create tests, refactor applications, explain unfamiliar code and even build entire features from a natural-language description. AI coding agents are increasingly capable of navigating repositories, modifying multiple files and working through development tasks with surprisingly little human intervention.&lt;/p&gt;</description></item></channel></rss>

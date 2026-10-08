@@ -1,65 +1,10 @@
-<!DOCTYPE html>
-<html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#17191f">
-    <title>How to Structure Terraform Projects for Scalable Infrastructure Management | Daham Navinda — Software Engineer</title>
-    <meta name="description" content="Daham Navinda is a software engineer interested in backend systems, cloud infrastructure, Kubernetes, and the craft of building reliable software.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="/css/styles.ee23a5cbce6d65495ba8cd2d2d12c57c6ef6c0ff2aa513adf7f3735f66489168.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body class="section-blog kind-page">
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-        <nav class="navbar container" aria-label="Main navigation">
-            <a href="/" class="nav-brand"><span class="brand-symbol" aria-hidden="true">&lt;dn/&gt;</span><span>Daham Navinda<small>engineer · tinkerer · human</small></span></a>
-            <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span></button>
-            <div class="nav-right" id="site-navigation"><ul class="nav-menu"><li><a href="/about/">About</a></li><li><a href="/experience/">Experience</a></li><li><a href="/projects/">Projects</a></li><li><a href="/blog/">Blog</a></li></ul><a class="nav-cta" href="https://github.com/DahamDev" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
-        </nav>
-    </header>
-    <main id="main">
-<section class="blog-detail">
-    <div class="container">
-        <a href="/blog/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
-
-        
-        <article>
-            <h1 class="post-title">How to Structure Terraform Projects for Scalable Infrastructure Management</h1>
-            <div class="post-meta">
-                <span><i class="far fa-calendar"></i> January 15, 2024</span>
-                <span><i class="far fa-clock"></i> 10 min read</span>
-            </div>
-            <div class="post-tags">
-                
-                <span class="tag">Terraform</span>
-                
-                <span class="tag">AWS</span>
-                
-                <span class="tag">Infrastructure as Code</span>
-                
-                <span class="tag">DevOps</span>
-                
-                <span class="tag">Best Practices</span>
-                
-            </div>
-            <div class="post-body">
-                <p>Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.</p>
-<h2 id="example-project-overview">Example Project Overview</h2>
-<p>My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:</p>
-<ul>
-<li>Amazon VPC with public and private subnets across multiple Availability Zones</li>
-<li>Application Load Balancer (ALB) for distributing incoming traffic</li>
-<li>Amazon ECS Fargate cluster running containerized applications</li>
-<li>Supporting infrastructure including security groups, IAM roles, and CloudWatch logs</li>
-</ul>
-<h2 id="project-structure-breakdown">Project Structure Breakdown</h2>
-<pre tabindex="0"><code>terraform-project-structure/
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=color-scheme content="dark"><meta name=theme-color content="#17191f"><title>How to Structure Terraform Projects for Scalable Infrastructure Management | Daham Navinda — Software Engineer</title><meta name=description content="Daham Navinda is a software engineer interested in backend systems, cloud infrastructure, Kubernetes, and the craft of building reliable software."><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel=stylesheet><link rel=stylesheet href=/css/styles.761d7a7c5a5a22cc7af9ecc73c6c031d4718c9ba1d766b2278c234c8b466fe1a.css><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css></head><body class="section-blog kind-page"><a class=skip-link href=#main>Skip to content</a><header class=site-header><nav class="navbar container" aria-label="Main navigation"><a href=/ class=nav-brand><span class=brand-symbol aria-hidden=true>&lt;dn/></span><span>Daham Navinda<small>engineer · tinkerer · human</small></span></a>
+<button class=nav-toggle aria-label="Open navigation" aria-expanded=false aria-controls=site-navigation><span></span><span></span></button><div class=nav-right id=site-navigation><ul class=nav-menu><li><a href=/about/>About</a></li><li><a href=/experience/>Experience</a></li><li><a href=/projects/>Projects</a></li><li><a href=/blog/>Blog</a></li></ul><a class=nav-cta href=https://github.com/DahamDev target=_blank rel=noopener>GitHub <span aria-hidden=true>↗</span></a></div></nav></header><main id=main><section class=blog-detail><div class=container><a href=/blog/ class=back-link><i class="fas fa-arrow-left"></i> Back to Blog</a><article><h1 class=post-title>How to Structure Terraform Projects for Scalable Infrastructure Management</h1><div class=post-meta><span><i class="far fa-calendar"></i> January 15, 2024</span>
+<span><i class="far fa-clock"></i> 10 min read</span></div><div class=post-tags><span class=tag>Terraform</span>
+<span class=tag>AWS</span>
+<span class=tag>Infrastructure as Code</span>
+<span class=tag>DevOps</span>
+<span class=tag>Best Practices</span></div><div class=post-body><p>Managing infrastructure as code (IaC) becomes increasingly complex as your AWS environment grows. A well-organized Terraform project structure is essential for maintaining scalable, reusable, and manageable infrastructure code. This article demonstrates a proven project structure that enables teams to efficiently manage multi-environment deployments while promoting code reusability and maintainability.</p><h2 id=example-project-overview>Example Project Overview</h2><p>My example project deploys a containerized web application using Amazon ECS (Elastic Container Service) with the following AWS services:</p><ul><li>Amazon VPC with public and private subnets across multiple Availability Zones</li><li>Application Load Balancer (ALB) for distributing incoming traffic</li><li>Amazon ECS Fargate cluster running containerized applications</li><li>Supporting infrastructure including security groups, IAM roles, and CloudWatch logs</li></ul><h2 id=project-structure-breakdown>Project Structure Breakdown</h2><pre tabindex=0><code>terraform-project-structure/
 ├── modules/                    # Reusable infrastructure modules
 │   ├── vpc/                   # VPC module
 │   │   ├── main.tf           # VPC resources
@@ -79,57 +24,4 @@
 ├── versions.tf              # Provider and Terraform version constraints
 ├── terraform.tfvars        # Variable values
 └── Makefile                # Automation commands
-</code></pre><h2 id="benefits-of-this-structure">Benefits of This Structure</h2>
-<h3 id="1-modularity-and-reusability">1. Modularity and Reusability</h3>
-<p>Modules encapsulate related resources, making them reusable across different projects and environments.</p>
-<h3 id="2-clear-separation-of-concerns">2. Clear Separation of Concerns</h3>
-<p>Each module handles a specific aspect of your infrastructure:</p>
-<ul>
-<li><strong>VPC module:</strong> Network infrastructure (subnets, route tables, NAT gateways)</li>
-<li><strong>ALB module:</strong> Load balancing and traffic distribution</li>
-<li><strong>ECS module:</strong> Container orchestration and application deployment</li>
-</ul>
-<h3 id="3-simplified-testing-and-validation">3. Simplified Testing and Validation</h3>
-<p>Modules can be tested independently, making it easier to validate changes and catch issues early in the development cycle.</p>
-<h2 id="best-practices-summary">Best Practices Summary</h2>
-<ol>
-<li><strong>Use consistent naming conventions</strong> across all modules and resources</li>
-<li><strong>Document your modules</strong> with clear descriptions and examples</li>
-<li><strong>Version your modules</strong> using Git tags or semantic versioning</li>
-<li><strong>Implement state locking</strong> using DynamoDB to prevent concurrent modifications</li>
-<li><strong>Use remote state storage</strong> (S3) for team collaboration</li>
-<li><strong>Never commit sensitive data</strong> - use <code>.gitignore</code> properly</li>
-</ol>
-<h2 id="conclusion">Conclusion</h2>
-<p>A well-structured Terraform project provides the foundation for scalable infrastructure management. By organizing code into reusable modules and implementing consistent patterns, teams can efficiently manage complex AWS environments across multiple stages of development.</p>
-
-            </div>
-        </article>
-
-        
-    </div>
-</section>
-</main>
-    <footer><div class="container footer-content"><div><a href="/" class="footer-name">Daham Navinda <span>·</span> <small>made with curiosity</small></a></div><div class="footer-links"><a href="/about/">About</a><a href="/projects/">Projects</a><a href="/blog/">Blog</a><a href="mailto:navindabc@gmail.com">Email ↗</a></div><p class="copyright">&copy; 2026 Daham Navinda</p></div></footer>
-    <script>
-        (() => {
-            const toggle = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.nav-right');
-            if (!toggle || !nav) return;
-            const setMenu = open => {
-                toggle.setAttribute('aria-expanded', String(open));
-                toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-                nav.classList.toggle('active', open);
-            };
-            toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-            nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-                    setMenu(false);
-                    toggle.focus();
-                }
-            });
-        })();
-    </script>
-</body>
-</html>
+</code></pre><h2 id=benefits-of-this-structure>Benefits of This Structure</h2><h3 id=1-modularity-and-reusability>1. Modularity and Reusability</h3><p>Modules encapsulate related resources, making them reusable across different projects and environments.</p><h3 id=2-clear-separation-of-concerns>2. Clear Separation of Concerns</h3><p>Each module handles a specific aspect of your infrastructure:</p><ul><li><strong>VPC module:</strong> Network infrastructure (subnets, route tables, NAT gateways)</li><li><strong>ALB module:</strong> Load balancing and traffic distribution</li><li><strong>ECS module:</strong> Container orchestration and application deployment</li></ul><h3 id=3-simplified-testing-and-validation>3. Simplified Testing and Validation</h3><p>Modules can be tested independently, making it easier to validate changes and catch issues early in the development cycle.</p><h2 id=best-practices-summary>Best Practices Summary</h2><ol><li><strong>Use consistent naming conventions</strong> across all modules and resources</li><li><strong>Document your modules</strong> with clear descriptions and examples</li><li><strong>Version your modules</strong> using Git tags or semantic versioning</li><li><strong>Implement state locking</strong> using DynamoDB to prevent concurrent modifications</li><li><strong>Use remote state storage</strong> (S3) for team collaboration</li><li><strong>Never commit sensitive data</strong> - use <code>.gitignore</code> properly</li></ol><h2 id=conclusion>Conclusion</h2><p>A well-structured Terraform project provides the foundation for scalable infrastructure management. By organizing code into reusable modules and implementing consistent patterns, teams can efficiently manage complex AWS environments across multiple stages of development.</p></div></article></div></section></main><footer><div class="container footer-content"><div><a href=/ class=footer-name>Daham Navinda <span>·</span> <small>made with curiosity</small></a></div><div class=footer-links><a href=/about/>About</a><a href=/projects/>Projects</a><a href=/blog/>Blog</a><a href=mailto:navindabc@gmail.com>Email ↗</a></div><p class=copyright>&copy; 2026 Daham Navinda</p></div></footer><script>(()=>{const e=document.querySelector(".nav-toggle"),t=document.querySelector(".nav-right");if(!e||!t)return;const n=n=>{e.setAttribute("aria-expanded",String(n)),e.setAttribute("aria-label",n?"Close navigation":"Open navigation"),t.classList.toggle("active",n)};e.addEventListener("click",()=>n(e.getAttribute("aria-expanded")!=="true")),t.querySelectorAll("a").forEach(e=>e.addEventListener("click",()=>n(!1))),document.addEventListener("keydown",t=>{t.key==="Escape"&&e.getAttribute("aria-expanded")==="true"&&(n(!1),e.focus())})})()</script></body></html>
