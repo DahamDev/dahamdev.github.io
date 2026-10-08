@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark">
@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/css/styles.3337c33df9502074fd0f906c7e64e0795d7248bf233c9a6953f336f54a574749.css">
+    <link rel="stylesheet" href="/css/styles.4de973606c4217cb6cab1ea9ac51b1dd0deec12f3df99997830b6d9699558ee6.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="section-about kind-section">
@@ -207,26 +207,6 @@
                     toggle.focus();
                 }
             });
-
-            const hero = document.querySelector('.home-hero');
-            const parallaxLayers = hero?.querySelectorAll('[data-parallax-speed]');
-            if (hero && parallaxLayers?.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                let frame = 0;
-                const updateParallax = () => {
-                    cancelAnimationFrame(frame);
-                    frame = requestAnimationFrame(() => {
-                        const heroTop = hero.getBoundingClientRect().top + window.scrollY;
-                        const scrolledPastHeroTop = Math.max(0, heroTop - hero.getBoundingClientRect().top);
-                        parallaxLayers.forEach(layer => {
-                            const speed = Number(layer.dataset.parallaxSpeed) || 0;
-                            layer.style.setProperty('--parallax-y', `${scrolledPastHeroTop * speed}px`);
-                        });
-                    });
-                };
-                window.addEventListener('scroll', updateParallax, { passive: true });
-                window.addEventListener('resize', updateParallax, { passive: true });
-                updateParallax();
-            }
         })();
     </script>
 </body>

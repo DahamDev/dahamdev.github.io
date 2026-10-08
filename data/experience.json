@@ -3,7 +3,7 @@
     "title": "Software Engineer - Microservices",
     "institution": "Air New Zealand",
     "date": "2026 – Present",
-    "description": "In progress.... More to come"
+    "description": "Migrated Air NZ learning managemetn system into a new system. Desgined several integrations with internal systems using event driven AWS serverless architecture patterns. Trasnformed existing microservices based jabva applciations into python lambda functions. "
   },
   {
     "title": "Cloud Support Engineer (Kubernetes and Container Service)",

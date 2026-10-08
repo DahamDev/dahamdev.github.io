@@ -1,17 +1,10 @@
 {{ define "main" }}
 <section class="home-hero">
     <img class="hero-art" src="{{ "images/renaissance-island.webp" | relURL }}" alt="" aria-hidden="true">
-    <div class="hero-clouds" aria-hidden="true">
-        <img class="cloud-band" src="{{ "images/sky-clouds.webp" | relURL }}" alt="">
-    </div>
-    <div class="hero-parallax" aria-hidden="true">
-        <img class="parallax-foreground" data-parallax-speed="0.28" src="{{ "images/renaissance-foreground.webp" | relURL }}" alt="">
-    </div>
-    <div class="treasure-sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="container hero-layout">
         <div class="hero-copy">
             <p class="eyebrow"><span class="status-dot"></span> A developer’s little corner of the internet</p>
-            <h1>Hi, I’m Daham.<br><span class="heading-accent">I build things</span><br>that work.</h1>
+            <h1>Hi, I’m Daham.<br>I turn complex<br><span class="heading-accent">problems into</span><br>reliable software</h1>
             <p class="hero-description">Software engineer by day, curious tinkerer always. I explore backend systems, cloud worlds, and the little details that make good software feel great.</p>
             <div class="hero-actions">
                 <a href="{{ "projects/" | relURL }}" class="btn btn-primary">Browse the project log <span aria-hidden="true">→</span></a>
@@ -19,7 +12,6 @@
             </div>
             <div class="hero-meta"><span>✦ &nbsp;Based in Aotearoa, New Zealand</span><span>Backend · Cloud · Kubernetes</span></div>
         </div>
-        <div class="hero-character" data-parallax-speed="0.17"><img src="{{ "images/daham-game-character.webp" | relURL }}" alt="2D illustration of Daham as a Renaissance-inspired software engineer holding an engineering sketch"></div>
         <aside class="quest-stamp" aria-label="Engineering focus: backend, cloud, and reliable software"><span class="quest-star" aria-hidden="true">✦</span><span><small>ENGINEERING LOG</small><strong>Backend · cloud · reliability</strong></span><span class="quest-check" aria-hidden="true">↗</span></aside>
     </div>
     <div class="container skill-strip"><span class="strip-label">My usual toolkit</span><div><span>Java</span><span>Python</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>Distributed systems</span></div></div>
@@ -45,8 +37,8 @@
 {{ end }}
 
 <section class="section now-section">
-    <div class="container now-layout"><div><p class="eyebrow">A few things about my work</p><h2>Curiosity, then craft<span class="heading-accent">.</span></h2></div><div class="now-copy"><p>I’m drawn to the parts of software you can’t always see: resilient services, clear interfaces between systems, infrastructure that can be repeated, and the tiny details that make things pleasant to use.</p><a href="{{ "about/" | relURL }}" class="text-link">More about my background <span aria-hidden="true">↗</span></a></div></div>
-    <div class="container interest-grid"><article><span class="interest-icon">{ }</span><h3>Backend systems</h3><p>APIs, data flows, performance, and the shape of a good service.</p></article><article><span class="interest-icon">⌘</span><h3>Cloud &amp; platforms</h3><p>AWS, Kubernetes, automation, and making operations less mysterious.</p></article><article><span class="interest-icon">⌁</span><h3>Learning in public</h3><p>Writing down the useful things I learn while building and debugging.</p></article></div>
+    <div class="container now-layout"><div><p class="eyebrow">A few things about my work</p><h2>Curiosity, then craft<span class="heading-accent">.</span></h2></div><div class="now-copy"><p>I connect business goals with sound technical decisions, then help teams build reliable systems that deliver lasting value.</p><a href="{{ "about/" | relURL }}" class="text-link">More about my background <span aria-hidden="true">↗</span></a></div></div>
+    <div class="container interest-grid"><article><span class="interest-icon">{ }</span><h3>Business aligned architecture</h3><p>Understand stakeholder needs, navigate competing priorities, and shape practical architectures that teams can deliver.</p></article><article><span class="interest-icon">⌘</span><h3>Distributed systems engineering</h3><p>Design and build resilient backend systems, from service boundaries and APIs to data flows and scale.</p></article><article><span class="interest-icon">⌁</span><h3>Expertise in AWS and Kubernetes</h3><p>Design effective DevOps practices and SRE architectures for reliable software delivery and operations.</p></article></div>
 </section>
 
 {{ $posts := first 3 (where .Site.RegularPages "Section" "blog") }}

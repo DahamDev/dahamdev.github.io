@@ -43,26 +43,6 @@
                     toggle.focus();
                 }
             });
-
-            const hero = document.querySelector('.home-hero');
-            const parallaxLayers = hero?.querySelectorAll('[data-parallax-speed]');
-            if (hero && parallaxLayers?.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                let frame = 0;
-                const updateParallax = () => {
-                    cancelAnimationFrame(frame);
-                    frame = requestAnimationFrame(() => {
-                        const heroTop = hero.getBoundingClientRect().top + window.scrollY;
-                        const scrolledPastHeroTop = Math.max(0, heroTop - hero.getBoundingClientRect().top);
-                        parallaxLayers.forEach(layer => {
-                            const speed = Number(layer.dataset.parallaxSpeed) || 0;
-                            layer.style.setProperty('--parallax-y', `${scrolledPastHeroTop * speed}px`);
-                        });
-                    });
-                };
-                window.addEventListener('scroll', updateParallax, { passive: true });
-                window.addEventListener('resize', updateParallax, { passive: true });
-                updateParallax();
-            }
         })();
     </script>
 </body>

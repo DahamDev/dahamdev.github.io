@@ -75,13 +75,31 @@ footer{background:#07384f;border-color:#e8f99c}.footer-name{color:#f3fff9}.foote
 @media(max-width:800px){.home-hero{min-height:0;background:#eff9f4}.home-hero:before{z-index:1;inset:0 0 auto;height:365px;background:linear-gradient(180deg,rgba(4,47,70,.18) 0%,rgba(4,58,78,.16) 65%,#eff9f4 100%)}.hero-art{height:365px;object-position:67% 44%}.hero-layout{min-height:0;display:block;padding-top:295px;padding-bottom:88px}.hero-copy{max-width:570px;padding:23px;border:2px solid #b9ded7;border-radius:8px 18px 8px 18px;background:rgba(248,255,249,.96);box-shadow:4px 4px 0 #b3dcd4}.hero-copy .eyebrow{color:#07889b}.hero-copy h1{color:#07384f;text-shadow:none}.hero-copy .heading-accent{color:#07889b}.hero-description{color:#426c78;text-shadow:none}.hero-meta,.hero-meta>span:first-child{color:#527783}.hero-meta>span:first-child{color:#07889b}.hero-actions .btn{border-color:#07384f;background:#f8fff9;color:#07384f;box-shadow:3px 3px 0 #07384f}.hero-actions .btn-primary{background:#e8f99c;border-color:#07384f}.quest-stamp{right:9px;bottom:20px}}
 @media(max-width:430px){.hero-layout{padding-top:292px;padding-bottom:99px}.hero-art,.home-hero:before{height:355px}.hero-copy{padding:19px}.hero-copy h1{font-size:42px}.hero-art{object-position:67% 42%}}
 
-/* Main hero background image. */
+/* A lightly animated treasure-island layer. */
 .home-hero{isolation:isolate}
-.hero-art{z-index:0}
+.hero-art{z-index:0;transform:scale(1.055);animation:island-drift 26s ease-in-out infinite alternate;will-change:transform}
 .home-hero:before{z-index:1}
+.treasure-sparkles{position:absolute;z-index:2;inset:0;overflow:hidden;pointer-events:none}
+.treasure-sparkles i{position:absolute;bottom:-50px;left:12%;width:13px;height:13px;background:#ffe99c;border-radius:2px;clip-path:polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,39% 62%,0 50%,39% 38%);filter:drop-shadow(0 0 8px #ffe99c);animation:treasure-dust 12s linear infinite}
+.treasure-sparkles i:nth-child(2){left:27%;width:8px;height:8px;animation-duration:15s;animation-delay:-7s}
+.treasure-sparkles i:nth-child(3){left:42%;width:19px;height:19px;animation-duration:18s;animation-delay:-3s}
+.treasure-sparkles i:nth-child(4){left:56%;width:9px;height:9px;animation-duration:13s;animation-delay:-9s}
+.treasure-sparkles i:nth-child(5){left:73%;width:14px;height:14px;animation-duration:17s;animation-delay:-5s}
+.treasure-sparkles i:nth-child(6){left:87%;width:7px;height:7px;animation-duration:14s;animation-delay:-11s}
+.treasure-sparkles i:nth-child(7){left:34%;width:5px;height:5px;animation-duration:11s;animation-delay:-4s}
+.treasure-sparkles i:nth-child(8){left:65%;width:6px;height:6px;animation-duration:16s;animation-delay:-12s}
 .quest-stamp{z-index:4;right:36%;bottom:34px}
-@media(max-width:800px){.quest-stamp{right:9px;bottom:20px}.hero-art{object-position:67% 16%}}
+@keyframes treasure-dust{0%{transform:translate3d(0,0,0) rotate(0) scale(.65);opacity:0}12%{opacity:.85}70%{opacity:.65}100%{transform:translate3d(24px,-760px,0) rotate(150deg) scale(1.2);opacity:0}}
+@keyframes island-drift{from{transform:scale(1.055) translate3d(-.25%,0,0)}to{transform:scale(1.095) translate3d(.35%,-.3%,0)}}
+@media(max-width:800px){.treasure-sparkles{height:365px;bottom:auto}.quest-stamp{right:9px;bottom:20px}.hero-art{animation-duration:34s;object-position:67% 16%}}
 @media(max-width:430px){.quest-stamp{right:7px;bottom:18px}}
+@media(prefers-reduced-motion:reduce){.hero-art,.treasure-sparkles i{animation:none!important}.hero-art{transform:scale(1.04)}}
+
+/* Three foreground depths move at different rates while the page scrolls. */
+.hero-parallax{position:absolute;z-index:2;inset:0;overflow:visible;pointer-events:none}
+.hero-parallax img{position:absolute;display:block;max-width:none;transform:translate3d(0,var(--parallax-y,0px),0);will-change:transform}
+.parallax-foreground{bottom:0;width:100vw;height:auto;object-fit:initial;object-position:initial;transform:translate3d(-50%,var(--parallax-y,0px),0);opacity:.96}
+@media(max-width:800px){.hero-parallax{inset:0 0 auto;height:365px}.parallax-foreground{width:min(100vw,680px);bottom:0}}
 
 /* Polished indie adventure styling: atmospheric, restrained, and portfolio-first. */
 :root{
@@ -149,6 +167,11 @@ footer{border-color:#314850;background:#091a22}
 .post-body blockquote{background:#142c36}
 .post-body code{color:#e8bd68}
 footer .footer-content p{color:#90a8ad}
+.hero-clouds{position:absolute;z-index:1;inset:auto 0 0;height:clamp(260px,42vh,380px);overflow:hidden;pointer-events:none}
+.cloud-band{position:absolute;display:block;max-width:none;width:110%;height:auto;left:-5%;top:-8%;opacity:.25;will-change:transform;animation:cloud-drift 64s ease-in-out infinite alternate}
+@keyframes cloud-drift{from{transform:translate3d(-2.6%,0,0)}to{transform:translate3d(2.6%,1.2%,0)}}
+@media(max-width:800px){.hero-clouds{height:170px}.cloud-band{width:180%;left:-40%;top:-5%;opacity:.18;animation-duration:42s}}
+@media(prefers-reduced-motion:reduce){.cloud-band{animation:none!important}}
 @media(max-width:800px){
   .hero-layout{padding-top:255px}
   .nav-right{background:#102630;border-color:#304953}
