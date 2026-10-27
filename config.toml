@@ -1,13 +1,13 @@
 baseURL = "https://dahamnavinda.com/"
 languageCode = "en-us"
-title = "Daham Navinda — Software Engineer"
+title = "Daham Navinda — Software, trails & curiosity"
 theme = "portfolio"
 
 [params]
   name = "Daham Navinda"
   title = "Software Engineer · Cloud & Backend Systems"
   field = "Backend · Cloud · Kubernetes"
-  bio = "Daham Navinda is a software engineer interested in backend systems, cloud infrastructure, Kubernetes, and the craft of building reliable software."
+  bio = "The personal website of Daham Navinda, a software engineer in New Zealand. Technical projects, notes on what I’m learning, and a love of nature and hiking."
   about = "I'm a software and cloud engineer focused on understanding how systems behave and making them reliable. I currently work at Amazon Web Services as a Cloud Support Engineer specializing in Kubernetes and container services. My background includes Java, Spring Boot, Python, AWS, EKS, ECS, infrastructure as code, observability, and production incident analysis."
   email = "navindabc@gmail.com"
   github = "https://github.com/DahamDev"

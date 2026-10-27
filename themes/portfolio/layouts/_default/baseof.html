@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#17191f">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#fcfdfb">
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.bio }}{{ end }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,13 +18,13 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <nav class="navbar container" aria-label="Main navigation">
-            <a href="{{ "/" | relURL }}" class="nav-brand"><span class="brand-symbol" aria-hidden="true">&lt;dn/&gt;</span><span>{{ .Site.Params.name }}<small>engineer · tinkerer · human</small></span></a>
+            <a href="{{ "/" | relURL }}" class="nav-brand"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="M5 29 17 10l7 11 4-6 8 14H5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m13 17 4 3 4-3M8 33h24" stroke="currentColor" stroke-width="1.6"/></svg></span><span>{{ .Site.Params.name }}<small>software · trails · curiosity</small></span></a>
             <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span></button>
             <div class="nav-right" id="site-navigation"><ul class="nav-menu">{{ range .Site.Menus.main }}{{ if and (ne .Name "Contact") (ne .Name "Home") }}<li><a href="{{ .URL }}"{{ if eq $.RelPermalink .URL }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a></li>{{ end }}{{ end }}</ul><a class="nav-cta" href="{{ .Site.Params.github }}" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
         </nav>
     </header>
     <main id="main">{{ block "main" . }}{{ end }}</main>
-    <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }} <span>·</span> <small>made with curiosity</small></a></div><div class="footer-links"><a href="{{ "/about/" | relURL }}">About</a><a href="{{ "/projects/" | relURL }}">Projects</a><a href="{{ "/blog/" | relURL }}">Blog</a><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
+    <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }} <span>·</span> <small>code, trails &amp; curiosity</small></a></div><div class="footer-links"><a href="{{ "/about/" | relURL }}">About</a><a href="{{ "/projects/" | relURL }}">Projects</a><a href="{{ "/blog/" | relURL }}">Blog</a><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
     <script>
         (() => {
             const toggle = document.querySelector('.nav-toggle');

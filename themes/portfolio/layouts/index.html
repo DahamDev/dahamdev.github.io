@@ -1,27 +1,30 @@
 {{ define "main" }}
-<section class="home-hero">
-    <img class="hero-art" src="{{ "images/renaissance-island.webp" | relURL }}" alt="" aria-hidden="true">
+<section class="home-hero" aria-labelledby="hero-title" data-alpine-scene data-engine="{{ "js/vendor/three.module.min.js" | relURL }}">
+    <div class="hero-landscape" aria-hidden="true">
+        <canvas class="hero-landscape-canvas" aria-hidden="true"></canvas>
+    </div>
     <div class="container hero-layout">
         <div class="hero-copy">
-            <p class="eyebrow"><span class="status-dot"></span> A developer’s little corner of the internet</p>
-            <h1>Hi, I’m Daham.<br>I turn complex<br><span class="heading-accent">problems into</span><br>reliable software</h1>
-            <p class="hero-description">Software engineer by day, curious tinkerer always. I explore backend systems, cloud worlds, and the little details that make good software feel great.</p>
+            <p class="eyebrow">Software engineer <span aria-hidden="true">/</span> New Zealand</p>
+            <h1 id="hero-title">Hi, I’m Daham.<br>Curious by nature.</h1>
+            <p class="hero-description">I like understanding how things work, building software, and getting out into the hills. This is home to my technical projects, things I’m learning, and life beyond the screen.</p>
             <div class="hero-actions">
-                <a href="{{ "projects/" | relURL }}" class="btn btn-primary">Browse the project log <span aria-hidden="true">→</span></a>
-                <a href="{{ "about/" | relURL }}" class="btn">Meet the developer <span aria-hidden="true">↗</span></a>
+                <a href="{{ "projects/" | relURL }}" class="btn btn-primary">My projects <span aria-hidden="true">↗</span></a>
+                <a href="{{ "about/" | relURL }}" class="btn hero-secondary">About me <span aria-hidden="true">→</span></a>
             </div>
-            <div class="hero-meta"><span>✦ &nbsp;Based in Aotearoa, New Zealand</span><span>Backend · Cloud · Kubernetes</span></div>
         </div>
-        <aside class="quest-stamp" aria-label="Engineering focus: backend, cloud, and reliable software"><span class="quest-star" aria-hidden="true">✦</span><span><small>ENGINEERING LOG</small><strong>Backend · cloud · reliability</strong></span><span class="quest-check" aria-hidden="true">↗</span></aside>
     </div>
-    <div class="container skill-strip"><span class="strip-label">My usual toolkit</span><div><span>Java</span><span>Python</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>Distributed systems</span></div></div>
+    <div class="container hero-bottom"><p>New Zealand <span aria-hidden="true">·</span> Code &amp; trails</p><div class="scene-controls"><button class="scene-replay" type="button" hidden aria-label="Replay summit moment" title="Replay summit moment">↺</button><button class="scene-toggle" type="button" hidden aria-label="Pause background animation"><span class="scene-toggle-icon" aria-hidden="true">Ⅱ</span><span class="scene-toggle-text">Pause motion</span></button></div></div>
 </section>
+<div class="container skill-strip"><span class="strip-label">Things I work with</span><div><span>Java</span><span>Python</span><span>AWS</span><span>Kubernetes</span><span>Terraform</span><span>Distributed systems</span></div></div>
+{{ $alpine := resources.Get "js/alpine.js" | fingerprint }}
+<script type="module" src="{{ $alpine.RelPermalink }}"></script>
 
 {{ $projects := first 3 (where .Site.RegularPages "Section" "projects") }}
 {{ if $projects }}
 <section class="section projects-section">
     <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">The build log</p><h2>Things I’ve worked on<span class="heading-accent">.</span></h2></div><a class="text-link" href="{{ "projects/" | relURL }}">All projects <span aria-hidden="true">↗</span></a></div>
+        <div class="section-heading"><div><p class="eyebrow">My technical work</p><h2>Things I’ve worked on<span class="heading-accent">.</span></h2></div><a class="text-link" href="{{ "projects/" | relURL }}">All projects <span aria-hidden="true">↗</span></a></div>
         <div class="home-project-grid">
             {{ range $index, $project := $projects }}
             <a class="home-project-card project-card-{{ add $index 1 }}" href="{{ $project.RelPermalink }}">
@@ -37,14 +40,21 @@
 {{ end }}
 
 <section class="section now-section">
-    <div class="container now-layout"><div><p class="eyebrow">A few things about my work</p><h2>Curiosity, then craft<span class="heading-accent">.</span></h2></div><div class="now-copy"><p>I connect business goals with sound technical decisions, then help teams build reliable systems that deliver lasting value.</p><a href="{{ "about/" | relURL }}" class="text-link">More about my background <span aria-hidden="true">↗</span></a></div></div>
-    <div class="container interest-grid"><article><span class="interest-icon">{ }</span><h3>Business aligned architecture</h3><p>Understand stakeholder needs, navigate competing priorities, and shape practical architectures that teams can deliver.</p></article><article><span class="interest-icon">⌘</span><h3>Distributed systems engineering</h3><p>Design and build resilient backend systems, from service boundaries and APIs to data flows and scale.</p></article><article><span class="interest-icon">⌁</span><h3>Expertise in AWS and Kubernetes</h3><p>Design effective DevOps practices and SRE architectures for reliable software delivery and operations.</p></article></div>
+    <div class="container now-layout">
+        <div><p class="eyebrow">A little about me</p><h2>On and off<br>the keyboard<span class="heading-accent">.</span></h2></div>
+        <div class="now-copy"><p>This site is a home for the work I’m proud of, the things I’m learning, and the places I like to wander.</p><a href="{{ "about/" | relURL }}" class="text-link">A bit more about me <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="container interest-grid">
+        <article><span class="interest-icon" aria-hidden="true">{ }</span><h3>Making things work</h3><p>I enjoy working through tricky problems in backend systems and cloud infrastructure, then sharing what I learned.</p></article>
+        <article><span class="interest-icon" aria-hidden="true">⌘</span><h3>Writing things down</h3><p>Notes from problems I’ve worked through, questions I’m still exploring, and things I’d like to understand better.</p></article>
+        <article><span class="interest-icon" aria-hidden="true">⌁</span><h3>Time outdoors</h3><p>I’m drawn to hiking and New Zealand’s landscapes. A good view and a quiet moment are usually worth the climb.</p></article>
+    </div>
 </section>
 
 {{ $posts := first 3 (where .Site.RegularPages "Section" "blog") }}
 {{ if $posts }}
-<section class="section notes-section"><div class="container"><div class="section-heading"><div><p class="eyebrow">Field notes</p><h2>Recent writing<span class="heading-accent">.</span></h2></div><a href="{{ "blog/" | relURL }}" class="text-link">Visit the blog <span aria-hidden="true">↗</span></a></div><div class="blog-grid">{{ range $posts }}<a class="blog-preview-card" href="{{ .RelPermalink }}"><span class="blog-preview-date">{{ .Date.Format "02 Jan 2006" }} <span>·</span> {{ .ReadingTime }} min read</span><h3>{{ .Title }}</h3><p>{{ .Params.excerpt | truncate 160 }}</p><span class="read-link">Read note <span aria-hidden="true">↗</span></span></a>{{ end }}</div></div></section>
+<section class="section notes-section"><div class="container"><div class="section-heading"><div><p class="eyebrow">From my notebook</p><h2>Notes along the way<span class="heading-accent">.</span></h2></div><a href="{{ "blog/" | relURL }}" class="text-link">Visit the blog <span aria-hidden="true">↗</span></a></div><div class="blog-grid">{{ range $posts }}<a class="blog-preview-card" href="{{ .RelPermalink }}"><span class="blog-preview-date">{{ .Date.Format "02 Jan 2006" }} <span>·</span> {{ .ReadingTime }} min read</span><h3>{{ .Title }}</h3><p>{{ .Params.excerpt | truncate 160 }}</p><span class="read-link">Read article <span aria-hidden="true">↗</span></span></a>{{ end }}</div></div></section>
 {{ end }}
 
-<section class="contact-section"><div class="container contact-layout"><div><p class="eyebrow">Say hello</p><h2>Good work starts<br>with a good <span class="heading-accent">conversation.</span></h2><p>Want to talk software, systems, or a role that might be a good fit? My inbox is open.</p></div><div class="contact-actions"><a href="mailto:{{ .Site.Params.email }}" class="btn btn-primary">{{ .Site.Params.email }} <span aria-hidden="true">↗</span></a><div class="social-links"><a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn ↗</a></div></div></div></section>
+<section class="contact-section"><div class="container contact-layout"><div><p class="eyebrow">Get in touch</p><h2>Always up for<br><span class="heading-accent">a good conversation.</span></h2><p>Have a question about a project or a favourite trail to share? Say hello.</p></div><div class="contact-actions"><a href="mailto:{{ .Site.Params.email }}" class="btn btn-primary">{{ .Site.Params.email }} <span aria-hidden="true">↗</span></a><div class="social-links"><a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">GitHub ↗</a><a href="{{ .Site.Params.linkedin }}" target="_blank" rel="noopener">LinkedIn ↗</a></div></div></div></section>
 {{ end }}

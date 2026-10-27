@@ -2,7 +2,7 @@
 <header class="page-header">
     <div class="container">
         <h1 class="animate-in">About Me</h1>
-        <p class="animate-in">{{ .Site.Params.title }} · {{ .Site.Params.field }}</p>
+        <p class="animate-in">A little about me, on and off the trail.</p>
     </div>
 </header>
 
@@ -10,6 +10,7 @@
     <div class="container">
         <div class="about-bio animate-in">
             <p>{{ .Site.Params.about }}</p>
+            {{ .Content }}
             <div class="about-links">
                 <a href="mailto:{{ .Site.Params.email }}" class="btn btn-primary"><i class="fas fa-envelope"></i> Email</a>
                 <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
