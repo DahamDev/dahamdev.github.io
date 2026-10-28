@@ -53,10 +53,10 @@ export function estimateSunTimes(date) {
 const DAY_PALETTES = {
   night: {zenith:'#101f3b',horizon:'#354d71',glow:'#7c96b8',water:'#164456',reflection:'#365675',cloud:'#536682',sun:'#b6d0ef',ambient:'#9bb7df',ground:'#555d68',fog:'#324862',power:.08,fill:.42,hemi:.60,key:.42,day:0},
   twilight: {zenith:'#344d89',horizon:'#cf8193',glow:'#ffb49b',water:'#245568',reflection:'#967d9d',cloud:'#a394b4',sun:'#efadc1',ambient:'#91a8de',ground:'#535356',fog:'#7f8ba9',power:.3,fill:.3,hemi:.55,key:.48,day:.12},
-  sunrise: {zenith:'#669ed7',horizon:'#ffc39b',glow:'#ffce8d',water:'#329b9f',reflection:'#b6c5ca',cloud:'#ffd4bc',sun:'#ffba7b',ambient:'#b4cce9',ground:'#807251',fog:'#b5c8cd',power:1.5,fill:.55,hemi:.8,key:1.0,day:.65},
-  day: {zenith:'#238ddc',horizon:'#b4e4f6',glow:'#fff3ce',water:'#08a9b4',reflection:'#70dce0',cloud:'#ffffff',sun:'#fff0d3',ambient:'#bfe5ff',ground:'#6e7451',fog:'#b5dfee',power:3.1,fill:.85,hemi:1,key:1.6,day:1},
-  golden: {zenith:'#539bda',horizon:'#ffcf98',glow:'#ffe3a3',water:'#249da3',reflection:'#c6cbb0',cloud:'#ffe6bd',sun:'#ffd08b',ambient:'#bad4ef',ground:'#8b794f',fog:'#bccfcd',power:2.4,fill:.65,hemi:.9,key:1.4,day:.9},
-  sunset: {zenith:'#686fa9',horizon:'#ff957e',glow:'#ffba79',water:'#456a85',reflection:'#ca96a6',cloud:'#f7b4ac',sun:'#ff9b64',ambient:'#a2b4de',ground:'#6f5961',fog:'#a696b3',power:1.05,fill:.4,hemi:.65,key:.85,day:.45}
+  sunrise: {zenith:'#639fd7',horizon:'#f2c5a5',glow:'#f6d29a',water:'#087f98',reflection:'#55b5b6',cloud:'#f6d9ca',sun:'#f5b980',ambient:'#e5dccc',ground:'#625a35',fog:'#b8c9c8',power:1.5,fill:.55,hemi:.8,key:1.0,day:.65},
+  day: {zenith:'#168cdb',horizon:'#a8d4ed',glow:'#fff1d2',water:'#007b99',reflection:'#21abb7',cloud:'#ffffff',sun:'#fff0d3',ambient:'#eaf1dc',ground:'#454b2b',fog:'#b9d5d9',power:3.1,fill:.85,hemi:1,key:1.6,day:1},
+  golden: {zenith:'#4e91ca',horizon:'#f2c99f',glow:'#f6dfa9',water:'#087b94',reflection:'#64afb0',cloud:'#f6e3c5',sun:'#f5cd8c',ambient:'#ecdfc9',ground:'#5c4d30',fog:'#c0ceca',power:2.4,fill:.65,hemi:.9,key:1.4,day:.9},
+  sunset: {zenith:'#687ca8',horizon:'#e99e87',glow:'#f2be83',water:'#276b86',reflection:'#b7848e',cloud:'#eebcb0',sun:'#f39f6c',ambient:'#c9c5cb',ground:'#514b42',fog:'#b0a5b3',power:1.05,fill:.4,hemi:.65,key:.85,day:.45}
 };
 export function daylightBlend(minutes, sun) {
   const keys=[[0,'night'],[sun.dawn-35,'night'],[sun.dawn,'twilight'],[sun.sunrise,'sunrise'],
@@ -268,7 +268,7 @@ export function createHiker(T) {
   const fabricNormal=createSurfaceMaps(T,'fabric');
   const cloth = color => new T.MeshPhysicalMaterial({ color, roughness: .86, normalMap:fabricNormal, normalScale:new T.Vector2(.22,.22), sheen:.16, sheenRoughness:.8 });
   const jacket = cloth('#288f83'), panels = cloth('#11626f'), trousers = cloth('#283b52');
-  const pack = cloth('#87935d'), pocket = cloth('#636b58'), webbing = cloth('#303d40');
+  const pack = cloth('#c5a02e'), pocket = cloth('#9c7920'), webbing = cloth('#303d35');
   const leather = cloth('#75543d'), sole = cloth('#30373c'), skin = cloth('#ab8061');
   const hat = cloth('#b77b49'), metal = new T.MeshStandardMaterial({ color: '#bac9ce', roughness: .35, metalness: .65 });
   const black = cloth('#252f35');
@@ -749,13 +749,13 @@ export function createFineFoliage(T) {
 
 export function createAlpineWorld(T, { compact = false } = {}) {
   const scene = new T.Scene();
-  scene.background = new T.Color('#a8def5');
-  scene.fog = new T.FogExp2('#b5dfee', .00055);
+  scene.background = new T.Color('#a8d4ed');
+  scene.fog = new T.FogExp2('#b9d5d9', .00055);
   const camera = new T.PerspectiveCamera(compact ? 58 : 46, 1, .5, 4200);
   const clock = { value: 0 };
   const worldFraming = { compact };
   const travelUniform = { value: 0 };
-  const hemisphere = new T.HemisphereLight('#bfe5ff', '#6e7451', 1.0);
+  const hemisphere = new T.HemisphereLight('#eaf1dc', '#454b2b', 1.0);
   scene.add(hemisphere);
   const sunlight = new T.DirectionalLight('#fff0d3', 3.1);
   sunlight.position.set(-300, 300, -450);
@@ -775,7 +775,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   // Procedural sun, cratered moon and sky share directions with physical lights and lake glints.
   const sky = new T.Mesh(new T.SphereGeometry(3500, 32, 16), new T.ShaderMaterial({
     side: T.BackSide, depthWrite: false, toneMapped: false,
-    uniforms: { ...celestialUniforms, daylight:{value:1}, uTime: clock, zenith: { value: new T.Color('#238ddc') }, horizon: { value: new T.Color('#b4e4f6') }, glow: { value: new T.Color('#fff3ce') } },
+    uniforms: { ...celestialUniforms, daylight:{value:1}, uTime: clock, zenith: { value: new T.Color('#168cdb') }, horizon: { value: new T.Color('#a8d4ed') }, glow: { value: new T.Color('#fff1d2') } },
     vertexShader: `varying vec3 vDirection; void main(){ vDirection=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
     fragmentShader: `${noiseGLSL}
       varying vec3 vDirection; uniform float uTime,daylight,sunVisibility,moonVisibility;
@@ -831,7 +831,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
       float macro=fbm(vTerrain.xz*.032);
       float grain=fbm(vTerrain.xz*.75+vTerrain.y*.16);
       float slope=1.-max(normalize(vTerrainNormal).y,0.);
-      vec3 grass=mix(vec3(.045,.22,.065),vec3(.20,.40,.10),macro);
+      vec3 grass=mix(vec3(.018,.075,.022),vec3(.25,.46,.018),macro);
       vec3 rock=mix(vec3(.17,.19,.22),vec3(.34,.35,.32),grain);
       float strata=sin(vTerrain.y*.86+fbm(vTerrain.xz*.08)*13.);
       float fissure=1.-smoothstep(.025,.09,abs(sin(vTerrain.y*1.7+fbm(vTerrain.xz*.16)*8.)));
@@ -889,7 +889,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   // Fine branch cutouts give trees a porous silhouette and visible needle detail.
   const fineFoliage=createFineFoliage(T),needles=fineFoliage.geometry;
   const trunkGeometry = new T.CylinderGeometry(.13,.27,6,10);
-  const foliageMaterial = new T.MeshStandardMaterial({color:'#a0c58c',map:fineFoliage.texture,alphaTest:.42,side:T.DoubleSide,roughness:.94});
+  const foliageMaterial = new T.MeshStandardMaterial({color:'#648b35',map:fineFoliage.texture,alphaTest:.42,side:T.DoubleSide,roughness:.94});
   foliageMaterial.onBeforeCompile = shader => {
     shader.uniforms.uTime = clock;
     shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader;
@@ -918,7 +918,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   }
   grassGeometry.setAttribute('position', new T.Float32BufferAttribute(blades, 3));
   grassGeometry.computeVertexNormals();
-  const grassMaterial = new T.MeshStandardMaterial({ color: '#b9aa56', roughness: 1, side: T.DoubleSide });
+  const grassMaterial = new T.MeshStandardMaterial({ color: '#9fbc32', roughness: 1, side: T.DoubleSide });
   grassMaterial.onBeforeCompile = shader => {
     shader.uniforms.uTime = clock;
     shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader;
@@ -964,7 +964,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
 
   // Animated wave normals, moving reflection bands and sunlight glints on the lake.
   const waterMaterial = new T.ShaderMaterial({
-    uniforms: { ...celestialUniforms, daylight:{value:1}, reflectionMap:{value:null}, reflectionMatrix:{value:new T.Matrix4()},hasReflection:{value:0},uTime: clock, uTravel: travelUniform, waterColor: { value: new T.Color('#08a9b4') }, skyColor: { value: new T.Color('#70dce0') }, sunColor: { value: new T.Color('#fff0c1') }, fogColor: { value: scene.fog.color }, fogDensity: { value: scene.fog.density } },
+    uniforms: { ...celestialUniforms, daylight:{value:1}, reflectionMap:{value:null}, reflectionMatrix:{value:new T.Matrix4()},hasReflection:{value:0},uTime: clock, uTravel: travelUniform, waterColor: { value: new T.Color('#007b99') }, skyColor: { value: new T.Color('#21abb7') }, sunColor: { value: new T.Color('#fff0c1') }, fogColor: { value: scene.fog.color }, fogDensity: { value: scene.fog.density } },
     vertexShader: `uniform mat4 reflectionMatrix; varying vec4 vReflection; varying vec3 vWorld; void main(){ vec4 world=modelMatrix*vec4(position,1.); vWorld=world.xyz; vReflection=reflectionMatrix*world; gl_Position=projectionMatrix*viewMatrix*world; }`,
     fragmentShader: `${noiseGLSL}
       varying vec4 vReflection; uniform sampler2D reflectionMap; uniform float hasReflection; varying vec3 vWorld; uniform float uTime,uTravel,fogDensity,daylight,sunVisibility,moonVisibility; uniform vec3 waterColor,skyColor,sunColor,fogColor,sunDirection,moonDirection,moonColor;
