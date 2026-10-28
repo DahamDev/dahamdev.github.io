@@ -910,16 +910,24 @@ export function createAlpineWorld(T, { compact = false } = {}) {
     clock.value = time; travelUniform.value = travel;
     hiker.pose(time);teaFire.update(time,hiker.tea);
     // A restrained rear dolly approaches the shoulder, holds through the sit and first drink,
-    // then cranes up and pans across the lake. Never orbits around to the face.
+    // then cranes up and pans across the lake. Dragging stays within the rear view.
     const portrait=worldFraming.compact;
     const approach=smooth(Math.min(time/3,1));
     const reveal=smooth(Math.max(0,Math.min((time-20)/10,1)));
     const drift=Math.sin(Math.max(0,time-30)*.065)*.22;
     camera.position.set(
-      (portrait?6:mix(-1,-.8,approach))-reveal*(portrait?.4:2.2)+drift+pointer.x*.12,
+      (portrait?6:mix(-1,-.8,approach))-reveal*(portrait?.4:2.2)+drift,
       mix(portrait?98:97,portrait?96.3:95,approach)+reveal*(portrait?2.7:1.8),
-      mix(portrait?24:21,portrait?15.5:11,approach)+reveal*7+pointer.y*.08);
-    camera.lookAt(portrait?5.8:mix(-1,-26,reveal),portrait?103:mix(92,98,reveal),mix(-45,-270,reveal));
+      mix(portrait?24:21,portrait?15.5:11,approach)+reveal*7);
+    const lookTarget=new T.Vector3(portrait?5.8:mix(-1,-26,reveal),portrait?103:mix(92,98,reveal),mix(-45,-270,reveal));
+    // Bounded orbit keeps the camera behind the hiker and above the summit.
+    // Rotate the look target too, keeping the composition coherent.
+    const pivot=hiker.root.position.clone();pivot.y+=1.8;
+    const orbit=new T.Quaternion().setFromEuler(new T.Euler(
+      Math.max(-.12,Math.min(.12,pointer.y)),Math.max(-.48,Math.min(.48,pointer.x)),0,'YXZ'));
+    camera.position.sub(pivot).applyQuaternion(orbit).add(pivot);
+    lookTarget.sub(pivot).applyQuaternion(orbit).add(pivot);
+    camera.lookAt(lookTarget);
     clouds.forEach((cloud, i) => {
       cloud.position.x = mod(cloud.userData.startX + 1300 + time * (1.5 + i % 3), 2600) - 1300;
     });
@@ -946,7 +954,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   const button = host.querySelector('.scene-toggle');
   const page = runtime.document;
   let renderer, world, reflection;
-  const fallback = () => { host.classList.remove('is-ready'); host.dataset.sceneState = 'fallback'; button.hidden = true; const replay=host.querySelector('.scene-replay'); if(replay)replay.hidden=true; };
+  const fallback = () => { host.classList.remove('is-ready'); host.dataset.sceneState = 'fallback';host.tabIndex=-1;host.classList.remove('is-dragging'); button.hidden = true; const replay=host.querySelector('.scene-replay'); if(replay)replay.hidden=true; };
   try {
     renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: 'low-power' });
     const compact = host.clientWidth < 700;
@@ -964,13 +972,37 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   let paused = motion.matches || Boolean(runtime.navigator?.connection?.saveData);
   let visible = true, contextLost = false, failed = false, elapsed = paused ? HIKER_SEATED_TIME : 0, last = 0, frame = 0;
   let slowFrames = 0, reducedResolution = false, reflectionTime=-Infinity, frameInterval=1000/60, accumulated=0;
-  const pointer = { x: 0, y: 0 }, targetPointer = { x: 0, y: 0 };
+  const pointer = { x: 0, y: 0 }, targetPointer = { x: 0, y: 0 }, viewVelocity={x:0,y:0};
+  let drag=null,renderClock=0;const heldKeys=new Set();
+  const viewBusy=()=>drag!==null || heldKeys.size>0 || Math.abs(pointer.x)+Math.abs(pointer.y)+Math.abs(viewVelocity.x)+Math.abs(viewVelocity.y)>1e-4;
+  function wakeView(){if(!frame && visible && !page.hidden && !contextLost && !failed){last=0;frame=runtime.requestAnimationFrame(tick);}}
+  function finishDrag(immediate=false){
+    const id=drag?.id;drag=null;heldKeys.clear();
+    targetPointer.x=targetPointer.y=0;
+    host.classList.remove('is-dragging');
+    if(id!==undefined && host.hasPointerCapture?.(id))host.releasePointerCapture(id);
+    if(immediate || motion.matches){pointer.x=pointer.y=viewVelocity.x=viewVelocity.y=0;}
+    if(motion.matches && !page.hidden && visible){reflectionTime=-Infinity;render();}
+    else if(viewBusy())wakeView();
+  }
+  function advanceView(dt){
+    if(motion.matches)return;
+    const frequency=drag||heldKeys.size?16:4.8,decay=Math.exp(-frequency*dt);
+    for(const axis of ['x','y']){
+      const offset=pointer[axis]-targetPointer[axis],term=(viewVelocity[axis]+frequency*offset)*dt;
+      pointer[axis]=targetPointer[axis]+(offset+term)*decay;
+      viewVelocity[axis]=(viewVelocity[axis]-frequency*term)*decay;
+      const limit=axis==='x'?.48:.12;
+      if(Math.abs(pointer[axis])>limit){pointer[axis]=Math.sign(pointer[axis])*limit;viewVelocity[axis]=0;}
+    }
+    if(!drag && !heldKeys.size && !viewBusy())pointer.x=pointer.y=viewVelocity.x=viewVelocity.y=0;
+  }
   renderer.debug.onShaderError=()=>{failed=true;runtime.cancelAnimationFrame(frame);fallback();};
   function render() {
     if (contextLost || failed) return;
     try {
       world.update(elapsed, pointer);
-      if(elapsed-reflectionTime>=(world.compact?1/7.5:1/10)){reflection.render(renderer);reflectionTime=elapsed;}
+      if(renderClock-reflectionTime>=(world.compact?1/7.5:1/10)){reflection.render(renderer);reflectionTime=renderClock;}
       renderer.render(world.scene, world.camera);
     } catch {
       failed = true; runtime.cancelAnimationFrame(frame); fallback();
@@ -988,17 +1020,14 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   }
   function tick(now) {
     frame = 0;
-    if (paused || !visible || page.hidden || contextLost || failed) { last = 0; return; }
+    if ((paused && !viewBusy()) || !visible || page.hidden || contextLost || failed) { last = 0; return; }
     if (!last) last = now;
     const delta = now - last;last=now;
     const dt=Math.min(delta/1000,.1);
-    elapsed+=dt;accumulated+=delta;
+    if(!paused)elapsed+=dt;renderClock+=dt;accumulated+=delta;advanceView(dt);
     if (accumulated>=frameInterval-.5) {
       accumulated=Math.max(0,accumulated-frameInterval);
       if(accumulated>=frameInterval)accumulated%=frameInterval;
-      const response=1-Math.exp(-dt*1.1);
-      pointer.x += (targetPointer.x - pointer.x) * response;
-      pointer.y += (targetPointer.y - pointer.y) * response;
       render();
       // Prioritize fluid hand movement; reflection updates retain their lower
       // cadence. Reduce resolution, then cap at 30 fps only on slower devices.
@@ -1007,7 +1036,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
         renderer.setPixelRatio(.85); reducedResolution = true; resize();
       }else if(slowFrames>90 && reducedResolution){frameInterval=1000/30;slowFrames=0;}
     }
-    if (!failed) frame = runtime.requestAnimationFrame(tick);
+    if (!failed && (!paused || viewBusy())) frame = runtime.requestAnimationFrame(tick);
   }
   function sync() {
     runtime.cancelAnimationFrame(frame); frame = 0; last = 0; accumulated=0;
@@ -1017,31 +1046,57 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
     button.querySelector('.scene-toggle-text').textContent = paused ? 'Play motion' : 'Pause motion';
     button.querySelector('.scene-toggle-icon').textContent = paused ? '▷' : 'Ⅱ';
     button.setAttribute('aria-label', paused ? 'Play background animation' : 'Pause background animation');
-    if (running) frame = runtime.requestAnimationFrame(tick);
+    if ((running || (visible && !page.hidden && viewBusy())) && !failed) frame = runtime.requestAnimationFrame(tick);
   }
   button.addEventListener('click', () => { paused = !paused; sync(); });
   const replay=host.querySelector('.scene-replay');
-  replay?.addEventListener('click',()=>{elapsed=0;reflectionTime=-Infinity;paused=false;render();sync();});
-  motion.addEventListener('change', () => { paused = motion.matches; targetPointer.x = targetPointer.y = 0; if(paused){elapsed=Math.max(elapsed,HIKER_SEATED_TIME);render();} sync(); });
-  page.addEventListener('visibilitychange', sync);
-  host.addEventListener('pointermove', event => {
-    if (paused || event.pointerType === 'touch') return;
-    const bounds = host.getBoundingClientRect();
-    targetPointer.x = (event.clientX - bounds.left) / bounds.width * 2 - 1;
-    targetPointer.y = -((event.clientY - bounds.top) / bounds.height * 2 - 1);
-  }, { passive: true });
-  host.addEventListener('pointerleave', () => { targetPointer.x = targetPointer.y = 0; });
-  new runtime.IntersectionObserver(entries => { visible = entries[0].isIntersecting; sync(); }).observe(host);
+  replay?.addEventListener('click',()=>{finishDrag(true);elapsed=0;reflectionTime=-Infinity;paused=false;render();sync();});
+  motion.addEventListener('change', () => { paused = motion.matches;finishDrag(true);if(paused){elapsed=Math.max(elapsed,HIKER_SEATED_TIME);render();}sync(); });
+  page.addEventListener('visibilitychange',()=>{if(page.hidden)finishDrag(true);sync();});
+  host.addEventListener('pointerdown',event=>{
+    if(failed || contextLost || drag || event.isPrimary===false || event.button!==0)return;
+    if(event.target?.closest?.('a,button,input,textarea,select,[contenteditable],.hero-copy,.hero-bottom p'))return;
+    Object.assign(targetPointer,pointer);viewVelocity.x=viewVelocity.y=0;
+    drag={id:event.pointerId,x:event.clientX,y:event.clientY};
+    host.setPointerCapture?.(event.pointerId);host.classList.add('is-dragging');
+    if(event.pointerType!=='touch'){event.preventDefault();host.focus?.({preventScroll:true});}
+    if(!motion.matches)wakeView();
+  });
+  host.addEventListener('pointermove',event=>{
+    if(!drag || drag.id!==event.pointerId)return;
+    const bounds=host.getBoundingClientRect();
+    targetPointer.x=Math.max(-.48,Math.min(.48,targetPointer.x-(event.clientX-drag.x)/Math.max(1,bounds.width)*.95));
+    targetPointer.y=Math.max(-.12,Math.min(.12,targetPointer.y+(event.clientY-drag.y)/Math.max(1,bounds.height)*.35));
+    drag.x=event.clientX;drag.y=event.clientY;
+    if(motion.matches){Object.assign(pointer,targetPointer);reflectionTime=-Infinity;render();}
+  });
+  for(const type of ['pointerup','pointercancel','lostpointercapture'])host.addEventListener(type,event=>{if(drag?.id===event.pointerId)finishDrag();});
+  host.addEventListener('keydown',event=>{
+    if(event.target!==host || failed || contextLost)return;
+    if(event.key==='Escape'){event.preventDefault();finishDrag();return;}
+    const directions={ArrowLeft:[.08,0],ArrowRight:[-.08,0],ArrowUp:[0,-.03],ArrowDown:[0,.03]};
+    if(!directions[event.key])return;
+    event.preventDefault();
+    if(!heldKeys.size){Object.assign(targetPointer,pointer);viewVelocity.x=viewVelocity.y=0;}
+    heldKeys.add(event.key);
+    targetPointer.x=Math.max(-.48,Math.min(.48,targetPointer.x+directions[event.key][0]));
+    targetPointer.y=Math.max(-.12,Math.min(.12,targetPointer.y+directions[event.key][1]));
+    if(motion.matches){Object.assign(pointer,targetPointer);reflectionTime=-Infinity;render();}else wakeView();
+  });
+  host.addEventListener('keyup',event=>{if(heldKeys.delete(event.key) && !heldKeys.size)finishDrag();});
+  host.addEventListener('blur',()=>finishDrag());
+  runtime.addEventListener?.('blur',()=>finishDrag());
+  new runtime.IntersectionObserver(entries => { visible = entries[0].isIntersecting;if(!visible)finishDrag(true);sync(); }).observe(host);
   new runtime.ResizeObserver(resize).observe(host);
   canvas.addEventListener('webglcontextlost', event => {
-    event.preventDefault(); contextLost = true; runtime.cancelAnimationFrame(frame); fallback();
+    event.preventDefault(); contextLost = true;finishDrag(true); runtime.cancelAnimationFrame(frame); fallback();
   });
   canvas.addEventListener('webglcontextrestored', () => {
     contextLost = false; resize();
-    if (!failed) { host.classList.add('is-ready'); button.hidden = false; if(replay)replay.hidden=false; sync(); }
+    if (!failed) { host.classList.add('is-ready');host.tabIndex=0; button.hidden = false; if(replay)replay.hidden=false; sync(); }
   });
   resize();
-  if (!failed) { host.classList.add('is-ready'); button.hidden = false; if(replay)replay.hidden=false; sync(); }
+  if (!failed) { host.classList.add('is-ready');host.tabIndex=0; button.hidden = false; if(replay)replay.hidden=false; sync(); }
   return { world, renderer, reflection, get elapsed() { return elapsed; } };
 }
 

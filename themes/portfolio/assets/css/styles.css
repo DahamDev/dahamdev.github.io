@@ -56,6 +56,13 @@ img { max-width: 100%; }
 .hero-landscape-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; }
 .home-hero.is-ready .hero-landscape-canvas { opacity: 1; }
 .home-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(23,29,44,.66), rgba(29,34,50,.28) 46%, rgba(29,34,50,.03) 78%), linear-gradient(0deg, rgba(23,29,44,.57), transparent 31%); }
+.home-hero.is-ready { cursor: grab; touch-action: pan-y pinch-zoom; }
+.home-hero.is-dragging { cursor: grabbing; user-select: none; }
+.home-hero:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+.hero-copy, .hero-bottom p { cursor: auto; }
+.scene-hint { display: none; position: absolute; top: 22px; right: 32px; margin: 0; color: #fff; font: 10px/1.5 var(--mono); text-shadow: 0 1px 8px #17202e; pointer-events: none; }
+.home-hero.is-ready .scene-hint { display: block; }
+.scene-keyboard-hint { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .hero-layout { display: flex; align-items: center; height: 100%; padding-block: 95px 120px; }
 .hero-copy { max-width: 670px; }
 .hero-copy .eyebrow { color: #f2e6e2; font-size: 11px; letter-spacing: .12em; margin-bottom: 23px; text-shadow: 0 1px 8px #1e263b66; }
@@ -228,6 +235,7 @@ footer { padding-block: 29px; background: var(--paper); }
   .hero-copy h1 { font-size: clamp(39px, 10.3vw, 56px); }
   .hero-copy .eyebrow { font-size: 9px; letter-spacing: .07em; margin-bottom: 14px; }
   .hero-copy .eyebrow span { margin-inline: 4px; }
+  .scene-hint { top: 12px; right: 20px; font-size: 9px; }
   .home-hero { min-height: 600px; height: clamp(600px, 78svh, 680px); max-height: 680px; }
   .hero-layout { align-items: flex-start; padding-block: 36px 100px; }
   /* Keep the lower scene clear: shade the copy and controls, not the whole canvas. */

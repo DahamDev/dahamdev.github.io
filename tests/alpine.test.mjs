@@ -8,12 +8,13 @@ import { createAlpineWorld, createHiker, summitHeight, terrainHeight, startAlpin
 function harness({reduced=false, fail=false}={}) {
   let renders=0, mainRenders=0, reflectionRenders=0, next=0;
   const frames=new Map(), events={}, canvasEvents={}, motionEvents={}, buttonEvents={}, replayEvents={};
-  const label={},icon={},attributes={},classes=new Set();
+  const label={},icon={},attributes={},classes=new Set(),captured=new Set();
   const button={hidden:true,querySelector:s=>s.endsWith('-text')?label:icon,setAttribute:(k,v)=>attributes[k]=v,addEventListener:(k,cb)=>buttonEvents[k]=cb};
   const replay={hidden:true,addEventListener:(k,cb)=>replayEvents[k]=cb};
   const canvas={addEventListener:(k,cb)=>canvasEvents[k]=cb};
   const host={clientWidth:390,dataset:{},querySelector:s=>s==='canvas'?canvas:s==='.scene-replay'?replay:button,
     classList:{add:n=>classes.add(n),remove:n=>classes.delete(n)},
+    setPointerCapture:id=>captured.add(id),hasPointerCapture:id=>captured.has(id),releasePointerCapture:id=>captured.delete(id),
     addEventListener:(k,cb)=>events[k]=cb,getBoundingClientRect:()=>({width:390,height:820,left:0,top:0})};
   const motion={matches:reduced,addEventListener:(k,cb)=>motionEvents[k]=cb};
   const document={hidden:false,addEventListener:(k,cb)=>events[k]=cb};
@@ -28,7 +29,7 @@ function harness({reduced=false, fail=false}={}) {
     IntersectionObserver:class{constructor(cb){events.intersection=cb;}observe(){}},
     ResizeObserver:class{constructor(cb){events.resize=cb;}observe(){}}};
   const controller=startAlpineRenderer({...THREE,WebGLRenderer:Renderer},host,motion,runtime);
-  return {host,motion,document,label,attributes,classes,frames,events,canvasEvents,motionEvents,button,replay,controller,
+  return {host,motion,document,label,attributes,classes,captured,frames,events,canvasEvents,motionEvents,button,replay,controller,
     click:()=>buttonEvents.click(),replayScene:()=>replayEvents.click(),
     step(time){const batch=[...frames.values()];frames.clear();batch.forEach(cb=>cb(time));},get renders(){return renders;},get mainRenders(){return mainRenders;},get reflectionRenders(){return reflectionRenders;}};
 }
@@ -383,4 +384,80 @@ test('animation targets 60 fps while reflections keep their separate lower caden
   for(let frame=1;frame<=120;frame++)slow.step(5300+frame*1000/120);
   assert.ok(slow.mainRenders-main>=29 && slow.mainRenders-main<=31,'slow-device fallback must retain a 30 fps cap');
   slow.controller.world.dispose();
+});
+
+
+function pointerEvent(host,overrides={}){
+  return {target:host,pointerId:1,button:0,isPrimary:true,pointerType:'mouse',clientX:180,clientY:300,preventDefault(){},...overrides};
+}
+
+test('dragging explores a paused scene and release smoothly returns without resuming animation',()=>{
+  const s=harness();s.click();const baseline=s.controller.world.camera.position.clone();
+  const baselineRotation=s.controller.world.camera.quaternion.clone();
+  s.events.pointermove(pointerEvent(s.host,{clientX:340}));s.step(100);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)<1e-8,'hover alone moves the camera');
+  s.events.pointerdown(pointerEvent(s.host));assert.ok(s.captured.has(1));
+  s.events.pointermove(pointerEvent(s.host,{clientX:340,clientY:180}));
+  const reflections=s.reflectionRenders;
+  for(let i=0;i<50;i++)s.step(200+i*1000/60);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)>3,'drag should visibly orbit the camera');
+  assert.ok(s.controller.world.camera.quaternion.angleTo(baselineRotation)>.1);
+  assert.ok(s.reflectionRenders>reflections,'reflections must follow a paused camera');
+  assert.equal(s.controller.elapsed,0);assert.ok(s.classes.has('is-dragging'));
+  s.events.pointerup(pointerEvent(s.host,{clientX:900}));assert.equal(s.captured.size,0);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)>1,'return must not snap');
+  for(let i=0;i<360;i++)s.step(1100+i*1000/60);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)<.001,'camera did not return to the default view');
+  assert.ok(s.controller.world.camera.quaternion.angleTo(baselineRotation)<.001);
+  assert.equal(s.controller.elapsed,0);assert.equal(s.frames.size,0);assert.equal(s.host.dataset.sceneState,'paused');
+  s.controller.world.dispose();
+});
+
+test('drag excludes links and text, ignores secondary pointers, and cancels cleanly',()=>{
+  const s=harness();s.click();const baseline=s.controller.world.camera.position.clone();
+  for(const target of [{closest:()=>({})},s.host]){
+    s.events.pointerdown(pointerEvent(target,{target,button:target===s.host?2:0}));
+    assert.equal(s.captured.size,0);
+  }
+  s.events.pointerdown(pointerEvent(s.host,{isPrimary:false}));assert.equal(s.captured.size,0);
+  s.events.pointerdown(pointerEvent(s.host,{pointerType:'touch'}));
+  s.events.pointermove(pointerEvent(s.host,{pointerId:2,clientX:390}));
+  for(let i=0;i<10;i++)s.step(100+i*20);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)<1e-8,'second finger changed the view');
+  s.events.pointermove(pointerEvent(s.host,{pointerType:'touch',clientX:20}));
+  for(let i=0;i<30;i++)s.step(400+i*20);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)>1);
+  s.events.pointercancel(pointerEvent(s.host));
+  assert.equal(s.classes.has('is-dragging'),false);assert.equal(s.captured.size,0);
+  for(let i=0;i<250;i++)s.step(1100+i*20);
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)<.001);
+  s.events.pointerdown(pointerEvent(s.host));s.events.lostpointercapture(pointerEvent(s.host));assert.equal(s.classes.has('is-dragging'),false);
+  s.controller.world.dispose();
+});
+
+test('reduced motion permits direct exploration and keyboard control without an animated return',()=>{
+  const s=harness({reduced:true});const baseline=s.controller.world.camera.position.clone(),elapsed=s.controller.elapsed;
+  s.events.pointerdown(pointerEvent(s.host));s.events.pointermove(pointerEvent(s.host,{clientX:350}));
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)>1);
+  assert.equal(s.frames.size,0);
+  s.events.pointerup(pointerEvent(s.host));assert.ok(s.controller.world.camera.position.distanceTo(baseline)<1e-8);
+  s.events.keydown({target:s.host,key:'ArrowLeft',preventDefault(){}});
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)>1);
+  s.events.keyup({key:'ArrowLeft'});assert.ok(s.controller.world.camera.position.distanceTo(baseline)<1e-8);
+  s.events.keydown({target:s.host,key:'ArrowRight',preventDefault(){}});
+  s.events.keydown({target:s.host,key:'Escape',preventDefault(){}});
+  assert.ok(s.controller.world.camera.position.distanceTo(baseline)<1e-8);
+  assert.equal(s.controller.elapsed,elapsed);assert.equal(s.frames.size,0);
+  s.controller.world.dispose();
+});
+
+test('camera drag limits keep the view behind the hiker and above the summit',()=>{
+  const w=createAlpineWorld(THREE,{compact:true});
+  for(const compact of [true,false])for(const time of [0,3,8,16,30,90])for(const x of [-100,100])for(const y of [-100,100]){
+    w.worldFraming.compact=compact;w.update(time,{x,y});
+    assert.ok(w.camera.position.z>w.hiker.root.position.z+8,'drag reveals the face');
+    assert.ok(w.camera.position.y>summitHeight(w.camera.position.x,w.camera.position.z)+1,'drag enters the ground');
+    assert.ok(w.camera.quaternion.toArray().every(Number.isFinite));
+  }
+  w.dispose();
 });

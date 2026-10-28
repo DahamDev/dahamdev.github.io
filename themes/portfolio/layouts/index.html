@@ -1,8 +1,9 @@
 {{ define "main" }}
-<section class="home-hero" aria-labelledby="hero-title" data-alpine-scene data-engine="{{ "js/vendor/three.module.min.js" | relURL }}">
+<section class="home-hero" aria-labelledby="hero-title" aria-describedby="scene-drag-hint" data-alpine-scene data-engine="{{ "js/vendor/three.module.min.js" | relURL }}">
     <div class="hero-landscape" aria-hidden="true">
         <canvas class="hero-landscape-canvas" aria-hidden="true"></canvas>
     </div>
+    <p class="scene-hint" id="scene-drag-hint">Drag to explore · Release to return<span class="scene-keyboard-hint">. You can also use the arrow keys. Press Escape to reset the view.</span></p>
     <div class="container hero-layout">
         <div class="hero-copy">
             <p class="eyebrow">Software engineer <span aria-hidden="true">/</span> New Zealand</p>
