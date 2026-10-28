@@ -218,7 +218,7 @@ export function createSurfaceMaps(T, kind = 'rock') {
 // Planar reflection using Three.js's reflected-camera / oblique-clip approach.
 // Three.js MIT license: static/js/vendor/three.LICENSE.txt.
 export function createLakeReflection(T, world) {
-  const target=new T.WebGLRenderTarget(world.compact?256:768,world.compact?256:512,{depthBuffer:true});
+  const target=new T.WebGLRenderTarget(world.compact?384:768,world.compact?256:512,{depthBuffer:true});
   const reflectedCamera=new T.PerspectiveCamera();
   const textureMatrix=new T.Matrix4(),up=new T.Vector3(0,1,0),point=new T.Vector3(0,-.15,0);
   const plane=new T.Plane(),clip=new T.Vector4(),q=new T.Vector4();
@@ -848,7 +848,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
       diffuseColor.rgb*=land;
     `);
   };
-  const ground = new T.PlaneGeometry(1120, TILE_LENGTH, compact ? 100 : 180, compact ? 88 : 144);
+  const ground = new T.PlaneGeometry(1120, TILE_LENGTH, compact ? 136 : 180, compact ? 108 : 144);
   ground.rotateX(-Math.PI / 2); ground.translate(0, 0, -TILE_LENGTH / 2);
   for (let i = 0; i < ground.attributes.position.count; i++) {
     const p = ground.attributes.position;
@@ -943,7 +943,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
 
   // A distant craggy massif uses overlapping ridges, erosion noise and the same
   // snow/rock shading as the nearby terrain; it is geometry rather than an image.
-  const massif = new T.PlaneGeometry(2100, 850, compact ? 160 : 320, compact ? 80 : 160);
+  const massif = new T.PlaneGeometry(2100, 850, compact ? 240 : 320, compact ? 120 : 160);
   massif.rotateX(-Math.PI / 2); massif.translate(0, 0, -1050);
   const mp = massif.attributes.position;
   for (let i = 0; i < mp.count; i++) {
@@ -1107,15 +1107,16 @@ export function createAlpineWorld(T, { compact = false } = {}) {
     const reveal=smooth(Math.max(0,Math.min((time-20)/10,1)));
     const drift=Math.sin(Math.max(0,time-30)*.065)*.22;
     camera.position.set(
-      (portrait?6:mix(-1,-.8,approach))-reveal*(portrait?.4:2.2)+drift,
+      (portrait?3.4:mix(-1,-.8,approach))-reveal*(portrait?.4:2.2)+drift,
       mix(portrait?98:97,portrait?96.3:95,approach)+reveal*(portrait?2.7:1.8),
       mix(portrait?24:21,portrait?15.5:11,approach)+reveal*7);
-    const lookTarget=new T.Vector3(portrait?5.8:mix(-1,-26,reveal),portrait?103:mix(92,98,reveal),mix(-45,-270,reveal));
+    const lookTarget=new T.Vector3(portrait?3.7:mix(-1,-26,reveal),portrait?103:mix(92,98,reveal),mix(-45,-270,reveal));
     // Bounded orbit keeps the camera behind the hiker and above the summit.
     // Rotate the look target too, keeping the composition coherent.
     const pivot=hiker.root.position.clone();pivot.y+=1.8;
+    const portraitYaw=portrait?-.40:0;
     const orbit=new T.Quaternion().setFromEuler(new T.Euler(
-      Math.max(-.12,Math.min(.12,pointer.y)),Math.max(-.48,Math.min(.48,pointer.x)),0,'YXZ'));
+      Math.max(-.12,Math.min(.12,pointer.y)),portraitYaw+Math.max(-.48,Math.min(.48,pointer.x)),0,'YXZ'));
     camera.position.sub(pivot).applyQuaternion(orbit).add(pivot);
     lookTarget.sub(pivot).applyQuaternion(orbit).add(pivot);
     camera.lookAt(lookTarget);
@@ -1177,7 +1178,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   try {
     renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: 'low-power' });
     const compact = host.clientWidth < 700;
-    renderer.setPixelRatio(Math.min(runtime.devicePixelRatio || 1, compact ? 1 : 1.5));
+    renderer.setPixelRatio(Math.min(runtime.devicePixelRatio || 1, compact ? 2 : 1.5));
     renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.toneMapping = T.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
@@ -1249,11 +1250,11 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
       if(accumulated>=frameInterval)accumulated%=frameInterval;
       render();
       // Prioritize fluid hand movement; reflection updates retain their lower
-      // cadence. Reduce resolution, then cap at 30 fps only on slower devices.
+      // cadence. Keep mobile resolution crisp and lower its frame rate if needed.
       slowFrames = delta > 28 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
-      if (slowFrames > 45 && !reducedResolution) {
+      if (slowFrames > 45 && !reducedResolution && !world.compact) {
         renderer.setPixelRatio(.85); reducedResolution = true; resize();
-      }else if(slowFrames>90 && reducedResolution){frameInterval=1000/30;slowFrames=0;}
+      }else if(slowFrames>(world.compact?60:90) && (reducedResolution || world.compact)){frameInterval=1000/30;slowFrames=0;}
     }
     if (!failed && (!paused || viewBusy() || daylight?.travelling)) frame = runtime.requestAnimationFrame(tick);
   }
