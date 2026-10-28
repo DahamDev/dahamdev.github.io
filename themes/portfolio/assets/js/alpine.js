@@ -9,6 +9,155 @@ const TAU = Math.PI * 2;
 const mod = (n, d) => ((n % d) + d) % d;
 const mix = (a, b, t) => a + (b - a) * t;
 const smooth = t => t * t * (3 - 2 * t);
+const AUCKLAND_ZONE = 'Pacific/Auckland';
+const aucklandFormatter = new Intl.DateTimeFormat('en-NZ', {
+  timeZone: AUCKLAND_ZONE, year:'numeric', month:'2-digit', day:'2-digit',
+  hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZoneName:'short'
+});
+export function aucklandTime(date = new Date()) {
+  const p = Object.fromEntries(aucklandFormatter.formatToParts(date).map(part => [part.type, part.value]));
+  return { date: `${p.year}-${p.month}-${p.day}`, minutes: Number(p.hour)*60+Number(p.minute), zone:p.timeZoneName };
+}
+export function formatSceneTime(minutes) {
+  const value = mod(Math.floor(minutes),1440);
+  return `${String(Math.floor(value/60)).padStart(2,'0')}:${String(value%60).padStart(2,'0')}`;
+}
+export function parseSunTimes(payload, date) {
+  const r=payload?.results;
+  if(payload?.status!=='OK' || r?.date!==date || r.timezone!==AUCKLAND_ZONE)return null;
+  const result={};
+  for(const key of ['dawn','sunrise','solar_noon','sunset','dusk']){
+    const match=/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(r[key]);
+    if(!match || +match[1]>23 || +match[2]>59 || +(match[3]||0)>59)return null;
+    result[key]=+match[1]*60 + +match[2] + +(match[3]||0)/60;
+  }
+  const times=Object.values(result);
+  if(times.some((v,i)=>i && v<=times[i-1]))return null;
+  return result;
+}
+// Seasonal estimate only while offline/loading; the control labels it explicitly.
+export function estimateSunTimes(date) {
+  const local=aucklandTime(date), day=Date.parse(`${local.date}T12:00:00Z`);
+  const dayOfYear=(day-Date.UTC(new Date(day).getUTCFullYear(),0,0))/86400000;
+  const declination=23.44*Math.PI/180*Math.sin(TAU*(284+dayOfYear)/365);
+  const latitude=-36.8485*Math.PI/180;
+  const hourAngle=altitude=>Math.acos((Math.sin(altitude*Math.PI/180)-Math.sin(latitude)*Math.sin(declination))/(Math.cos(latitude)*Math.cos(declination)))*720/Math.PI;
+  const offset=(Date.parse(`${local.date}T${formatSceneTime(local.minutes)}:00Z`)-Math.floor(date.getTime()/60000)*60000)/60000;
+  const b=TAU*(dayOfYear-81)/364;
+  const equation=9.87*Math.sin(2*b)-7.53*Math.cos(b)-1.5*Math.sin(b);
+  const noon=720-4*174.7633+offset-equation, dayArc=hourAngle(-.833), twilightArc=hourAngle(-6);
+  return {dawn:noon-twilightArc,sunrise:noon-dayArc,solar_noon:noon,sunset:noon+dayArc,dusk:noon+twilightArc};
+}
+
+// Colors are interpolated in linear space by Three.js; times follow today's sun events.
+const DAY_PALETTES = {
+  night: {zenith:'#101f3b',horizon:'#354d71',glow:'#7c96b8',water:'#164456',reflection:'#365675',cloud:'#536682',sun:'#b6d0ef',ambient:'#9bb7df',ground:'#555d68',fog:'#324862',power:.08,fill:.42,hemi:.60,key:.42,day:0},
+  twilight: {zenith:'#344d89',horizon:'#cf8193',glow:'#ffb49b',water:'#245568',reflection:'#967d9d',cloud:'#a394b4',sun:'#efadc1',ambient:'#91a8de',ground:'#535356',fog:'#7f8ba9',power:.3,fill:.3,hemi:.55,key:.48,day:.12},
+  sunrise: {zenith:'#669ed7',horizon:'#ffc39b',glow:'#ffce8d',water:'#329b9f',reflection:'#b6c5ca',cloud:'#ffd4bc',sun:'#ffba7b',ambient:'#b4cce9',ground:'#807251',fog:'#b5c8cd',power:1.5,fill:.55,hemi:.8,key:1.0,day:.65},
+  day: {zenith:'#238ddc',horizon:'#b4e4f6',glow:'#fff3ce',water:'#08a9b4',reflection:'#70dce0',cloud:'#ffffff',sun:'#fff0d3',ambient:'#bfe5ff',ground:'#6e7451',fog:'#b5dfee',power:3.1,fill:.85,hemi:1,key:1.6,day:1},
+  golden: {zenith:'#539bda',horizon:'#ffcf98',glow:'#ffe3a3',water:'#249da3',reflection:'#c6cbb0',cloud:'#ffe6bd',sun:'#ffd08b',ambient:'#bad4ef',ground:'#8b794f',fog:'#bccfcd',power:2.4,fill:.65,hemi:.9,key:1.4,day:.9},
+  sunset: {zenith:'#686fa9',horizon:'#ff957e',glow:'#ffba79',water:'#456a85',reflection:'#ca96a6',cloud:'#f7b4ac',sun:'#ff9b64',ambient:'#a2b4de',ground:'#6f5961',fog:'#a696b3',power:1.05,fill:.4,hemi:.65,key:.85,day:.45}
+};
+export function daylightBlend(minutes, sun) {
+  const keys=[[0,'night'],[sun.dawn-35,'night'],[sun.dawn,'twilight'],[sun.sunrise,'sunrise'],
+    [sun.sunrise+75,'day'],[sun.sunset-100,'day'],[sun.sunset-45,'golden'],
+    [sun.sunset,'sunset'],[sun.dusk,'twilight'],[sun.dusk+45,'night'],[1440,'night']];
+  const value=mod(minutes,1440);
+  const index=keys.findIndex((key,i)=>i>0 && value<=key[0]);
+  const a=keys[index-1], b=keys[index];
+  return {from:DAY_PALETTES[a[1]],to:DAY_PALETTES[b[1]],blend:smooth((value-a[0])/(b[0]-a[0]))};
+}
+
+// Art-directed arcs keep both bodies in the alpine vista. The moon is a
+// full-moon night-light, not an astronomical ephemeris or a live lunar phase.
+export function celestialState(minutes, sun) {
+  const value=mod(minutes,1440), clamp=v=>Math.max(0,Math.min(1,v));
+  const dayProgress=clamp((value-sun.sunrise)/(sun.sunset-sun.sunrise));
+  const nightLength=1440-sun.sunset+sun.sunrise;
+  // Extend the night arc across twilight on either side; switch arcs only at
+  // midday, when the moon is invisible, so sunset cannot make it jump sideways.
+  const nightElapsed=value>=(sun.sunrise+sun.sunset)/2?value-sun.sunset:value+1440-sun.sunset;
+  const nightProgress=clamp(nightElapsed/nightLength);
+  const sunVisibility=smooth(clamp((value-sun.sunrise+18)/36))*(1-smooth(clamp((value-sun.sunset+18)/36)));
+  const moonVisibility=1-sunVisibility;
+  return {
+    sunDirection:[mix(-.16,.16,dayProgress),.07+.22*Math.sin(Math.PI*dayProgress),-1],
+    moonDirection:[mix(.04,-.23,nightProgress),.10+.19*Math.sin(Math.PI*nightProgress),-1],
+    sunVisibility,moonVisibility,moonPower:moonVisibility*(.35+.6*Math.sin(Math.PI*nightProgress))
+  };
+}
+
+export const TIME_TRAVEL_SECONDS = 90;
+
+export function createDaylightControl(host, onChange, runtime=globalThis) {
+  const panel=host.querySelector('.scene-time');
+  if(!panel)return null;
+  const clock=panel.querySelector('time'), toggle=panel.querySelector('.scene-time-travel');
+  const status=panel.querySelector('[data-time-status]');
+  const zone=panel.querySelector('[data-time-zone]'), events=panel.querySelector('[data-sun-times]');
+  const source=panel.querySelector('[data-sun-status]');
+  const now=()=>new (runtime.Date||Date)();
+  let selected=null, dateKey='', sun, estimated=true, retryAt=0, disposed=false, request=null, readout='';
+  function paint(animated=false){
+    if(disposed)return;
+    const current=aucklandTime(now()), minutes=selected??current.minutes;
+    const display=formatSceneTime(minutes), travelling=selected!==null;
+    const nextReadout=`${current.date}|${display}|${travelling}|${estimated}|${sun.sunrise}|${sun.sunset}`;
+    if(nextReadout!==readout){
+      readout=nextReadout;
+      if(clock.textContent!==display){clock.textContent=display;clock.dateTime=display;}
+      zone.textContent='Auckland time';
+      clock.setAttribute('aria-label',`${display}, Auckland ${current.zone}${travelling?', time travel preview':''}`);
+      status.textContent=travelling?'Travelling':'Live';
+      toggle.setAttribute('aria-checked',String(travelling));
+      panel.dataset.mode=travelling?'travel':'live';
+      events.textContent=`↑ ${formatSceneTime(sun.sunrise)}   ↓ ${formatSceneTime(sun.sunset)}`;
+      events.setAttribute('aria-label',`Sunrise ${formatSceneTime(sun.sunrise)}, sunset ${formatSceneTime(sun.sunset)}${estimated?', estimated':''}`);
+      source.textContent=estimated?'Estimated sun times · ':'Sun times · ';
+    }
+    onChange(minutes,sun,{animated});
+  }
+  async function loadSun(date){
+    const abort=new AbortController();request?.abort();request=abort;
+    const timeout=runtime.setTimeout(()=>abort.abort(),6000);
+    try{
+      const response=await runtime.fetch(`https://api.sunrisesunset.io/json?lat=-36.8485&lng=174.7633&date=${date}&timezone=Pacific%2FAuckland&time_format=24`,{signal:abort.signal});
+      if(!response.ok)throw Error('Sun times unavailable');
+      const payload=await response.json(), parsed=parseSunTimes(payload,date);
+      if(!parsed)throw Error('Invalid sun times');
+      if(disposed || date!==dateKey)return;
+      sun=parsed;estimated=false;
+      try{runtime.localStorage.setItem('alpine-auckland-sun',JSON.stringify(payload));}catch{}
+      paint();
+    }catch{/* Keep the labeled seasonal estimate; retry at most once per hour. */}
+    finally{runtime.clearTimeout(timeout);if(request===abort)request=null;}
+  }
+  function refresh(){
+    const current=now(), date=aucklandTime(current).date;
+    if(date!==dateKey){
+      dateKey=date;sun=estimateSunTimes(current);estimated=true;retryAt=0;
+      try{const cached=parseSunTimes(JSON.parse(runtime.localStorage.getItem('alpine-auckland-sun')),date);if(cached){sun=cached;estimated=false;}}catch{}
+    }
+    paint();
+    if(estimated && !request && current.getTime()>=retryAt){retryAt=current.getTime()+3600000;void loadSun(date);}
+  }
+  const toggleTravel=()=>{selected=selected===null?aucklandTime(now()).minutes:null;refresh();};
+  const visibility=()=>{if(!runtime.document.hidden)refresh();};
+  toggle.addEventListener('click',toggleTravel);
+  runtime.document.addEventListener('visibilitychange',visibility);
+  refresh();panel.hidden=false;
+  const timer=runtime.setInterval(()=>{if(!runtime.document.hidden)refresh();},15000);
+  return {
+    refresh,
+    get travelling(){return !disposed && selected!==null;},
+    advance(seconds){
+      if(disposed || selected===null || runtime.document.hidden || !Number.isFinite(seconds) || seconds<=0)return;
+      selected=mod(selected+seconds*1440/TIME_TRAVEL_SECONDS,1440);paint(true);
+    },
+    dispose(){disposed=true;request?.abort();runtime.clearInterval(timer);toggle.removeEventListener('click',toggleTravel);runtime.document.removeEventListener('visibilitychange',visibility);}
+  };
+}
+
 function hash(x, z) {
   const n = Math.sin(x * 127.1 + z * 311.7) * 43758.5453;
   return n - Math.floor(n);
@@ -118,10 +267,10 @@ export function createHiker(T) {
   const root = new T.Group(); root.name = 'summit-hiker'; root.scale.setScalar(3.1);
   const fabricNormal=createSurfaceMaps(T,'fabric');
   const cloth = color => new T.MeshPhysicalMaterial({ color, roughness: .86, normalMap:fabricNormal, normalScale:new T.Vector2(.22,.22), sheen:.16, sheenRoughness:.8 });
-  const jacket = cloth('#3c7777'), panels = cloth('#11626f'), trousers = cloth('#283b52');
-  const pack = cloth('#7d8267'), pocket = cloth('#636b58'), webbing = cloth('#303d40');
+  const jacket = cloth('#288f83'), panels = cloth('#11626f'), trousers = cloth('#283b52');
+  const pack = cloth('#87935d'), pocket = cloth('#636b58'), webbing = cloth('#303d40');
   const leather = cloth('#75543d'), sole = cloth('#30373c'), skin = cloth('#ab8061');
-  const hat = cloth('#967056'), metal = new T.MeshStandardMaterial({ color: '#bac9ce', roughness: .35, metalness: .65 });
+  const hat = cloth('#b77b49'), metal = new T.MeshStandardMaterial({ color: '#bac9ce', roughness: .35, metalness: .65 });
   const black = cloth('#252f35');
   const sphere = new T.SphereGeometry(1, 28, 20);
   function mesh(geometry, material, parent, position = [0, 0, 0], scale) {
@@ -569,7 +718,7 @@ export function createFineFoliage(T) {
     }
     const a=1-smooth(Math.max(0,Math.min(1,(d-.008)/.014)));
     const i=(y*size+x)*4,variation=hash(x,y)*25;
-    data[i]=110+variation;data[i+1]=143+variation;data[i+2]=94+variation;data[i+3]=Math.round(a*255);
+    data[i]=118+variation;data[i+1]=167+variation;data[i+2]=98+variation;data[i+3]=Math.round(a*255);
   }
   const texture=new T.DataTexture(data,size,size,T.RGBAFormat);texture.colorSpace=T.SRGBColorSpace;
   texture.generateMipmaps=true;texture.minFilter=T.LinearMipmapLinearFilter;texture.magFilter=T.LinearFilter;texture.needsUpdate=true;
@@ -600,35 +749,70 @@ export function createFineFoliage(T) {
 
 export function createAlpineWorld(T, { compact = false } = {}) {
   const scene = new T.Scene();
-  scene.background = new T.Color('#b4dce5');
-  scene.fog = new T.FogExp2('#b8dbe5', .00084);
+  scene.background = new T.Color('#a8def5');
+  scene.fog = new T.FogExp2('#b5dfee', .00055);
   const camera = new T.PerspectiveCamera(compact ? 58 : 46, 1, .5, 4200);
   const clock = { value: 0 };
   const worldFraming = { compact };
   const travelUniform = { value: 0 };
-  scene.add(new T.HemisphereLight('#c6def4', '#514a3f', .95));
-  const sunlight = new T.DirectionalLight('#ffe4bc', 3.1);
+  const hemisphere = new T.HemisphereLight('#bfe5ff', '#6e7451', 1.0);
+  scene.add(hemisphere);
+  const sunlight = new T.DirectionalLight('#fff0d3', 3.1);
   sunlight.position.set(-300, 300, -450);
-  scene.add(sunlight);
-  const fill = new T.DirectionalLight('#c3def5', .85);
+  sunlight.name='sunlight';scene.add(sunlight);
+  const moonlight = new T.DirectionalLight('#bdd7ff',0);
+  moonlight.name='moonlight';scene.add(moonlight);
+  const celestialUniforms={
+    sunDirection:{value:new T.Vector3(0,.29,-1).normalize()},
+    moonDirection:{value:new T.Vector3(.04,.29,-1).normalize()},
+    sunVisibility:{value:1},moonVisibility:{value:0},moonColor:{value:new T.Color('#bdd7ff')}
+  };
+  sunlight.position.copy(celestialUniforms.sunDirection.value).multiplyScalar(600);
+  const fill = new T.DirectionalLight('#cce9ff', .85);
   fill.position.set(50, 110, 160);
   scene.add(fill);
 
-  // Procedural daylight with a soft sun disc, horizon glow and high cloud wisps.
+  // Procedural sun, cratered moon and sky share directions with physical lights and lake glints.
   const sky = new T.Mesh(new T.SphereGeometry(3500, 32, 16), new T.ShaderMaterial({
     side: T.BackSide, depthWrite: false, toneMapped: false,
-    uniforms: { uTime: clock, zenith: { value: new T.Color('#4398d6') }, horizon: { value: new T.Color('#c7eaf2') }, glow: { value: new T.Color('#fff2c9') } },
+    uniforms: { ...celestialUniforms, daylight:{value:1}, uTime: clock, zenith: { value: new T.Color('#238ddc') }, horizon: { value: new T.Color('#b4e4f6') }, glow: { value: new T.Color('#fff3ce') } },
     vertexShader: `varying vec3 vDirection; void main(){ vDirection=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
     fragmentShader: `${noiseGLSL}
-      varying vec3 vDirection; uniform float uTime; uniform vec3 zenith,horizon,glow;
+      varying vec3 vDirection; uniform float uTime,daylight,sunVisibility,moonVisibility;
+      uniform vec3 zenith,horizon,glow,sunDirection,moonDirection,moonColor;
+      float crater(vec2 uv,vec2 center,float radius){
+        float distanceToCenter=length(uv-center)/radius;
+        return -.20*(1.-smoothstep(.35,.83,distanceToCenter))
+          +.13*exp(-pow((distanceToCenter-.92)*12.,2.));
+      }
       void main(){
         vec3 d=normalize(vDirection); float h=max(d.y,0.);
         vec3 color=mix(horizon,zenith,smoothstep(.03,.65,h));
-        vec3 sun=normalize(vec3(-.33,.48,-1.)); float proximity=max(dot(d,sun),0.);
-        color=mix(color,glow,pow(proximity,24.)*.45);
-        color+=glow*(pow(proximity,750.)*.65+pow(proximity,9000.)*1.7);
+        float proximity=max(dot(d,sunDirection),0.);
+        color=mix(color,glow,pow(proximity,24.)*.45*sunVisibility);
+        float sunDisc=smoothstep(.99972,.99983,proximity);
+        color+=glow*(pow(proximity,750.)*.45+sunDisc*2.2)*sunVisibility;
+        float moonProximity=max(dot(d,moonDirection),0.);
+        color+=moonColor*pow(moonProximity,240.)*.11*moonVisibility;
+        vec3 moonRight=normalize(cross(moonDirection,vec3(0.,1.,0.)));
+        vec3 moonUp=normalize(cross(moonRight,moonDirection));
+        vec2 moonUV=vec2(dot(d,moonRight),dot(d,moonUp))/.027;
+        float moonRadius=length(moonUV);
+        float moonDisc=(1.-smoothstep(.96,1.,moonRadius))*step(0.,dot(d,moonDirection))*moonVisibility;
+        if(moonDisc>0.){
+          float maria=smoothstep(.34,.68,fbm(moonUV*3.1+vec2(12.,27.)));
+          float relief=crater(moonUV,vec2(.30,-.34),.18)+crater(moonUV,vec2(-.37,.18),.23)+crater(moonUV,vec2(.10,.48),.12);
+          float grain=fbm(moonUV*38.)*.10;
+          float limb=.55+.45*sqrt(max(0.,1.-moonRadius*moonRadius));
+          vec3 surface=moonColor*(.72+grain-maria*.25+relief)*limb;
+          color=mix(color,surface,moonDisc);
+        }
         float clouds=fbm(d.xz/max(.1,d.y)*vec2(2.2,7.)+vec2(uTime*.006,0.));
         color=mix(color,glow*.75,smoothstep(.54,.78,clouds)*smoothstep(.08,.3,h)*.36);
+        vec2 starUV=vec2(atan(d.x,d.z),asin(d.y))*650.;
+        vec2 starCell=floor(starUV);
+        float star=step(.997,hash21(starCell))*(1.-smoothstep(.03,.23,length(fract(starUV)-.5)));
+        color+=vec3(.55,.68,1.)*star*(1.-smoothstep(0.,.35,daylight))*smoothstep(.05,.3,h)*(1.-moonDisc);
         gl_FragColor=vec4(color,1.);
         #include <colorspace_fragment>
       }`
@@ -647,8 +831,8 @@ export function createAlpineWorld(T, { compact = false } = {}) {
       float macro=fbm(vTerrain.xz*.032);
       float grain=fbm(vTerrain.xz*.75+vTerrain.y*.16);
       float slope=1.-max(normalize(vTerrainNormal).y,0.);
-      vec3 grass=mix(vec3(.075,.18,.07),vec3(.29,.34,.12),macro);
-      vec3 rock=mix(vec3(.12,.14,.19),vec3(.26,.25,.30),grain);
+      vec3 grass=mix(vec3(.045,.22,.065),vec3(.20,.40,.10),macro);
+      vec3 rock=mix(vec3(.17,.19,.22),vec3(.34,.35,.32),grain);
       float strata=sin(vTerrain.y*.86+fbm(vTerrain.xz*.08)*13.);
       float fissure=1.-smoothstep(.025,.09,abs(sin(vTerrain.y*1.7+fbm(vTerrain.xz*.16)*8.)));
       float mineral=fbm(vTerrain.xz*3.3+vTerrain.y*.4);
@@ -656,11 +840,11 @@ export function createAlpineWorld(T, { compact = false } = {}) {
       rock=mix(rock,rock*.55,fissure*.35);
       vec3 land=mix(grass,rock,smoothstep(.23,.58,slope));
       land=mix(land,rock,smoothstep(55.,110.,vTerrain.y)*.75);
-      land*=.78+.32*grain;
+      land*=.88+.24*grain;
       float snow=smoothstep(118.,155.,vTerrain.y+macro*37.-slope*48.);
-      vec3 snowColor=mix(vec3(.51,.57,.69),vec3(.88,.87,.86),grain*.5+.5);
+      vec3 snowColor=mix(vec3(.54,.67,.81),vec3(.95,.97,1.),grain*.5+.5);
       land=mix(land,snowColor,snow);
-      land=mix(vec3(.31,.23,.18),land,smoothstep(-.3,3.5,vTerrain.y));
+      land=mix(vec3(.42,.34,.21),land,smoothstep(-.3,3.5,vTerrain.y));
       diffuseColor.rgb*=land;
     `);
   };
@@ -705,7 +889,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   // Fine branch cutouts give trees a porous silhouette and visible needle detail.
   const fineFoliage=createFineFoliage(T),needles=fineFoliage.geometry;
   const trunkGeometry = new T.CylinderGeometry(.13,.27,6,10);
-  const foliageMaterial = new T.MeshStandardMaterial({color:'#91aa80',map:fineFoliage.texture,alphaTest:.42,side:T.DoubleSide,roughness:.94});
+  const foliageMaterial = new T.MeshStandardMaterial({color:'#a0c58c',map:fineFoliage.texture,alphaTest:.42,side:T.DoubleSide,roughness:.94});
   foliageMaterial.onBeforeCompile = shader => {
     shader.uniforms.uTime = clock;
     shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader;
@@ -734,7 +918,7 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   }
   grassGeometry.setAttribute('position', new T.Float32BufferAttribute(blades, 3));
   grassGeometry.computeVertexNormals();
-  const grassMaterial = new T.MeshStandardMaterial({ color: '#a28a58', roughness: 1, side: T.DoubleSide });
+  const grassMaterial = new T.MeshStandardMaterial({ color: '#b9aa56', roughness: 1, side: T.DoubleSide });
   grassMaterial.onBeforeCompile = shader => {
     shader.uniforms.uTime = clock;
     shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader;
@@ -780,10 +964,10 @@ export function createAlpineWorld(T, { compact = false } = {}) {
 
   // Animated wave normals, moving reflection bands and sunlight glints on the lake.
   const waterMaterial = new T.ShaderMaterial({
-    uniforms: { reflectionMap:{value:null}, reflectionMatrix:{value:new T.Matrix4()},hasReflection:{value:0},uTime: clock, uTravel: travelUniform, waterColor: { value: new T.Color('#147c96') }, skyColor: { value: new T.Color('#66cbd5') }, sunColor: { value: new T.Color('#fff0c1') }, fogColor: { value: scene.fog.color } },
+    uniforms: { ...celestialUniforms, daylight:{value:1}, reflectionMap:{value:null}, reflectionMatrix:{value:new T.Matrix4()},hasReflection:{value:0},uTime: clock, uTravel: travelUniform, waterColor: { value: new T.Color('#08a9b4') }, skyColor: { value: new T.Color('#70dce0') }, sunColor: { value: new T.Color('#fff0c1') }, fogColor: { value: scene.fog.color }, fogDensity: { value: scene.fog.density } },
     vertexShader: `uniform mat4 reflectionMatrix; varying vec4 vReflection; varying vec3 vWorld; void main(){ vec4 world=modelMatrix*vec4(position,1.); vWorld=world.xyz; vReflection=reflectionMatrix*world; gl_Position=projectionMatrix*viewMatrix*world; }`,
     fragmentShader: `${noiseGLSL}
-      varying vec4 vReflection; uniform sampler2D reflectionMap; uniform float hasReflection; varying vec3 vWorld; uniform float uTime,uTravel; uniform vec3 waterColor,skyColor,sunColor,fogColor;
+      varying vec4 vReflection; uniform sampler2D reflectionMap; uniform float hasReflection; varying vec3 vWorld; uniform float uTime,uTravel,fogDensity,daylight,sunVisibility,moonVisibility; uniform vec3 waterColor,skyColor,sunColor,fogColor,sunDirection,moonDirection,moonColor;
       void main(){
         vec2 p=vec2(vWorld.x,vWorld.z-uTravel);
         float t=uTime;
@@ -799,11 +983,13 @@ export function createAlpineWorld(T, { compact = false } = {}) {
         vec3 realReflection=texture2D(reflectionMap,clamp(reflectionUV,.001,.999)).rgb;
         reflected=mix(reflected,realReflection,hasReflection*.9);
         vec3 color=mix(waterColor,reflected,.38+fresnel*.53);
-        float glint=pow(max(dot(reflect(-normalize(vec3(-.33,.23,-1.)),normal),eye),0.),150.);
-        color+=sunColor*glint*1.5;
+        float glint=pow(max(dot(reflect(-sunDirection,normal),eye),0.),150.);
+        float moonGlint=pow(max(dot(reflect(-moonDirection,normal),eye),0.),85.);
+        color+=sunColor*glint*1.5*sunVisibility;
+        color+=moonColor*moonGlint*.65*moonVisibility;
         float ripple=pow(max(sin(p.y*.6+sin(p.x*.13+t)*2.+t*.8),0.),24.);
         color+=skyColor*ripple*.055;
-        float fog=1.-exp(-pow(length(cameraPosition-vWorld)*.00084,2.));
+        float fog=1.-exp(-pow(length(cameraPosition-vWorld)*fogDensity,2.));
         color=mix(color,fogColor,fog);
         gl_FragColor=vec4(color,1.);
         #include <tonemapping_fragment>
@@ -892,10 +1078,10 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   const flowerMaterial=new T.MeshStandardMaterial({color:'#fff6ce',roughness:.8});
   const petals=flowers.flatMap(p=>Array.from({length:5},(_,i)=>({...p,x:p.x+Math.cos(i/5*TAU)*.10,z:p.z+Math.sin(i/5*TAU)*.10,angle:i/5*TAU})));
   scene.add(instances(new T.SphereGeometry(.085,10,6),flowerMaterial,petals,d=>{d.scale.set(.75,.20,1.2);}));
-  scene.add(instances(new T.SphereGeometry(.043,8,6),new T.MeshStandardMaterial({color:'#c6a44b',roughness:.9}),flowers,d=>{d.position.y+=.018;d.scale.y=.5;}));
+  scene.add(instances(new T.SphereGeometry(.043,8,6),new T.MeshStandardMaterial({color:'#e0bb40',roughness:.9}),flowers,d=>{d.position.y+=.018;d.scale.y=.5;}));
   const hiker=createHiker(T);scene.add(hiker.root);
   const teaFire=createTeaFire(T);scene.add(teaFire.root,teaFire.mug,teaFire.steam);
-  const characterLight=new T.DirectionalLight('#ffe5bf',1.6);
+  const characterLight=new T.DirectionalLight('#ffedc9',1.6);
   characterLight.position.set(-22,118,-25);characterLight.target.position.set(7,91,-5);
   characterLight.castShadow=!compact;
   characterLight.shadow.mapSize.set(compact?512:2048,compact?512:2048);
@@ -904,6 +1090,11 @@ export function createAlpineWorld(T, { compact = false } = {}) {
   characterLight.shadow.radius=2;
   characterLight.shadow.bias=-.0006;characterLight.shadow.normalBias=.03;
   scene.add(characterLight,characterLight.target);
+  // Broad, shadow-free moon bounce on the camera-facing side of the hiker.
+  // Local falloff lifts the jacket, backpack and nearby rock without washing out the valley.
+  const nightBounce=new T.PointLight('#c8ddf4',0,34,2);
+  nightBounce.name='hiker-night-bounce';nightBounce.position.set(12,101,5);
+  scene.add(nightBounce);
 
   function update(time, pointer = { x: 0, y: 0 }) {
     const travel = 0;
@@ -940,13 +1131,41 @@ export function createAlpineWorld(T, { compact = false } = {}) {
       position.setY(1, flap); position.setY(5, flap); position.needsUpdate = true;
     });
   }
+  const daylightColor=new T.Color();
+  function setDaylight(minutes,sun) {
+    const {from,to,blend}=daylightBlend(minutes,sun);
+    const bodies=celestialState(minutes,sun);
+    celestialUniforms.sunDirection.value.fromArray(bodies.sunDirection).normalize();
+    celestialUniforms.moonDirection.value.fromArray(bodies.moonDirection).normalize();
+    celestialUniforms.sunVisibility.value=bodies.sunVisibility;
+    celestialUniforms.moonVisibility.value=bodies.moonVisibility;
+    sunlight.position.copy(celestialUniforms.sunDirection.value).multiplyScalar(600);
+    moonlight.position.copy(celestialUniforms.moonDirection.value).multiplyScalar(600);
+    moonlight.intensity=bodies.moonPower;
+    const color=(target,key)=>target.set(from[key]).lerp(daylightColor.set(to[key]),blend);
+    const number=key=>mix(from[key],to[key],blend);
+    for(const key of ['zenith','horizon','glow'])color(sky.material.uniforms[key].value,key);
+    sky.material.uniforms.daylight.value=number('day');
+    color(scene.background,'horizon');color(scene.fog.color,'fog');
+    color(waterMaterial.uniforms.waterColor.value,'water');color(waterMaterial.uniforms.skyColor.value,'reflection');
+    color(waterMaterial.uniforms.sunColor.value,'sun');waterMaterial.uniforms.daylight.value=number('day');
+    color(cloudMaterial.color,'cloud');color(sunlight.color,'sun');sunlight.intensity=number('power')*bodies.sunVisibility;
+    color(hemisphere.color,'ambient');color(hemisphere.groundColor,'ground');hemisphere.intensity=number('hemi');
+    color(fill.color,'ambient');fill.intensity=number('fill');
+    color(characterLight.color,'sun');characterLight.color.lerp(celestialUniforms.moonColor.value,bodies.moonVisibility);
+    characterLight.intensity=number('key')+.45*bodies.moonPower;
+    nightBounce.intensity=95*(1-smooth(Math.min(1,number('day')/.65)));
+    // Reuse the existing foreground shadow map for moonlit clothing and cliff detail.
+    const keyDirection=celestialUniforms.sunDirection.value.clone().lerp(celestialUniforms.moonDirection.value,bodies.moonVisibility).normalize();
+    characterLight.position.copy(characterLight.target.position).addScaledVector(keyDirection,45);
+  }
   function dispose() {
     const geometries = new Set(), materials = new Set(), textures=new Set();
     scene.traverse(object => { if (object.geometry) geometries.add(object.geometry); if (object.material) materials.add(object.material); });
     geometries.forEach(g => g.dispose()); materials.forEach(m => {if(m.normalMap)textures.add(m.normalMap);if(m.map)textures.add(m.map);m.dispose();});textures.forEach(t=>t.dispose()); cloudTexture.dispose();
   }
   update(0);
-  return { scene, camera, update, dispose, chunks, clock, water, clouds, birds, compact, hiker, summit, worldFraming, teaFire };
+  return { scene, camera, update, setDaylight, dispose, chunks, clock, water, clouds, birds, compact, hiker, summit, worldFraming, teaFire };
 }
 
 export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
@@ -973,7 +1192,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   let visible = true, contextLost = false, failed = false, elapsed = paused ? HIKER_SEATED_TIME : 0, last = 0, frame = 0;
   let slowFrames = 0, reducedResolution = false, reflectionTime=-Infinity, frameInterval=1000/60, accumulated=0;
   const pointer = { x: 0, y: 0 }, targetPointer = { x: 0, y: 0 }, viewVelocity={x:0,y:0};
-  let drag=null,renderClock=0;const heldKeys=new Set();
+  let drag=null,renderClock=0,daylight=null;const heldKeys=new Set();
   const viewBusy=()=>drag!==null || heldKeys.size>0 || Math.abs(pointer.x)+Math.abs(pointer.y)+Math.abs(viewVelocity.x)+Math.abs(viewVelocity.y)>1e-4;
   function wakeView(){if(!frame && visible && !page.hidden && !contextLost && !failed){last=0;frame=runtime.requestAnimationFrame(tick);}}
   function finishDrag(immediate=false){
@@ -1020,11 +1239,11 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   }
   function tick(now) {
     frame = 0;
-    if ((paused && !viewBusy()) || !visible || page.hidden || contextLost || failed) { last = 0; return; }
+    if ((paused && !viewBusy() && !daylight?.travelling) || !visible || page.hidden || contextLost || failed) { last = 0; return; }
     if (!last) last = now;
     const delta = now - last;last=now;
     const dt=Math.min(delta/1000,.1);
-    if(!paused)elapsed+=dt;renderClock+=dt;accumulated+=delta;advanceView(dt);
+    if(!paused)elapsed+=dt;renderClock+=dt;accumulated+=delta;advanceView(dt);daylight?.advance(dt);
     if (accumulated>=frameInterval-.5) {
       accumulated=Math.max(0,accumulated-frameInterval);
       if(accumulated>=frameInterval)accumulated%=frameInterval;
@@ -1036,7 +1255,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
         renderer.setPixelRatio(.85); reducedResolution = true; resize();
       }else if(slowFrames>90 && reducedResolution){frameInterval=1000/30;slowFrames=0;}
     }
-    if (!failed && (!paused || viewBusy())) frame = runtime.requestAnimationFrame(tick);
+    if (!failed && (!paused || viewBusy() || daylight?.travelling)) frame = runtime.requestAnimationFrame(tick);
   }
   function sync() {
     runtime.cancelAnimationFrame(frame); frame = 0; last = 0; accumulated=0;
@@ -1046,7 +1265,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
     button.querySelector('.scene-toggle-text').textContent = paused ? 'Play motion' : 'Pause motion';
     button.querySelector('.scene-toggle-icon').textContent = paused ? '▷' : 'Ⅱ';
     button.setAttribute('aria-label', paused ? 'Play background animation' : 'Pause background animation');
-    if ((running || (visible && !page.hidden && viewBusy())) && !failed) frame = runtime.requestAnimationFrame(tick);
+    if ((running || (visible && !page.hidden && (viewBusy() || daylight?.travelling))) && !failed) frame = runtime.requestAnimationFrame(tick);
   }
   button.addEventListener('click', () => { paused = !paused; sync(); });
   const replay=host.querySelector('.scene-replay');
@@ -1055,7 +1274,7 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
   page.addEventListener('visibilitychange',()=>{if(page.hidden)finishDrag(true);sync();});
   host.addEventListener('pointerdown',event=>{
     if(failed || contextLost || drag || event.isPrimary===false || event.button!==0)return;
-    if(event.target?.closest?.('a,button,input,textarea,select,[contenteditable],.hero-copy,.hero-bottom p'))return;
+    if(event.target?.closest?.('a,button,input,textarea,select,[contenteditable],.hero-copy,.hero-bottom p,.scene-time'))return;
     Object.assign(targetPointer,pointer);viewVelocity.x=viewVelocity.y=0;
     drag={id:event.pointerId,x:event.clientX,y:event.clientY};
     host.setPointerCapture?.(event.pointerId);host.classList.add('is-dragging');
@@ -1095,9 +1314,13 @@ export function startAlpineRenderer(T, host, motion, runtime = globalThis) {
     contextLost = false; resize();
     if (!failed) { host.classList.add('is-ready');host.tabIndex=0; button.hidden = false; if(replay)replay.hidden=false; sync(); }
   });
+  daylight=createDaylightControl(host,(minutes,sun,{animated})=>{
+    world.setDaylight(minutes,sun);
+    if(!animated){reflectionTime=-Infinity;if(visible && !page.hidden)render();sync();}
+  },runtime);
   resize();
   if (!failed) { host.classList.add('is-ready');host.tabIndex=0; button.hidden = false; if(replay)replay.hidden=false; sync(); }
-  return { world, renderer, reflection, get elapsed() { return elapsed; } };
+  return { world, renderer, reflection, daylight, get elapsed() { return elapsed; } };
 }
 
 if (typeof document !== 'undefined') {

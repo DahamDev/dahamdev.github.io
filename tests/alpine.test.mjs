@@ -5,19 +5,21 @@ import assert from 'node:assert/strict';
 import * as THREE from '../static/js/vendor/three.module.min.js';
 import { createAlpineWorld, createHiker, summitHeight, terrainHeight, startAlpineRenderer, createLakeReflection, HIKER_SEATED_TIME, HIKER_SIT_START, TEA_PICKUP_TIME } from '../themes/portfolio/assets/js/alpine.js';
 
-function harness({reduced=false, fail=false}={}) {
+function harness({reduced=false, fail=false, timeControl=false}={}) {
   let renders=0, mainRenders=0, reflectionRenders=0, next=0;
   const frames=new Map(), events={}, canvasEvents={}, motionEvents={}, buttonEvents={}, replayEvents={};
   const label={},icon={},attributes={},classes=new Set(),captured=new Set();
   const button={hidden:true,querySelector:s=>s.endsWith('-text')?label:icon,setAttribute:(k,v)=>attributes[k]=v,addEventListener:(k,cb)=>buttonEvents[k]=cb};
   const replay={hidden:true,addEventListener:(k,cb)=>replayEvents[k]=cb};
   const canvas={addEventListener:(k,cb)=>canvasEvents[k]=cb};
-  const host={clientWidth:390,dataset:{},querySelector:s=>s==='canvas'?canvas:s==='.scene-replay'?replay:button,
+  const timeEvents={},timeNodes=Object.fromEntries(['time','.scene-time-travel','[data-time-status]','[data-time-zone]','[data-sun-times]','[data-sun-status]'].map(key=>[key,{setAttribute(){},addEventListener:(type,cb)=>timeEvents[type]=cb,removeEventListener(){}}]));
+  const timePanel={dataset:{},querySelector:key=>timeNodes[key]};
+  const host={clientWidth:390,dataset:{},querySelector:s=>s==='canvas'?canvas:s==='.scene-replay'?replay:s==='.scene-toggle'?button:s==='.scene-time' && timeControl?timePanel:null,
     classList:{add:n=>classes.add(n),remove:n=>classes.delete(n)},
     setPointerCapture:id=>captured.add(id),hasPointerCapture:id=>captured.has(id),releasePointerCapture:id=>captured.delete(id),
     addEventListener:(k,cb)=>events[k]=cb,getBoundingClientRect:()=>({width:390,height:820,left:0,top:0})};
   const motion={matches:reduced,addEventListener:(k,cb)=>motionEvents[k]=cb};
-  const document={hidden:false,addEventListener:(k,cb)=>events[k]=cb};
+  const document={hidden:false,addEventListener(k,cb){const previous=events[k];events[k]=event=>{previous?.(event);cb(event);};},removeEventListener(){}};
   class Renderer {
     constructor(){if(fail)throw Error('WebGL unavailable');this.shadowMap={};this.debug={};}
     setPixelRatio(){} setSize(){} dispose(){} clear(){}
@@ -25,12 +27,15 @@ function harness({reduced=false, fail=false}={}) {
     render(){renders++;if(this.target)reflectionRenders++;else mainRenders++;}
   }
   const runtime={document,devicePixelRatio:2,navigator:{},
+    Date:class extends Date{constructor(){super('2026-10-27T23:00:00Z');}},
+    setInterval(){return 1;},clearInterval(){},setTimeout,clearTimeout,
+    localStorage:{getItem:()=>JSON.stringify({status:'OK',results:{date:'2026-10-28',timezone:'Pacific/Auckland',dawn:'05:50:00',sunrise:'06:17:30',solar_noon:'13:05:00',sunset:'19:52:30',dusk:'20:20:00'}})},
     requestAnimationFrame:cb=>{frames.set(++next,cb);return next;},cancelAnimationFrame:id=>frames.delete(id),
     IntersectionObserver:class{constructor(cb){events.intersection=cb;}observe(){}},
     ResizeObserver:class{constructor(cb){events.resize=cb;}observe(){}}};
   const controller=startAlpineRenderer({...THREE,WebGLRenderer:Renderer},host,motion,runtime);
   return {host,motion,document,label,attributes,classes,captured,frames,events,canvasEvents,motionEvents,button,replay,controller,
-    click:()=>buttonEvents.click(),replayScene:()=>replayEvents.click(),
+    timeNodes,travel:()=>timeEvents.click(),click:()=>buttonEvents.click(),replayScene:()=>replayEvents.click(),
     step(time){const batch=[...frames.values()];frames.clear();batch.forEach(cb=>cb(time));},get renders(){return renders;},get mainRenders(){return mainRenders;},get reflectionRenders(){return reflectionRenders;}};
 }
 
@@ -460,4 +465,21 @@ test('camera drag limits keep the view behind the hiker and above the summit',()
     assert.ok(w.camera.quaternion.toArray().every(Number.isFinite));
   }
   w.dispose();
+});
+
+
+test('time travel uses the renderer cadence while the hiker is paused, suspends offscreen, and stops when switched off',()=>{
+  const h=harness({reduced:true,timeControl:true});
+  assert.equal(h.frames.size,0);const elapsed=h.controller.elapsed;
+  h.travel();assert.equal(h.frames.size,1);
+  const reflections=h.reflectionRenders, renders=h.mainRenders;
+  h.step(1000);for(let i=1;i<=66;i++)h.step(1000+i*1000/60);
+  assert.equal(h.controller.elapsed,elapsed);assert.equal(h.timeNodes.time.textContent,'12:17');
+  assert.ok(h.mainRenders-renders>=65 && h.mainRenders-renders<=67,'daylight must use the existing render cadence');
+  assert.ok(h.reflectionRenders-reflections<=10,'travel must preserve mobile reflection throttling');
+  h.events.intersection([{isIntersecting:false}]);assert.equal(h.frames.size,0);
+  const display=h.timeNodes.time.textContent;h.step(50000);assert.equal(h.timeNodes.time.textContent,display);
+  h.events.intersection([{isIntersecting:true}]);h.step(100000);assert.equal(h.timeNodes.time.textContent,display,'resume must not fast-forward');
+  h.travel();assert.equal(h.frames.size,0);assert.equal(h.timeNodes.time.textContent,'12:00');
+  h.controller.daylight.dispose();h.controller.world.dispose();
 });

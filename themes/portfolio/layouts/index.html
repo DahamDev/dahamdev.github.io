@@ -4,6 +4,12 @@
         <canvas class="hero-landscape-canvas" aria-hidden="true"></canvas>
     </div>
     <p class="scene-hint" id="scene-drag-hint">Drag to explore · Release to return<span class="scene-keyboard-hint">. You can also use the arrow keys. Press Escape to reset the view.</span></p>
+    <div class="scene-time" role="group" aria-label="Auckland time and landscape lighting" hidden>
+        <div class="scene-time-heading"><span data-time-zone>Auckland time</span><time>--:--</time><span class="scene-keyboard-hint" data-time-status>Live</span></div>
+        <button class="scene-time-travel" type="button" role="switch" aria-checked="false" aria-describedby="scene-time-help"><span>Time travel</span><span class="scene-time-switch" aria-hidden="true"></span></button>
+        <span class="scene-keyboard-hint" id="scene-time-help">Loop through a full day in 90 seconds. Turn off to return to the current Auckland time.</span>
+        <div class="scene-keyboard-hint"><span data-sun-times></span><span><span data-sun-status>Sun times · </span><span>SunriseSunset.io</span></span></div>
+    </div>
     <div class="container hero-layout">
         <div class="hero-copy">
             <p class="eyebrow">Software engineer <span aria-hidden="true">/</span> New Zealand</p>

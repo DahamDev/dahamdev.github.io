@@ -24,7 +24,7 @@
         </nav>
     </header>
     <main id="main">{{ block "main" . }}{{ end }}</main>
-    <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }} <span>·</span> <small>code, trails &amp; curiosity</small></a></div><div class="footer-links"><a href="{{ "/about/" | relURL }}">About</a><a href="{{ "/projects/" | relURL }}">Projects</a><a href="{{ "/blog/" | relURL }}">Blog</a><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
+    <footer><div class="container footer-content"><div><a href="{{ "/" | relURL }}" class="footer-name">{{ .Site.Params.name }} <span>·</span> <small>code, trails &amp; curiosity</small></a>{{ if .IsHome }}<p class="sun-credit">Sun times by <a href="https://sunrisesunset.io" target="_blank" rel="noopener">SunriseSunset.io</a></p>{{ end }}</div><div class="footer-links"><a href="{{ "/about/" | relURL }}">About</a><a href="{{ "/projects/" | relURL }}">Projects</a><a href="{{ "/blog/" | relURL }}">Blog</a><a href="mailto:{{ .Site.Params.email }}">Email ↗</a></div><p class="copyright">&copy; {{ now.Year }} {{ .Site.Params.name }}</p></div></footer>
     <script>
         (() => {
             const toggle = document.querySelector('.nav-toggle');
